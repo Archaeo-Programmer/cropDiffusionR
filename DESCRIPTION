@@ -1,0 +1,61 @@
+Package: ENSOMaizeImpacts
+Type: Package
+Title: The Impact of ENSO on Maize Agriculture
+Version: 1.0.0
+Date: 2022-09-05
+Authors@R: 
+    c(
+    person(given = "Andrew",
+           family = "Gillreath-Brown",
+           role = c("aut", "cre"),
+           email = "andrew.d.brown@wsu.edu",
+           comment = c(ORCID = "0000-0002-2272-5542")),
+    person(given = "Timothy",
+           family = "Kohler",
+           role = c("aut", "ctb"),
+           email = "tako@wsu.edu",
+           comment = c(ORCID = "0000-0002-3414-6660"))
+           )
+Maintainer: Andrew Gillreath-Brown <andrew.d.brown@wsu.edu>
+Description: This R package repository is to accompany the submission for Gillreath-Brown and Kohler 2022, which examines the effects on ENSO on maize agriculture in the southwestern United States.
+License: MIT + file LICENSE
+Depends: 
+    magrittr,
+    R (>= 3.5.0),
+    vegan
+Imports: 
+    rebus.numbers,
+    leaflet,
+    sp,
+    rgdal,
+    plotly,
+    RColorBrewer,
+    here,
+    lubridate,
+    units,
+    rcarbon, 
+    DescTools, 
+    sf,
+    readr,
+    purrr,
+    dplyr,
+    tibble,
+    tidyr,
+    raster,
+    reshape2, 
+    mgcv,
+    ggplot2,
+    maps,
+    ggh4x,
+    usmap,
+    shadowtext,
+    knitr,
+    data.table,
+    httr
+LazyData: TRUE
+Suggests: testthat
+Encoding: UTF-8
+URL: https://github.com/Archaeo-Programmer/ENSO_Maize_Impacts
+BugReports: https://github.com/Archaeo-Programmer/ENSO_Maize_Impacts/issues
+RoxygenNote: 7.2.1
+Roxygen: list(markdown = TRUE)
