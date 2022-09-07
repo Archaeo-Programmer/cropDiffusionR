@@ -51,7 +51,9 @@ Imports:
     shadowtext,
     knitr,
     data.table,
-    httr
+    httr,
+    ggpubr,
+    gganimate
 LazyData: TRUE
 Suggests: testthat
 Encoding: UTF-8
