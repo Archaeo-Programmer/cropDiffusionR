@@ -460,3 +460,239 @@ ggplot(multi.plot, mapping = aes(x = date, y = value)) +
 ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r process_maize_frontier_gdd, message = FALSE, warning = FALSE, results = 'hide'}
+
+# Extract GDD for each location.
+MDB_full_cal <-
+  raster::extract(
+    x =  global_gdd,
+    y = MDB_full_cal %>%
+      dplyr::select(Longitude, Latitude),
+    df = TRUE
+  ) %>%
+  dplyr::select(gdd = 2) %>% 
+  bind_cols(MDB_full_cal, .)
+
+# Find minimum 2 sigma for each row.
+# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
+MDB_full_cal <- MDB_full_cal %>%
+  dplyr::mutate_all(function(x) gsub("NA to NA", NA, x))
+# subset the dataframe to only have the 2 sigma data and the unique lab code.
+df1 <- MDB_full_cal %>% 
+  dplyr::select(1, 35:41)
+#create an index that shows which cells are and are not NA.
+ind <- !is.na(df1)
+# Get the last sigma date that is True in each row (/the last non-NA value).
+sigma_min <- tapply(df1[ind], row(df1)[ind], tail, 1)
+#Bind back to lab_code. Need to fix these 2 lines of code, so that I never lose the unique identifier.
+sigma_min <- cbind(df1$Lab_code, sigma_min)
+#Update colnames.
+colnames(sigma_min) <- c("Lab_code", "MinBP")
+#Separating the text in each date box, so that I can extract the minimum year.
+sigma_min <- sigma_min %>%
+  as.data.frame() %>%
+  tidyr::separate(MinBP, into = c("pre", "to", "MinBP")) %>%
+  dplyr::select(-pre:-to)
+
+# Add this data back to the large dataframe.
+MDB_full_cal_min <- dplyr::left_join(MDB_full_cal, sigma_min, by = "Lab_code")
+# Reorder so that the Min years are by medianBP.
+MDB_full_cal_min <- MDB_full_cal_min %>% 
+  dplyr::relocate(MinBP, .after = MedianBP)
+
+
+# Reorder the latitude to be in ascending order.
+garb <- MDB_full_cal_min %>%
+  dplyr::arrange(desc(gdd))
+
+# Find index of the oldest date in maize data using the minimum BP year, then remove all rows above that date.
+delrows <- which.max(garb$MinBP) - 1
+garb <- garb %>%
+  dplyr::slice(-1:-delrows)
+
+# Get the actual year and gdd for the oldest maize sample.
+starting_maize <- which.max(garb$MinBP)
+garb$MinBP <- as.numeric(garb$MinBP)
+garb$gdd <- as.double(garb$gdd)
+starting_date <- garb[starting_maize, ] %>% .$MinBP
+starting_gdd <- garb[starting_maize, ] %>% .$gdd
+
+# Limit just to SW.
+garb <- garb %>%
+  filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+
+# Get the minimum gdd in the dataset.
+min_gdd <- as.double(min(garb$gdd))
+
+noBins <- (starting_gdd - min_gdd)
+
+# Create new dataframe that has the northern frontier of maize through time. Pick a site that is farther north than the previous site and younger.
+# LOOP: Set up a loop by first determining how many bins there are. For example, if I do a bin size of 1 degree for latitude, and if the latitude range
+# is from 15 to 20, then I would have 5 bins. That would give me how many times I need to loop through.
+# Then, I would find the starting point for the first record, whether that is starting with the absolute oldest date or starting at the lowest latitude with the oldest date.
+# Once i have a starting point, then I want to loop through each bin (e.g., 15-16, 16-17, etc.) and find the oldest date, but it must be younger than the previous selection.
+
+# Create bins.
+# Find cutoffs for the latitude bins in the dataset.
+cutOffs <- c((floor_lat):(ceiling_lat))
+
+# Convert to make sure columns are numeric then create the actual bins (as factors).
+garb$bins <- cut(as.numeric(garb$Latitude), breaks=cutOffs)
+garb$binsNo <- cut(as.numeric(garb$Latitude), breaks=cutOffs, labels = FALSE)
+
+#test <- garb %>% group_by(bins) %>% top_n(1, MinBP)
+unique_bins <- unique(garb$bins)
+
+garb1 <- garb
+
+
+for (i in 1:length(unique_bins)){
+
+  if (i == 1){
+    garb1 <- garb1 %>%
+      dplyr::group_by(bins) %>%
+      dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
+
+    max_agecurrent <- max(garb1$MinBP)
+  } else {
+    max_ageprev <- max_agecurrent
+    # garb1 %>%
+    #   ungroup() %>%
+    #   dplyr::filter(bins == unique_bins[i-1]) %>%
+    #   dplyr::filter(MinBP < max_ageprev) %>%
+    #   dplyr::select(MinBP) %>%
+    #   max(.)
+
+    subset <- garb1 %>%
+      dplyr::ungroup() %>%
+      dplyr::filter(bins == unique_bins[i]) %>%
+      dplyr::filter(MinBP < max_ageprev) %>%
+      nrow()
+
+    if (subset == 0) {
+      garb1 <- garb1 %>%
+        dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
+    } else {
+      max_agecurrent <- garb1 %>%
+        dplyr::ungroup() %>%
+        dplyr::filter(bins == unique_bins[i]) %>%
+        dplyr::filter(MinBP < max_ageprev) %>%
+        dplyr::select(MinBP) %>%
+        max(.)
+
+      garb1 <- garb1 %>%
+        dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
+    }
+  }
+}
+
+# Remove rows (latitude bins) that did not have a year returned (i.e., there were no dates younger than the previous latitude).
+garb2 <- garb1 %>%
+  dplyr::filter(maxage != -9999)
+
+# Get the unique years for each latitude.
+maize_index <- unique(garb2$maxage)
+
+garb3 <- garb2 %>%
+  dplyr::filter(MinBP == maxage)
+
+garb3 <- garb3 %>%
+  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
+
+# now just plot the northern frontier
+# progressively younger sites must be farther north than the previous site
+# EarlyMaizeNF <- EarlyMaize %>%
+#   filter(ID==279 | ID==271 | ID==76 | ID==46 | ID==49 | ID==135 | ID==445
+#          | ID==441 | ID==469 | ID==473)
+
+garb3$Elevation_masl <- as.numeric(garb3$Elevation_masl)
+
+# All other points to plot.
+allOther <- garb %>%
+  filter(!Lab_code %in% garb3$Lab_code) %>%
+  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
+
+```
+
+```{r maize_frontier_gdd_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# Plot using a linear model.
+garb3 %>%
+  #arrange(desc(Latitude)) %>%
+  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  ggplot(., aes(x = date, y = Latitude, color = fct_rev(State_prov))) +
+  # geom_hline(yintercept = 38.09, colour = "darkgrey") +
+  # geom_hline(yintercept = 31.332817, colour = "darkgrey") +
+  geom_hline(yintercept = 37.7, colour = "black") +
+  geom_hline(yintercept = 37, colour = "black") +
+  geom_point(data = allOther, aes(x = date, y = Latitude, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  #  geom_text(label = EarlyMaizeNF$Name, color = 'black', offset = 10) +
+  geom_smooth(aes(group = 1),
+              method = 'lm',
+              se = F,
+              linetype = 1) +
+  stat_smooth(
+    method = loess,
+    span = 0.9,
+    se = FALSE,
+    size = 1.5
+  )  +
+  #annotate("text", x = -4000, y = 35, label = "Upland United \n States Southwest", size = 7) +
+  annotate("text", x = -4000, y = 37.35, label = "Central Mesa Verde", size = 5) +
+  ggrepel::geom_label_repel(
+    aes(date, Latitude,
+        colour = State_prov, label = Site_name),
+    max.iter = 4000,
+    cex = 6.5,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    # xlim = c (-6500, 0),
+    #nudge_y = 3,
+    #nudge_x = 50,
+    force = 60,
+    box.padding = 1
+  ) +
+  scale_x_continuous(breaks = seq(-7500, 1500, 1000),
+                     minor_breaks = seq(-6500, 1500, 1000)) +
+  scale_y_continuous(breaks = seq(15, 40, 5),
+                     minor_breaks = seq(20, 35, 5),
+                     limits = c(15, 40)) +
+  xlab("Year BC/AD") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  theme(legend.justification = 'left',
+        legend.position = c(0.01, 0.82),
+        legend.title = element_blank(),
+        legend.direction = "vertical",
+        legend.text = element_text(size=18, colour="black")) +
+  guides(color = guide_legend(override.aes = list(fill = NA))) +
+  theme(axis.title.x = element_text(size = 24, colour="black"),
+        axis.text.x  = element_text(size = 22, colour="black")) +
+  theme(axis.title.y = element_text(size = 24, colour="black"),
+        axis.text.y  = element_text(size = 22, colour="black"))
+
+ggplot2::ggsave("vignettes/figures/maize_frontier_fig_macrofossils.png", dpi = 600)
+
+# Plot the residuals of the linear model.
+# m <- lm(Latitude~date, garb3)
+# plot(m)
+
+```

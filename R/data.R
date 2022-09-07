@@ -1,4 +1,4 @@
-#' # Accumulated Growing Degree Days.
+#' Accumulated Growing Degree Days.
 #'
 #' A `raster` containing global accumulated growing degree days for the year with a base temperature of 5°C.
 #'
