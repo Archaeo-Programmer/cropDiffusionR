@@ -393,7 +393,7 @@ t1 <- temp_anom %>%
   reshape2::melt(measure.vars = 2) %>% 
   dplyr::mutate(variable = "Anomaly") %>% 
   dplyr::rename(date = 1) %>% 
-  dplyr::filter(date >= -1000)
+  dplyr::filter(date >= -1000 & date <= 1600)
 t2 <- MDB_FULL %>% 
   dplyr::select(date, Latitude) %>% 
   reshape2::melt(measure.vars = c("Latitude"))
