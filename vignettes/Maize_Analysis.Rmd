@@ -22,8 +22,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # devtools::install()
 # devtools::load_all()
-devtools::install_github("zeehio/facetscales")
-library(ENSO_Maize_Impacts)
+#devtools::install_github("zeehio/facetscales")
+library(ENSOMaizeImpacts)
 
 ```
 
@@ -34,9 +34,15 @@ library(ENSO_Maize_Impacts)
 # Load the temperature anomaly data from paleoMAT output.
 temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv")
 
-MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE)
+MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE) %>% 
+  sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
+  dplyr::select(Lab_code) %>%
+  extract_GDD() %>% 
+  dplyr::left_join(., MDB_full_cal, by = "Lab_code")
 
-MDB_full_cal <- MDB_full_cal %>% 
+MDB_full_cal <- ok
+
+MDB_full_cal <- ok %>% 
   dplyr::filter(Type == "MacroSample")
 
 ```
@@ -480,15 +486,17 @@ ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 ```{r process_maize_frontier_gdd, message = FALSE, warning = FALSE, results = 'hide'}
 
 # Extract GDD for each location.
-MDB_full_cal <-
-  raster::extract(
-    x =  global_gdd,
-    y = MDB_full_cal %>%
-      dplyr::select(Longitude, Latitude),
-    df = TRUE
-  ) %>%
-  dplyr::select(gdd = 2) %>% 
-  bind_cols(MDB_full_cal, .)
+# MDB_full_cal <-
+#   raster::extract(
+#     x =  global_gdd,
+#     y = MDB_full_cal %>%
+#       dplyr::select(Longitude, Latitude) %>% 
+#       mutate(across(everything(), ~ as.numeric(.x))),
+#     df = TRUE
+#   ) %>%
+#   dplyr::select(gdd = 2) %>% 
+#   bind_cols(MDB_full_cal, .)
+
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
@@ -637,9 +645,9 @@ allOther <- garb %>%
 garb3 %>%
   dplyr::mutate(State_prov = as.factor(State_prov),
                 date = as.numeric(date),
-                Latitude = as.double(Latitude)) %>%
+                gdd = as.double(gdd)) %>%
   ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
-  geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
   geom_smooth(aes(group = 1),
               method = 'lm',
