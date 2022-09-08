@@ -496,7 +496,8 @@ ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 #   ) %>%
 #   dplyr::select(gdd = 2) %>% 
 #   bind_cols(MDB_full_cal, .)
-
+MDB_full_cal <- ok %>% 
+  dplyr::filter(Type == "MacroSample")
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
@@ -647,7 +648,7 @@ garb3 %>%
                 date = as.numeric(date),
                 gdd = as.double(gdd)) %>%
   ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
-  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
   geom_smooth(aes(group = 1),
               method = 'lm',
@@ -672,12 +673,13 @@ garb3 %>%
     force = 60,
     box.padding = 1
   ) +
-  scale_x_continuous(breaks = seq(-7500, 1500, 1000),
-                     minor_breaks = seq(-6500, 1500, 1000)) +
+  scale_x_continuous(breaks = seq(-4500, 1500, 1000),
+                     minor_breaks = seq(-4500, 1500, 1000),
+                     limits = c(-4500, 1600)) +
   scale_y_continuous(trans = "reverse",
-                     breaks = seq(1500, 5000, 500),
-                     limits = c(5200, 1500),
-                     minor_breaks = seq(1500, 5000, 250),
+                     breaks = seq(1000, 4000, 500),
+                     limits = c(4000, 1000),
+                     minor_breaks = seq(1000, 4000, 250),
                      guide = "axis_minor") +
   xlab("Years BC/AD") +
   ylab("Annual Accumulated Growing Degree Days") +
@@ -734,5 +736,96 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils.png", dpi
 # Plot the residuals of the linear model.
 # m <- lm(Latitude~date, garb3)
 # plot(m)
+
+
+
+# Using Wisconsin Data
+# Plot using a linear model.
+# garb3 %>%
+#   dplyr::mutate(State_prov = as.factor(State_prov),
+#                 date = as.numeric(date),
+#                 gdd = as.double(gdd)) %>%
+#   ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
+#   geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+#   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+#   geom_smooth(aes(group = 1),
+#               method = 'lm',
+#               se = FALSE,
+#               linetype = 1) +
+#   stat_smooth(
+#     method = loess,
+#     span = 0.9,
+#     se = FALSE,
+#     size = 1.5
+#   )  +
+#   ggrepel::geom_label_repel(
+#     aes(date, gdd,
+#         colour = State_prov, label = Site_name),
+#     max.iter = 4000,
+#     cex = 6.5,
+#     show.legend  = F,
+#     min.segment.length = unit(0, 'lines'),
+#     # xlim = c (-6500, 0),
+#     #nudge_y = 3,
+#     #nudge_x = 50,
+#     force = 60,
+#     box.padding = 1
+#   ) +
+#   scale_x_continuous(breaks = seq(-7500, 1500, 1000),
+#                      minor_breaks = seq(-6500, 1500, 1000)) +
+#   scale_y_continuous(trans = "reverse",
+#                      breaks = seq(1500, 5000, 500),
+#                      limits = c(5200, 1500),
+#                      minor_breaks = seq(1500, 5000, 250),
+#                      guide = "axis_minor") +
+#   xlab("Years BC/AD") +
+#   ylab("Annual Accumulated Growing Degree Days") +
+#   ggpubr::color_palette(palette = "jco") +
+#   theme_bw()  +
+#   guides(color = guide_legend(override.aes = list(fill = NA))) +
+#   theme(
+#     legend.justification = 'left',
+#     legend.position = c(0.01, 0.87),
+#     legend.title = element_blank(),
+#     legend.direction = "vertical",
+#     legend.text = element_text(size = 18, colour = "black"), 
+#     axis.ticks.length = unit(0.125, "inch"),
+#     ggh4x.axis.ticks.length.minor = rel(0.5),
+#     panel.border = element_blank(),
+#     panel.grid.major = element_blank(),
+#     axis.text = element_text(
+#       size = 26,
+#       colour = "black",
+#       family = "Helvetica"
+#     ),
+#     axis.title.y = element_text(
+#       size = 28,
+#       family = "Helvetica",
+#       margin = margin(
+#         t = 10,
+#         r = 5,
+#         b = 10,
+#         l = 10
+#       )
+#     ),
+#     axis.title.x = element_text(
+#       size = 28,
+#       family = "Helvetica",
+#       margin = margin(
+#         t = 5,
+#         r = 10,
+#         b = 10,
+#         l = 10
+#       )
+#     ),
+#     panel.grid.minor = element_blank(),
+#     axis.line = element_line(colour = "black"),
+#     plot.margin = margin(
+#       t = 5,
+#       r = 25,
+#       b = 5,
+#       l = 5
+#     )
+#   )
 
 ```
