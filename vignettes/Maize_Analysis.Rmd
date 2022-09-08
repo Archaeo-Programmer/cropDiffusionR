@@ -486,18 +486,20 @@ ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 ```{r process_maize_frontier_gdd, message = FALSE, warning = FALSE, results = 'hide'}
 
 # Extract GDD for each location.
-# MDB_full_cal <-
-#   raster::extract(
-#     x =  global_gdd,
-#     y = MDB_full_cal %>%
-#       dplyr::select(Longitude, Latitude) %>% 
-#       mutate(across(everything(), ~ as.numeric(.x))),
-#     df = TRUE
-#   ) %>%
-#   dplyr::select(gdd = 2) %>% 
-#   bind_cols(MDB_full_cal, .)
+MDB_full_cal <-
+  raster::extract(
+    x =  global_gdd,
+    y = MDB_full_cal %>%
+      dplyr::select(Longitude, Latitude) %>%
+      mutate(across(everything(), ~ as.numeric(.x))),
+    df = TRUE
+  ) %>%
+  dplyr::select(gdd = 2) %>%
+  bind_cols(MDB_full_cal, .)
+
 MDB_full_cal <- ok %>% 
-  dplyr::filter(Type == "MacroSample")
+  dplyr::filter(Type == "MacroSample") %>% 
+  dplyr::select(-gdd)
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
@@ -551,14 +553,14 @@ garb <- garb %>%
 min_gdd <- plyr::round_any(as.double(min(garb$gdd)), 100, f = floor)
 max_gdd <- plyr::round_any(as.double(max(garb$gdd)), 100, f = ceiling)
 
-noBins <- (max_gdd - min_gdd)/400
+noBins <- (max_gdd - min_gdd)/1
 
 # Create new dataframe that has the northern frontier of maize through time. Pick a site that has fewer GDD than the previous site and is younger.
 # LOOP: Set up a loop by first determining how many bins there are. For example, if I do a bin size of 400 GDD, and if the GDD range is from 1500 to 5100, then I would have 9 bins. That would give me how many times I need to loop through. Then, I would find the starting point for the first record, whether that is starting with the absolute oldest date or starting at the greatest GDD with the oldest date. Once I have a starting point, then I want to loop through each bin (e.g., 1500-1900, 1900-2300, etc.) and find the oldest date, but it must be younger than the previous selection.
 
 # Create bins.
 # Find cutoffs for the GDD bins in the dataset.
-cutOffs <- seq(min_gdd, max_gdd, 400)
+cutOffs <- seq(min_gdd, max_gdd, 1)
 
 # Convert to make sure columns are numeric then create the actual bins (as factors).
 garb$bins <- cut(as.numeric(garb$gdd), breaks = cutOffs)
@@ -654,12 +656,12 @@ garb3 %>%
               method = 'lm',
               se = FALSE,
               linetype = 1) +
-  stat_smooth(
-    method = loess,
-    span = 0.9,
-    se = FALSE,
-    size = 1.5
-  )  +
+  # stat_smooth(
+  #   method = loess,
+  #   span = 0.9,
+  #   se = FALSE,
+  #   size = 1.5
+  # )  +
   ggrepel::geom_label_repel(
     aes(date, gdd,
         colour = State_prov, label = Site_name),
@@ -675,7 +677,7 @@ garb3 %>%
   ) +
   scale_x_continuous(breaks = seq(-4500, 1500, 1000),
                      minor_breaks = seq(-4500, 1500, 1000),
-                     limits = c(-4500, 1600)) +
+                     limits = c(-4500, 1800)) +
   scale_y_continuous(trans = "reverse",
                      breaks = seq(1000, 4000, 500),
                      limits = c(4000, 1000),
@@ -731,7 +733,7 @@ garb3 %>%
     )
   )
 
-ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils.png", dpi = 600)
+ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbins.png", dpi = 600)
 
 # Plot the residuals of the linear model.
 # m <- lm(Latitude~date, garb3)
@@ -741,91 +743,91 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils.png", dpi
 
 # Using Wisconsin Data
 # Plot using a linear model.
-# garb3 %>%
-#   dplyr::mutate(State_prov = as.factor(State_prov),
-#                 date = as.numeric(date),
-#                 gdd = as.double(gdd)) %>%
-#   ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
-#   geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
-#   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
-#   geom_smooth(aes(group = 1),
-#               method = 'lm',
-#               se = FALSE,
-#               linetype = 1) +
-#   stat_smooth(
-#     method = loess,
-#     span = 0.9,
-#     se = FALSE,
-#     size = 1.5
-#   )  +
-#   ggrepel::geom_label_repel(
-#     aes(date, gdd,
-#         colour = State_prov, label = Site_name),
-#     max.iter = 4000,
-#     cex = 6.5,
-#     show.legend  = F,
-#     min.segment.length = unit(0, 'lines'),
-#     # xlim = c (-6500, 0),
-#     #nudge_y = 3,
-#     #nudge_x = 50,
-#     force = 60,
-#     box.padding = 1
-#   ) +
-#   scale_x_continuous(breaks = seq(-7500, 1500, 1000),
-#                      minor_breaks = seq(-6500, 1500, 1000)) +
-#   scale_y_continuous(trans = "reverse",
-#                      breaks = seq(1500, 5000, 500),
-#                      limits = c(5200, 1500),
-#                      minor_breaks = seq(1500, 5000, 250),
-#                      guide = "axis_minor") +
-#   xlab("Years BC/AD") +
-#   ylab("Annual Accumulated Growing Degree Days") +
-#   ggpubr::color_palette(palette = "jco") +
-#   theme_bw()  +
-#   guides(color = guide_legend(override.aes = list(fill = NA))) +
-#   theme(
-#     legend.justification = 'left',
-#     legend.position = c(0.01, 0.87),
-#     legend.title = element_blank(),
-#     legend.direction = "vertical",
-#     legend.text = element_text(size = 18, colour = "black"), 
-#     axis.ticks.length = unit(0.125, "inch"),
-#     ggh4x.axis.ticks.length.minor = rel(0.5),
-#     panel.border = element_blank(),
-#     panel.grid.major = element_blank(),
-#     axis.text = element_text(
-#       size = 26,
-#       colour = "black",
-#       family = "Helvetica"
-#     ),
-#     axis.title.y = element_text(
-#       size = 28,
-#       family = "Helvetica",
-#       margin = margin(
-#         t = 10,
-#         r = 5,
-#         b = 10,
-#         l = 10
-#       )
-#     ),
-#     axis.title.x = element_text(
-#       size = 28,
-#       family = "Helvetica",
-#       margin = margin(
-#         t = 5,
-#         r = 10,
-#         b = 10,
-#         l = 10
-#       )
-#     ),
-#     panel.grid.minor = element_blank(),
-#     axis.line = element_line(colour = "black"),
-#     plot.margin = margin(
-#       t = 5,
-#       r = 25,
-#       b = 5,
-#       l = 5
-#     )
-#   )
+garb3 %>%
+  dplyr::mutate(State_prov = as.factor(State_prov),
+                date = as.numeric(date),
+                gdd = as.double(gdd)) %>%
+  ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
+  geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_smooth(aes(group = 1),
+              method = 'lm',
+              se = FALSE,
+              linetype = 1) +
+  # stat_smooth(
+  #   method = loess,
+  #   span = 0.9,
+  #   se = FALSE,
+  #   size = 1.5
+  # )  +
+  ggrepel::geom_label_repel(
+    aes(date, gdd,
+        colour = State_prov, label = Site_name),
+    max.iter = 4000,
+    cex = 6.5,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    # xlim = c (-6500, 0),
+    #nudge_y = 3,
+    #nudge_x = 50,
+    force = 60,
+    box.padding = 1
+  ) +
+  scale_x_continuous(breaks = seq(-7500, 1500, 1000),
+                     minor_breaks = seq(-6500, 1500, 1000)) +
+  scale_y_continuous(trans = "reverse",
+                     breaks = seq(1500, 5000, 500),
+                     limits = c(5200, 1500),
+                     minor_breaks = seq(1500, 5000, 250),
+                     guide = "axis_minor") +
+  xlab("Years BC/AD") +
+  ylab("Annual Accumulated Growing Degree Days") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(override.aes = list(fill = NA))) +
+  theme(
+    legend.justification = 'left',
+    legend.position = c(0.01, 0.87),
+    legend.title = element_blank(),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
 
 ```
