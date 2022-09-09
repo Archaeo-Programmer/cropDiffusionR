@@ -1373,7 +1373,9 @@ paleocar_paleomat_sites2 <- paleocar_paleomat_sites %>%
 MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
 
-
+df %>% 
+  group_by(A) %>% 
+  slice_min(x, with_ties = FALSE)
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
@@ -1393,16 +1395,41 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
   # Reorder so that the Min years are located in the column next to medianBP.
   dplyr::relocate(MinBP, .after = MedianBP) %>%
-  mutate(bin = cut(
+  dplyr::filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado")) %>% 
+  # Create 100 year bins.
+  dplyr::mutate(bin = cut(
     MinBP,
-    breaks = seq(min(MinBP), max(MinBP), by = 100 ),
+    breaks = seq(plyr::round_any(min(MinBP), 100, f = floor), plyr::round_any(max(MinBP), 100, f = ceiling), by = 100),
     include.lowest = TRUE
-  ))
+  )) %>% 
+  dplyr::group_by(bin) %>% 
+  dplyr::slice_min(gdd) %>% 
+  dplyr::slice_max(MinBP) %>% 
+  #dplyr::select(Lab_code, Site_name, MinBP, gdd) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::arrange(desc(MinBP)) %>% 
+  dplyr::mutate(gdd = as.double(gdd)) %>% 
+  dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
+  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
 
 
-
+MDB_full_cal_min %>% 
+  ungroup() %>% 
+  dplyr::arrange(desc(MinBP)) %>% 
+  dplyr::mutate(gdd = as.double(gdd)) %>% 
+  mutate(next.smaller.day = row_number()[find.next.smaller(1, gdd)], 
+                                 next.smaller.day = replace(next.smaller.day, is.na(next.smaller.day), -1))
   
+find.next.smaller <- function(ini = 1, vec) {
+    if(length(vec) == 1) NA 
+    else c(ini + min(which(vec[1] > vec[-1])), 
+          find.next.smaller(ini + 1, vec[-1]))
+}       # the recursive function will go element by element through the vector and find out 
+        # the index of the next smaller value.
 
+ok3 <- ok3 %>% 
+  dplyr::mutate(ID = sample(100:3000, 45, replace=F)) %>% 
+  dplyr::select(ID, abc = MinBP, value = gdd)
 
 
 # Reorder the gdd to be in descending order.
@@ -1521,12 +1548,12 @@ allOther <- garb %>%
 ```{r maize_frontier_gdd_century_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Plot using a linear model.
-garb3 %>%
+MDB_full_cal_min %>%
   dplyr::mutate(State_prov = as.factor(State_prov),
                 date = as.numeric(date),
                 gdd = as.double(gdd)) %>%
   ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
-  geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
   geom_smooth(aes(group = 1),
               method = 'lm',
@@ -1551,13 +1578,13 @@ garb3 %>%
     force = 60,
     box.padding = 1
   ) +
-  scale_x_continuous(breaks = seq(-4500, 1500, 1000),
-                     minor_breaks = seq(-4500, 1500, 1000),
-                     limits = c(-4500, 1800)) +
+  scale_x_continuous(breaks = seq(-4500, 2000, 500),
+                     minor_breaks = seq(-4500, 2000, 250),
+                     limits = c(-4500, 2000)) +
   scale_y_continuous(trans = "reverse",
-                     breaks = seq(1000, 4000, 500),
-                     limits = c(4000, 1000),
-                     minor_breaks = seq(1000, 4000, 250),
+                     breaks = seq(500, 4000, 500),
+                     limits = c(4000, 500),
+                     minor_breaks = seq(500, 4000, 250),
                      guide = "axis_minor") +
   xlab("Years BC/AD") +
   ylab("Annual Accumulated Growing Degree Days") +
@@ -1608,6 +1635,8 @@ garb3 %>%
       l = 5
     )
   )
+
+ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_timeBins.png", dpi = 600)
 
 ```
 
