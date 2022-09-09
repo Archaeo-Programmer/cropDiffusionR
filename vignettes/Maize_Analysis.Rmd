@@ -24,6 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # devtools::load_all()
 #devtools::install_github("zeehio/facetscales")
 library(ENSOMaizeImpacts)
+require(ggh4x)
 
 ```
 
@@ -32,7 +33,8 @@ library(ENSOMaizeImpacts)
 ```{r load_data, message = FALSE, warning = FALSE, results = 'hide'}
 
 # Load the temperature anomaly reconstruction from paleoMAT.
-temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv")
+temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv") %>% 
+  dplyr::rename(year = 1, anom = 2, ci = 3, se = 4)
 
 # Get calibrated maize database, extract GDD from the WorldClim dataset, then add back to the calibrated database.
 MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE) %>% 
@@ -926,7 +928,7 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbi
 ```{r}
 
 # Create a bounding box for limits of this study
-bb2 <-
+bb <-
   c(
     "xmin" = -112.81446,
     "xmax" = -105.52416,
@@ -938,8 +940,12 @@ bb2 <-
   sf::st_as_sf(crs = 4326) %>%
   sf::st_transform(crs = 4326)
 
+usa <-
+  sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
+  sf::st_transform(., crs = 4326) %>% 
+  dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico"))
 
-ggplot2::ggplot() +
+paleomat_extent <- ggplot2::ggplot() +
   theme_bw() +
   scale_x_continuous(breaks = seq(-115, -103, 2.0),
                      limits = c(-115, -103.2)) +
@@ -949,25 +955,25 @@ ggplot2::ggplot() +
     data = usa,
     color = "#2b2b2b",
     fill = "transparent",
-    size = 1.0
+    size = 0.25
   ) +
   geom_sf(
-    data = bb2,
-    size = 1.5,
+    data = bb,
+    size = 0.75,
     fill = NA,
-    aes(colour = "darkolivegreen4",
-        linetype = "darkolivegreen4"),
+    aes(colour = "slategrey",
+        linetype = "dashed"),
     show.legend = "line",
     inherit.aes = FALSE
   ) +
-  scale_color_manual(
-    values = c("darkolivegreen4" = "darkolivegreen4"),
-    labels = c("This Study"),
+    scale_color_manual(
+    values = c("slategrey" = "slategrey"),
+    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
     name = "Data Extent"
   ) +
   scale_linetype_manual(
-    values = c("darkolivegreen4" = "dashed"),
-    labels = c("This Study"),
+    values = c("dashed" = "dashed"),
+    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
     name = "Data Extent"
   ) +
   labs(colour = "") +
@@ -976,7 +982,7 @@ ggplot2::ggplot() +
     x = -109.75,
     y = 38.5,
     label = "UTAH",
-    size = 6,
+    size = 3,
     fontface = 2,
     hjust = 1.0
   ) +
@@ -985,7 +991,7 @@ ggplot2::ggplot() +
     x = -108.25,
     y = 38.5,
     label = "COLORADO",
-    size = 6,
+    size = 3,
     fontface = 2,
     hjust = 0
   ) +
@@ -994,7 +1000,7 @@ ggplot2::ggplot() +
     x = -109.75,
     y = 32.3,
     label = "ARIZONA",
-    size = 6,
+    size = 3,
     fontface = 2,
     hjust = 1
   ) +
@@ -1003,30 +1009,35 @@ ggplot2::ggplot() +
     x = -108.25,
     y = 32.3,
     label = "NEW MEXICO",
-    size = 6,
+    size = 3,
     fontface = 2,
     hjust = 0
   ) +
   theme(
-    legend.key.width = unit(1.25, 'cm'),
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text=element_text(size=10),
     panel.border = element_blank(),
     panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.text.x = element_text(angle = 90),
+    axis.text = element_blank(),
+    axis.text.x = element_blank(),
     axis.title = element_blank(),
     axis.line = element_blank(),
     axis.ticks = element_blank(),
-    legend.text = element_text(size = 18, family = "Helvetica"),
-    legend.title = element_text(size = 19, family = "Helvetica")
+    panel.background = element_rect(fill = "transparent",
+                                  colour = NA_character_),
+      plot.background = element_rect(fill = "transparent",
+                                 colour = NA_character_), # necessary to avoid drawing plot outline
+  legend.background = element_rect(fill = "transparent", color = NA),
+  legend.box.background = element_rect(fill = "transparent", color = NA),
+  legend.key = element_rect(fill = "transparent", color = NA),
+  legend.box.margin=margin(-10,-10,-10,-20)
   )
 
 
-temp_anom %>%
-  ggplot2::ggplot(aes(x = Year, y = 2)) +
+anom_plot <- temp_anom %>%
+  ggplot2::ggplot(aes(x = year, y = anom)) +
+  geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
   geom_line(size = 2, colour = "cornflowerblue") +
   geom_hline(
     yintercept = 0,
@@ -1040,9 +1051,9 @@ temp_anom %>%
     guide = "axis_minor"
   ) +
   scale_y_continuous(
-    limits = c(-8, 8),
-    breaks = seq(-8, 8, 2),
-    minor_breaks = seq(-7, 7, by = 1),
+    limits = c(-2.5, 2.5),
+    breaks = seq(-2.5, 2.5, 0.5),
+    minor_breaks = seq(-2.5, 2.5, by = 0.25),
     guide = "axis_minor"
   ) +
   theme_bw() +
@@ -1088,6 +1099,16 @@ temp_anom %>%
     )
   )
 
+
+plot.with.inset <-
+  ggdraw() +
+  draw_plot(anom_plot) +
+  draw_plot(paleomat_extent, x = 0.04, y = .638, width = .51, height = .34)
+
+
+ggsave(filename = "vignettes/figures/paleomat_with_studyArea.png", 
+       plot = plot.with.inset,
+       dpi = 600)
 
 
 ```
