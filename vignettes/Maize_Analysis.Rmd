@@ -486,20 +486,20 @@ ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 ```{r process_maize_frontier_gdd, message = FALSE, warning = FALSE, results = 'hide'}
 
 # Extract GDD for each location.
-MDB_full_cal <-
-  raster::extract(
-    x =  global_gdd,
-    y = MDB_full_cal %>%
-      dplyr::select(Longitude, Latitude) %>%
-      mutate(across(everything(), ~ as.numeric(.x))),
-    df = TRUE
-  ) %>%
-  dplyr::select(gdd = 2) %>%
-  bind_cols(MDB_full_cal, .)
+# MDB_full_cal <-
+#   raster::extract(
+#     x =  global_gdd,
+#     y = MDB_full_cal %>%
+#       dplyr::select(Longitude, Latitude) %>%
+#       mutate(across(everything(), ~ as.numeric(.x))),
+#     df = TRUE
+#   ) %>%
+#   dplyr::select(gdd = 2) %>%
+#   bind_cols(MDB_full_cal, .)
 
 MDB_full_cal <- ok %>% 
-  dplyr::filter(Type == "MacroSample") %>% 
-  dplyr::select(-gdd)
+  dplyr::filter(Type == "MacroSample") #%>% 
+  #dplyr::select(-gdd)
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
@@ -642,6 +642,92 @@ allOther <- garb %>%
 
 ```
 
+```{r GDD_temp_slopes}
+
+temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv") %>% 
+  dplyr::select(date = Year, anomaly = 2)
+
+garb3 %>% 
+  dplyr::ungroup() %>% 
+  dplyr::select(Site_name, State_prov, gdd, date) %>% 
+  dplyr::left_join(., temp_anom, by = "date") %>% 
+  dplyr::filter(!is.na(anomaly)) %>% 
+  dplyr::mutate(delta_gdd = gdd - lag(gdd),
+                delta_anom = anomaly - lag(anomaly)) %>% 
+  ggplot(., aes(x = delta_anom, y = delta_gdd)) +
+  geom_point(shape = 19, size = 4) +
+  geom_smooth(aes(group = 1),
+              method = 'lm',
+              se = FALSE,
+              linetype = 1) +
+    ggrepel::geom_label_repel(
+    aes(
+        label = Site_name),
+    max.iter = 4000,
+    cex = 6.5,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 60,
+    box.padding = 1,
+    inherit.aes = TRUE
+  ) +
+  xlab("\u0394 Tempearture Anomaly °C") +
+  ylab("\u0394 Annual Accumulated Growing Degree Days") +
+    scale_x_continuous(breaks = seq(-1.5, 0.5, 0.5),
+                     minor_breaks = seq(-1.5, 0.5, 0.25)) +
+  scale_y_continuous(breaks = seq(-600, 0, 100),
+                     minor_breaks = seq(-600, 0, 50),
+                     guide = "axis_minor") +
+  theme_bw()+
+    theme(
+    legend.justification = 'left',
+    legend.position = c(0.01, 0.87),
+    legend.title = element_blank(),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"), 
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+# ggplot2::ggsave("vignettes/figures/GDD_temp_slopes.png", dpi = 600)
+
+```
+
 ```{r maize_frontier_gdd_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Plot using a linear model.
@@ -733,7 +819,7 @@ garb3 %>%
     )
   )
 
-ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbins.png", dpi = 600)
+#ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbins.png", dpi = 600)
 
 # Plot the residuals of the linear model.
 # m <- lm(Latitude~date, garb3)
@@ -829,5 +915,7 @@ garb3 %>%
       l = 5
     )
   )
+
+ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbins_wisconsindata.png", dpi = 600)
 
 ```
