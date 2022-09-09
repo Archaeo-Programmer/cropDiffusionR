@@ -37,7 +37,9 @@ temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programm
   dplyr::rename(year = 1, anom = 2, ci = 3, se = 4)
 
 # Get calibrated maize database, extract GDD from the WorldClim dataset, then add back to the calibrated database.
-MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE) %>% 
+MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE)
+
+MDB_full_cal <-  MDB_full_cal %>% 
   sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
   dplyr::select(Lab_code) %>%
   extract_GDD() %>% 
@@ -308,6 +310,7 @@ anim <- ggplot(garb3, aes(x = date, y = Latitude, color = State_prov)) +
 
 ```
 
+
 ```{r all_maize_sites_fig, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Plot all sites
@@ -494,15 +497,15 @@ ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 #     x =  global_gdd,
 #     y = MDB_full_cal %>%
 #       dplyr::select(Longitude, Latitude) %>%
-#       mutate(across(everything(), ~ as.numeric(.x))),
+#       dplyr::mutate(dplyr::across(everything(), ~ as.numeric(.x))),
 #     df = TRUE
 #   ) %>%
 #   dplyr::select(gdd = 2) %>%
-#   bind_cols(MDB_full_cal, .)
+#   dplyr::bind_cols(MDB_full_cal, .)
 
-MDB_full_cal <- ok %>% 
-  dplyr::filter(Type == "MacroSample") #%>% 
-  #dplyr::select(-gdd)
+MDB_full_cal <- ok %>%
+  dplyr::filter(Type == "MacroSample") #%>%
+#   dplyr::select(-gdd)
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
@@ -654,11 +657,12 @@ garb3 %>%
   dplyr::ungroup() %>% 
   dplyr::select(Site_name, State_prov, gdd, date) %>% 
   dplyr::left_join(., temp_anom, by = "date") %>% 
-  dplyr::filter(!is.na(anomaly)) %>% 
+  #dplyr::filter(!is.na(anomaly)) %>% 
   dplyr::mutate(delta_gdd = gdd - lag(gdd),
                 delta_anom = anomaly - lag(anomaly)) %>% 
-  ggplot(., aes(x = delta_anom, y = delta_gdd)) +
+  ggplot(., aes(x = date, y = delta_gdd)) +
   geom_point(shape = 19, size = 4) +
+  geom_line(size = 1) +
   geom_smooth(aes(group = 1),
               method = 'lm',
               se = FALSE,
@@ -674,10 +678,11 @@ garb3 %>%
     box.padding = 1,
     inherit.aes = TRUE
   ) +
-  xlab("\u0394 Tempearture Anomaly °C") +
+  xlab("Years BC/AD") +
   ylab("\u0394 Annual Accumulated Growing Degree Days") +
-    scale_x_continuous(breaks = seq(-1.5, 0.5, 0.5),
-                     minor_breaks = seq(-1.5, 0.5, 0.25)) +
+  scale_x_continuous(breaks = seq(-1200, 1200, 200),
+                     minor_breaks = seq(-1200, 1200, 100),
+                     limits = c(-1200, 1300)) +
   scale_y_continuous(breaks = seq(-600, 0, 100),
                      minor_breaks = seq(-600, 0, 50),
                      guide = "axis_minor") +
@@ -727,7 +732,7 @@ garb3 %>%
     )
   )
 
-# ggplot2::ggsave("vignettes/figures/GDD_temp_slopes.png", dpi = 600)
+# ggplot2::ggsave("vignettes/figures/GDD_slopes_overTime.png", dpi = 600)
 
 ```
 
@@ -925,7 +930,7 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbi
 
 
 
-```{r}
+```{r Figure1}
 
 # Create a bounding box for limits of this study
 bb <-
@@ -945,7 +950,8 @@ usa <-
   sf::st_transform(., crs = 4326) %>% 
   dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico"))
 
-paleomat_extent <- ggplot2::ggplot() +
+paleomat_extent <- 
+  ggplot2::ggplot() +
   theme_bw() +
   scale_x_continuous(breaks = seq(-115, -103, 2.0),
                      limits = c(-115, -103.2)) +
@@ -979,44 +985,44 @@ paleomat_extent <- ggplot2::ggplot() +
   labs(colour = "") +
   annotate(
     "text",
-    x = -109.75,
-    y = 38.5,
+    x = -109.2,
+    y = 37.5,
     label = "UTAH",
-    size = 3,
+    size = 4,
     fontface = 2,
     hjust = 1.0
   ) +
   annotate(
     "text",
-    x = -108.25,
-    y = 38.5,
+    x = -108.90,
+    y = 37.5,
     label = "COLORADO",
-    size = 3,
+    size = 4,
     fontface = 2,
     hjust = 0
   ) +
   annotate(
     "text",
-    x = -109.75,
-    y = 32.3,
+    x = -109.2,
+    y = 36.3,
     label = "ARIZONA",
-    size = 3,
+    size = 4,
     fontface = 2,
     hjust = 1
   ) +
   annotate(
     "text",
-    x = -108.25,
-    y = 32.3,
+    x = -108.90,
+    y = 36.3,
     label = "NEW MEXICO",
-    size = 3,
+    size = 4,
     fontface = 2,
     hjust = 0
   ) +
   theme(
     legend.position = "right",
     legend.title = element_blank(),
-    legend.text=element_text(size=10),
+    legend.text=element_text(size=12),
     panel.border = element_blank(),
     panel.grid.major = element_blank(),
     axis.text = element_blank(),
@@ -1112,3 +1118,498 @@ ggsave(filename = "vignettes/figures/paleomat_with_studyArea.png",
 
 
 ```
+
+
+
+```{r paleocar}
+
+paleocar <- raster::brick("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleocar_GDD_MAT_extent.tif")
+
+x.stats <- data.frame(x.mean=raster::cellStats(paleocar, "mean"))
+x.stats2 <- x.stats %>% 
+  dplyr::mutate(year = row_number()) %>% 
+  `rownames<-`(seq_len(nrow(.))) %>% 
+  dplyr::rename(anom = 1)
+
+temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv") %>% 
+  dplyr::rename(year = 1, anom = 2, ci = 3, se = 4)
+
+# For our reconstruction, we first extract the fitted values from the loess line, as plotting above.
+p <- paleocar_paleomat_sites2 %>%
+  ggplot2::qplot(year, anom, data = .) +
+  ggplot2::stat_smooth(
+    method = "loess",
+    formula = y ~ x,
+    aes(outfit = fit <<-
+          ..y..),
+    span = 0.10,
+    n = 2000
+  )
+
+paleocar_loess <- ggplot2::ggplot_build(p)$data[[2]]
+
+p <- readr::read_rds("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleomat/vignettes/data/diagnostics_reconstruction/final_paleomat_dataset3.rds") %>%
+  dplyr::filter(date >= -3000) %>%
+  ggplot2::qplot(date, anom_bootstrap, data = .) +
+  ggplot2::stat_smooth(
+    method = "loess",
+    formula = y ~ x,
+    aes(outfit = fit <<-
+          ..y..),
+    span = 0.05,
+    n = 5000
+  )
+
+anom_loess4 <- ggplot2::ggplot_build(p)$data[[2]]
+
+temp_anom_standard <- anom_loess4 %>%
+  dplyr::filter(x >= 1 & x <= 2000) %>%
+  dplyr::mutate(Series = "Gillreath-Brown") %>%
+  dplyr::select(year = x, anom = y, Series)
+
+paleocar_standard <- paleocar_loess %>%
+  dplyr::mutate(Series = "Bocinsky") %>%
+  dplyr::select(year = x, anom = y, Series)
+
+paleocar_paleomat <-
+  dplyr::bind_rows(temp_anom_standard, paleocar_standard)
+
+# paleocar and paleomat
+paleocar_paleomat %>%
+  dplyr::group_by(Series) %>%
+  dplyr::mutate(update = (anom - mean(anom)) / sd(anom)) %>%
+  ggplot2::ggplot(aes(x = year, y = update, colour = Series)) +
+  geom_hline(
+    yintercept = 0,
+    color = "darkgrey",
+    lty = 2,
+    lwd = 1.25
+  ) +
+  geom_line(size = 2.0) +
+  scale_color_manual(values = c("#A60F2D", "cornflowerblue")) +
+  xlab("Years AD") +
+  ylab("Standardized Temperature Values (Z-Scores)") +
+  scale_x_continuous(
+    limits = c(0, 2000),
+    breaks = seq(0, 2000, 200),
+    minor_breaks = seq(0, 2000, by = 100),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(breaks = seq(-2, 3, 0.5)) +
+  theme_bw() +
+  theme(
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    ),
+    legend.text = element_text(size = 19, family = "Helvetica"),
+    legend.title = element_blank()
+  )
+
+
+x.stats2 %>%
+  ggplot2::ggplot(aes(x = year, y = `x.mean`)) +
+  #geom_line(size = 2, colour = "cornflowerblue") +
+    geom_smooth(
+    method = "loess",
+    span = 0.15,
+    aes(x = year),
+    size = 2,
+    colour = "cornflowerblue"
+  ) +
+  scale_x_continuous(
+    limits = c(0, 2000),
+    breaks = seq(0, 2000, 500),
+    minor_breaks = seq(0, 2000, by = 100),
+    guide = "axis_minor"
+  ) +
+  # scale_y_continuous(
+  #   limits = c(-2.5, 2.5),
+  #   breaks = seq(-2.5, 2.5, 0.5),
+  #   minor_breaks = seq(-2.5, 2.5, by = 0.25),
+  #   guide = "axis_minor"
+  # ) +
+  theme_bw() +
+  xlab("Years BC/AD") +
+  ylab("Temperature Anomaly (°C)") +
+  theme(
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+
+
+
+paleomat_sites <- readr::read_rds("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleomat/vignettes/data/diagnostics_reconstruction/final_paleomat_dataset3.rds") %>% 
+  dplyr::group_by(site.name) %>% 
+  dplyr::slice(1) %>% 
+  dplyr::select(long, lat) %>% 
+  sf::st_as_sf(coords = c("long", "lat"), crs = 4326)
+
+paleocar_paleomat_sites <- raster::extract(paleocar, paleomat_sites, df = TRUE)
+
+paleocar_paleomat_sites2 <- paleocar_paleomat_sites %>% 
+  dplyr::select(-ID) %>% 
+  dplyr::filter(!is.na(`paleocar_GDD_MAT_extent.1`)) %>% 
+  stack() %>% 
+  dplyr::mutate(ind = as.numeric(gsub("\\D+", "", ind))) %>% 
+  dplyr::group_by(ind) %>% 
+  dplyr::summarise(values = mean(values)) %>% 
+  dplyr::rename(year = 1, anom = 2)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r process_maize_frontier_gdd_century, message = FALSE, warning = FALSE, results = 'hide'}
+
+# Extract GDD for each location.
+# MDB_full_cal <- ok %>%
+#   dplyr::filter(Type == "MacroSample") %>%
+#   dplyr::select(-gdd)
+# 
+# MDB_full_cal <-
+#   raster::extract(
+#     x =  global_gdd,
+#     y = MDB_full_cal %>%
+#       dplyr::select(Longitude, Latitude) %>%
+#       dplyr::mutate(dplyr::across(everything(), ~ as.numeric(.x))),
+#     df = TRUE
+#   ) %>%
+#   dplyr::select(gdd = 2) %>%
+#   dplyr::bind_cols(MDB_full_cal, .)
+
+MDB_full_cal <- ok %>%
+  dplyr::filter(Type == "MacroSample")
+
+
+# Find minimum 2 sigma for each row.
+# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
+MDB_full_cal <- MDB_full_cal %>%
+  dplyr::mutate(dplyr::across(everything(), ~ gsub("NA to NA", NA, .x)))
+
+# subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_full_cal_min <- MDB_full_cal %>%
+  dplyr::select(1, starts_with("TwoSigma")) %>%
+  tidyr::pivot_longer(-Lab_code) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::group_by(Lab_code) %>%
+  dplyr::slice(n()) %>%
+  dplyr::select(Lab_code, MinBP = value) %>%
+  # Extract the minimum year from the range of the 2 sigma date.
+  dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
+  # Add this data back to the large dataframe.
+  dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
+  # Reorder so that the Min years are located in the column next to medianBP.
+  dplyr::relocate(MinBP, .after = MedianBP) %>%
+  mutate(bin = cut(
+    MinBP,
+    breaks = seq(min(MinBP), max(MinBP), by = 100 ),
+    include.lowest = TRUE
+  ))
+
+
+
+  
+
+
+
+# Reorder the gdd to be in descending order.
+garb <- MDB_full_cal_min %>%
+  dplyr::arrange(desc(gdd))
+
+# Find index of the oldest date in maize data using the minimum BP year, then remove all rows above that date.
+delrows <- which.max(garb$MinBP) - 1
+garb <- garb %>%
+  dplyr::slice(-1:-delrows)
+
+# Get the actual year and gdd for the oldest maize sample.
+starting_maize <- which.max(garb$MinBP)
+garb$MinBP <- as.numeric(garb$MinBP)
+garb$gdd <- as.double(garb$gdd)
+starting_date <- garb[starting_maize, ] %>% .$MinBP
+starting_gdd <- garb[starting_maize, ] %>% .$gdd
+
+# Limit just to SW.
+garb <- garb %>%
+  filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+
+# Get the minimum gdd in the dataset.
+min_gdd <- plyr::round_any(as.double(min(garb$gdd)), 100, f = floor)
+max_gdd <- plyr::round_any(as.double(max(garb$gdd)), 100, f = ceiling)
+
+noBins <- (max_gdd - min_gdd)/1
+
+# Create new dataframe that has the northern frontier of maize through time. Pick a site that has fewer GDD than the previous site and is younger.
+# LOOP: Set up a loop by first determining how many bins there are. For example, if I do a bin size of 400 GDD, and if the GDD range is from 1500 to 5100, then I would have 9 bins. That would give me how many times I need to loop through. Then, I would find the starting point for the first record, whether that is starting with the absolute oldest date or starting at the greatest GDD with the oldest date. Once I have a starting point, then I want to loop through each bin (e.g., 1500-1900, 1900-2300, etc.) and find the oldest date, but it must be younger than the previous selection.
+
+# Create bins.
+# Find cutoffs for the GDD bins in the dataset.
+cutOffs <- seq(min_gdd, max_gdd, 1)
+
+# Convert to make sure columns are numeric then create the actual bins (as factors).
+garb$bins <- cut(as.numeric(garb$gdd), breaks = cutOffs)
+garb$binsNo <- cut(as.numeric(garb$gdd), breaks = cutOffs, labels = FALSE)
+
+#test <- garb %>% group_by(bins) %>% top_n(1, MinBP)
+unique_bins <- unique(garb$bins)
+
+garb1 <- garb
+
+for (i in 1:length(unique_bins)){
+
+  if (i == 1){
+    garb1 <- garb1 %>%
+      dplyr::group_by(bins) %>%
+      dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
+
+    max_agecurrent <- max(garb1$MinBP)
+  } else {
+    max_ageprev <- max_agecurrent
+    # garb1 %>%
+    #   ungroup() %>%
+    #   dplyr::filter(bins == unique_bins[i-1]) %>%
+    #   dplyr::filter(MinBP < max_ageprev) %>%
+    #   dplyr::select(MinBP) %>%
+    #   max(.)
+
+    subset <- garb1 %>%
+      dplyr::ungroup() %>%
+      dplyr::filter(bins == unique_bins[i]) %>%
+      dplyr::filter(MinBP < max_ageprev) %>%
+      nrow()
+
+    if (subset == 0) {
+      garb1 <- garb1 %>%
+        dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
+    } else {
+      max_agecurrent <- garb1 %>%
+        dplyr::ungroup() %>%
+        dplyr::filter(bins == unique_bins[i]) %>%
+        dplyr::filter(MinBP < max_ageprev) %>%
+        dplyr::select(MinBP) %>%
+        max(.)
+
+      garb1 <- garb1 %>%
+        dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
+    }
+  }
+}
+
+# Remove rows (GDD bins) that did not have a year returned (i.e., there were no dates younger than the previous GDD).
+garb2 <- garb1 %>%
+  dplyr::filter(maxage != -9999)
+
+# Get the unique years for each latitude.
+maize_index <- unique(garb2$maxage)
+
+garb3 <- garb2 %>%
+  dplyr::filter(MinBP == maxage)
+
+garb3 <- garb3 %>%
+  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
+
+# now just plot the northern frontier
+# progressively younger sites must be farther north than the previous site
+# EarlyMaizeNF <- EarlyMaize %>%
+#   filter(ID==279 | ID==271 | ID==76 | ID==46 | ID==49 | ID==135 | ID==445
+#          | ID==441 | ID==469 | ID==473)
+
+garb3$Elevation_masl <- as.numeric(garb3$Elevation_masl)
+
+# All other points to plot.
+allOther <- garb %>%
+  dplyr::filter(!Lab_code %in% garb3$Lab_code) %>%
+  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP),
+                date = as.numeric(date),
+                Latitude = as.double(Latitude))
+  
+
+```
+
+```{r maize_frontier_gdd_century_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# Plot using a linear model.
+garb3 %>%
+  dplyr::mutate(State_prov = as.factor(State_prov),
+                date = as.numeric(date),
+                gdd = as.double(gdd)) %>%
+  ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
+  geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_smooth(aes(group = 1),
+              method = 'lm',
+              se = FALSE,
+              linetype = 1) +
+  # stat_smooth(
+  #   method = loess,
+  #   span = 0.9,
+  #   se = FALSE,
+  #   size = 1.5
+  # )  +
+  ggrepel::geom_label_repel(
+    aes(date, gdd,
+        colour = State_prov, label = Site_name),
+    max.iter = 4000,
+    cex = 6.5,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    # xlim = c (-6500, 0),
+    #nudge_y = 3,
+    #nudge_x = 50,
+    force = 60,
+    box.padding = 1
+  ) +
+  scale_x_continuous(breaks = seq(-4500, 1500, 1000),
+                     minor_breaks = seq(-4500, 1500, 1000),
+                     limits = c(-4500, 1800)) +
+  scale_y_continuous(trans = "reverse",
+                     breaks = seq(1000, 4000, 500),
+                     limits = c(4000, 1000),
+                     minor_breaks = seq(1000, 4000, 250),
+                     guide = "axis_minor") +
+  xlab("Years BC/AD") +
+  ylab("Annual Accumulated Growing Degree Days") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(override.aes = list(fill = NA))) +
+  theme(
+    legend.justification = 'left',
+    legend.position = c(0.01, 0.87),
+    legend.title = element_blank(),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"), 
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+```
+
+
+
