@@ -31,9 +31,10 @@ library(ENSOMaizeImpacts)
 
 ```{r load_data, message = FALSE, warning = FALSE, results = 'hide'}
 
-# Load the temperature anomaly data from paleoMAT output.
+# Load the temperature anomaly reconstruction from paleoMAT.
 temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv")
 
+# Get calibrated maize database, extract GDD from the WorldClim dataset, then add back to the calibrated database.
 MDB_full_cal <- read.csv("../Paper 2/Maize_Database_Calibrated.csv", stringsAsFactors = FALSE) %>% 
   sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
   dplyr::select(Lab_code) %>%
@@ -917,5 +918,176 @@ garb3 %>%
   )
 
 ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbins_wisconsindata.png", dpi = 600)
+
+```
+
+
+
+```{r}
+
+# Create a bounding box for limits of this study
+bb2 <-
+  c(
+    "xmin" = -112.81446,
+    "xmax" = -105.52416,
+    "ymin" = 32.65757,
+    "ymax" = 38.089
+  ) %>%
+  sf::st_bbox() %>%
+  sf::st_as_sfc() %>%
+  sf::st_as_sf(crs = 4326) %>%
+  sf::st_transform(crs = 4326)
+
+
+ggplot2::ggplot() +
+  theme_bw() +
+  scale_x_continuous(breaks = seq(-115, -103, 2.0),
+                     limits = c(-115, -103.2)) +
+  scale_y_continuous(breaks = seq(31, 39, 2.0),
+                     limits = c(31.25, 39)) +
+  geom_sf(
+    data = usa,
+    color = "#2b2b2b",
+    fill = "transparent",
+    size = 1.0
+  ) +
+  geom_sf(
+    data = bb2,
+    size = 1.5,
+    fill = NA,
+    aes(colour = "darkolivegreen4",
+        linetype = "darkolivegreen4"),
+    show.legend = "line",
+    inherit.aes = FALSE
+  ) +
+  scale_color_manual(
+    values = c("darkolivegreen4" = "darkolivegreen4"),
+    labels = c("This Study"),
+    name = "Data Extent"
+  ) +
+  scale_linetype_manual(
+    values = c("darkolivegreen4" = "dashed"),
+    labels = c("This Study"),
+    name = "Data Extent"
+  ) +
+  labs(colour = "") +
+  annotate(
+    "text",
+    x = -109.75,
+    y = 38.5,
+    label = "UTAH",
+    size = 6,
+    fontface = 2,
+    hjust = 1.0
+  ) +
+  annotate(
+    "text",
+    x = -108.25,
+    y = 38.5,
+    label = "COLORADO",
+    size = 6,
+    fontface = 2,
+    hjust = 0
+  ) +
+  annotate(
+    "text",
+    x = -109.75,
+    y = 32.3,
+    label = "ARIZONA",
+    size = 6,
+    fontface = 2,
+    hjust = 1
+  ) +
+  annotate(
+    "text",
+    x = -108.25,
+    y = 32.3,
+    label = "NEW MEXICO",
+    size = 6,
+    fontface = 2,
+    hjust = 0
+  ) +
+  theme(
+    legend.key.width = unit(1.25, 'cm'),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.text.x = element_text(angle = 90),
+    axis.title = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    legend.text = element_text(size = 18, family = "Helvetica"),
+    legend.title = element_text(size = 19, family = "Helvetica")
+  )
+
+
+temp_anom %>%
+  ggplot2::ggplot(aes(x = Year, y = 2)) +
+  geom_line(size = 2, colour = "cornflowerblue") +
+  geom_hline(
+    yintercept = 0,
+    linetype = 'dashed',
+    color = c('darkslategray')
+  ) +
+  scale_x_continuous(
+    limits = c(-3000, 2100),
+    breaks = seq(-3000, 2000, 500),
+    minor_breaks = seq(-2900, 2000, by = 100),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(
+    limits = c(-8, 8),
+    breaks = seq(-8, 8, 2),
+    minor_breaks = seq(-7, 7, by = 1),
+    guide = "axis_minor"
+  ) +
+  theme_bw() +
+  xlab("Years BC/AD") +
+  ylab("Temperature Anomaly (°C)") +
+  theme(
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+
 
 ```
