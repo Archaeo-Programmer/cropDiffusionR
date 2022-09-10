@@ -26,7 +26,7 @@ extract_GDD <-
       dplyr::summarise(`days` = mean(n))
     
     current.list <-
-      list.files(path = "/Users/andrew/Downloads/wc2.1_30s_tavg",
+      list.files(path = "/Users/andrewgillreath-brown/Downloads/wc2.1_30s_tavg",
                  pattern = ".tif",
                  full.names = TRUE)
     c.stack <- raster::stack(current.list)

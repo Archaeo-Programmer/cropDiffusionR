@@ -17,7 +17,7 @@ editor_options:
 keep_md: yes
 ---
   
-  ```{r setup, include = FALSE, results = 'hide'}
+```{r setup, include = FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = TRUE)
 
 # devtools::install()
@@ -44,7 +44,7 @@ MDB_full_cal <-  MDB_full_cal %>%
   dplyr::select(Lab_code) %>%
   extract_GDD() %>% 
   dplyr::left_join(., MDB_full_cal, by = "Lab_code")
-
+ok <- MDB_full_cal
 #write.csv(MDB_full_cal, "MDB_full_cal_with_GDD.csv", row.names = F)
 #MDB_full_cal <- read.csv("MDB_full_cal_with_GDD.csv", stringsAsFactors = FALSE)
 
@@ -1379,7 +1379,8 @@ MDB_full_cal <- ok %>%
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
-  dplyr::mutate(dplyr::across(everything(), ~ gsub("NA to NA", NA, .x)))
+  dplyr::mutate(dplyr::across(everything(), ~ gsub("NA to NA", NA, .x))) %>% 
+  dplyr::filter(str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
 
 # subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_full_cal_min <- MDB_full_cal %>%
@@ -1395,15 +1396,15 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
   # Reorder so that the Min years are located in the column next to medianBP.
   dplyr::relocate(MinBP, .after = MedianBP) %>%
-  dplyr::filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado")) %>%
+  #dplyr::filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado")) %>%
   # Create 100 year bins.
   dplyr::mutate(bin = cut(
     MinBP,
     breaks = seq(plyr::round_any(min(MinBP), 100, f = floor), plyr::round_any(max(MinBP), 100, f = ceiling), by = 100),
     include.lowest = TRUE
   )) %>% 
-  dplyr::group_by(bin) %>% 
-  # dplyr::slice_min(gdd) %>% 
+  #dplyr::group_by(bin) %>% 
+  #dplyr::slice_min(gdd) %>% 
   # dplyr::slice_max(MinBP) %>% 
   dplyr::ungroup() %>% 
   dplyr::arrange(desc(MinBP)) %>% 
@@ -1411,7 +1412,8 @@ MDB_full_cal_min <- MDB_full_cal %>%
   #dplyr::filter(gdd == cummin(gdd)) %>% 
   #dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
   dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>% 
-  dplyr::select(Lab_code, Site_name, date, gdd, everything())
+  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>% 
+  dplyr::filter(date <= 1500)
 
 
 MDB_full_cal_min %>% 
@@ -1553,39 +1555,46 @@ MDB_full_cal_min %>%
   dplyr::mutate(State_prov = as.factor(State_prov),
                 date = as.numeric(date),
                 gdd = as.double(gdd)) %>%
-  ggplot(., aes(x = date, y = gdd, color = fct_rev(State_prov))) +
+  arrange(date) %>% 
+  ggplot(., aes(x = date, y = gdd)) +
   #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
-  geom_smooth(aes(group = 1),
-              method = 'lm',
-              se = FALSE,
-              linetype = 1) +
+    geom_smooth(
+    method = "loess",
+    span = 0.15,
+    size = 2,
+    colour = "cornflowerblue"
+  ) +
+  # geom_smooth(aes(group = 1),
+  #             method = 'lm',
+  #             se = FALSE,
+  #             linetype = 1) +
   # stat_smooth(
   #   method = loess,
   #   span = 0.9,
   #   se = FALSE,
   #   size = 1.5
   # )  +
-  ggrepel::geom_label_repel(
-    aes(date, gdd,
-        colour = State_prov, label = Site_name),
-    max.iter = 4000,
-    cex = 6.5,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    # xlim = c (-6500, 0),
-    #nudge_y = 3,
-    #nudge_x = 50,
-    force = 60,
-    box.padding = 1
-  ) +
-  scale_x_continuous(breaks = seq(-4500, 2000, 500),
-                     minor_breaks = seq(-4500, 2000, 250),
-                     limits = c(-4500, 2000)) +
+  # ggrepel::geom_label_repel(
+  #   aes(date, gdd,
+  #       colour = State_prov, label = Site_name),
+  #   max.iter = 4000,
+  #   cex = 6.5,
+  #   show.legend  = F,
+  #   min.segment.length = unit(0, 'lines'),
+  #   # xlim = c (-6500, 0),
+  #   #nudge_y = 3,
+  #   #nudge_x = 50,
+  #   force = 60,
+  #   box.padding = 1
+  # ) +
+  scale_x_continuous(breaks = seq(-3000, 1500, 500),
+                     minor_breaks = seq(-3000, 1500, 250),
+                     limits = c(-3000, 1500)) +
   scale_y_continuous(trans = "reverse",
-                     breaks = seq(500, 5500, 500),
-                     limits = c(5500, 500),
-                     minor_breaks = seq(500, 5500, 250),
+                     breaks = seq(500, 6500, 500),
+                     limits = c(6500, 500),
+                     minor_breaks = seq(500, 6500, 250),
                      guide = "axis_minor") +
   xlab("Years BC/AD") +
   ylab("Annual Accumulated Growing Degree Days") +
