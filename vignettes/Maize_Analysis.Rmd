@@ -1,23 +1,23 @@
 ---
-title: "ENSO Impacts on Maize Agriculture in the Southwestern United States"
+  title: "ENSO Impacts on Maize Agriculture in the Southwestern United States"
 author: "Andrew Gillreath-Brown"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 html_document:
   toc: yes
-  toc_depth: 2
-  toc_float: yes
-  number_sections: no
-  code_folding: hide
+toc_depth: 2
+toc_float: yes
+number_sections: no
+code_folding: hide
 output:
   html_document:
-    df_print: paged
+  df_print: paged
 mainfont: Calibri
 editor_options:
   chunk_output_type: console
 keep_md: yes
 ---
-
-```{r setup, include = FALSE, results = 'hide'}
+  
+  ```{r setup, include = FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = TRUE)
 
 # devtools::install()
@@ -44,6 +44,9 @@ MDB_full_cal <-  MDB_full_cal %>%
   dplyr::select(Lab_code) %>%
   extract_GDD() %>% 
   dplyr::left_join(., MDB_full_cal, by = "Lab_code")
+
+#write.csv(MDB_full_cal, "MDB_full_cal_with_GDD.csv", row.names = F)
+#MDB_full_cal <- read.csv("MDB_full_cal_with_GDD.csv", stringsAsFactors = FALSE)
 
 MDB_full_cal <- ok
 
@@ -138,12 +141,12 @@ garb1 <- garb
 
 
 for (i in 1:length(unique_bins)){
-
+  
   if (i == 1){
     garb1 <- garb1 %>%
       dplyr::group_by(bins) %>%
       dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
-
+    
     max_agecurrent <- max(garb1$MinBP)
   } else {
     max_ageprev <- max_agecurrent
@@ -153,13 +156,13 @@ for (i in 1:length(unique_bins)){
     #   dplyr::filter(MinBP < max_ageprev) %>%
     #   dplyr::select(MinBP) %>%
     #   max(.)
-
+    
     subset <- garb1 %>%
       dplyr::ungroup() %>%
       dplyr::filter(bins == unique_bins[i]) %>%
       dplyr::filter(MinBP < max_ageprev) %>%
       nrow()
-
+    
     if (subset == 0) {
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
@@ -170,7 +173,7 @@ for (i in 1:length(unique_bins)){
         dplyr::filter(MinBP < max_ageprev) %>%
         dplyr::select(MinBP) %>%
         max(.)
-
+      
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
     }
@@ -282,7 +285,7 @@ anim <- ggplot(garb3, aes(x = date, y = Latitude, color = State_prov)) +
   geom_line(aes(y = smooth_vals), colour = "blue") +
   gganimate::transition_reveal(date) +
   gganimate::ease_aes("linear") +
-#  geom_text(label = EarlyMaizeNF$Name, color = 'black', offset = 10) +
+  #  geom_text(label = EarlyMaizeNF$Name, color = 'black', offset = 10) +
   ggrepel::geom_label_repel(
     aes(date, Latitude,
         colour = State_prov, label = Site_name),
@@ -432,7 +435,7 @@ ggplot(multi.plot, mapping = aes(x = date, y = value)) +
     limits = c(-3000, 1500)
   ) +
   facetscales::facet_grid_sc(rows = vars(variable), 
-                scales = list(y = scales_y)) +
+                             scales = list(y = scales_y)) +
   #scale_y_continuous(breaks = seq(31.5, 38, 0.5)) +
   theme_bw() +
   theme(
@@ -578,12 +581,12 @@ unique_bins <- unique(garb$bins)
 garb1 <- garb
 
 for (i in 1:length(unique_bins)){
-
+  
   if (i == 1){
     garb1 <- garb1 %>%
       dplyr::group_by(bins) %>%
       dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
-
+    
     max_agecurrent <- max(garb1$MinBP)
   } else {
     max_ageprev <- max_agecurrent
@@ -593,13 +596,13 @@ for (i in 1:length(unique_bins)){
     #   dplyr::filter(MinBP < max_ageprev) %>%
     #   dplyr::select(MinBP) %>%
     #   max(.)
-
+    
     subset <- garb1 %>%
       dplyr::ungroup() %>%
       dplyr::filter(bins == unique_bins[i]) %>%
       dplyr::filter(MinBP < max_ageprev) %>%
       nrow()
-
+    
     if (subset == 0) {
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
@@ -610,7 +613,7 @@ for (i in 1:length(unique_bins)){
         dplyr::filter(MinBP < max_ageprev) %>%
         dplyr::select(MinBP) %>%
         max(.)
-
+      
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
     }
@@ -644,7 +647,7 @@ allOther <- garb %>%
   dplyr::mutate(date = paleomat::BPtoBCAD(MinBP),
                 date = as.numeric(date),
                 Latitude = as.double(Latitude))
-  
+
 
 ```
 
@@ -667,9 +670,9 @@ garb3 %>%
               method = 'lm',
               se = FALSE,
               linetype = 1) +
-    ggrepel::geom_label_repel(
+  ggrepel::geom_label_repel(
     aes(
-        label = Site_name),
+      label = Site_name),
     max.iter = 4000,
     cex = 6.5,
     show.legend  = F,
@@ -687,7 +690,7 @@ garb3 %>%
                      minor_breaks = seq(-600, 0, 50),
                      guide = "axis_minor") +
   theme_bw()+
-    theme(
+  theme(
     legend.justification = 'left',
     legend.position = c(0.01, 0.87),
     legend.title = element_blank(),
@@ -972,7 +975,7 @@ paleomat_extent <-
     show.legend = "line",
     inherit.aes = FALSE
   ) +
-    scale_color_manual(
+  scale_color_manual(
     values = c("slategrey" = "slategrey"),
     labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
     name = "Data Extent"
@@ -1031,13 +1034,13 @@ paleomat_extent <-
     axis.line = element_blank(),
     axis.ticks = element_blank(),
     panel.background = element_rect(fill = "transparent",
-                                  colour = NA_character_),
-      plot.background = element_rect(fill = "transparent",
-                                 colour = NA_character_), # necessary to avoid drawing plot outline
-  legend.background = element_rect(fill = "transparent", color = NA),
-  legend.box.background = element_rect(fill = "transparent", color = NA),
-  legend.key = element_rect(fill = "transparent", color = NA),
-  legend.box.margin=margin(-10,-10,-10,-20)
+                                    colour = NA_character_),
+    plot.background = element_rect(fill = "transparent",
+                                   colour = NA_character_), # necessary to avoid drawing plot outline
+    legend.background = element_rect(fill = "transparent", color = NA),
+    legend.box.background = element_rect(fill = "transparent", color = NA),
+    legend.key = element_rect(fill = "transparent", color = NA),
+    legend.box.margin=margin(-10,-10,-10,-20)
   )
 
 
@@ -1243,7 +1246,7 @@ paleocar_paleomat %>%
 x.stats2 %>%
   ggplot2::ggplot(aes(x = year, y = `x.mean`)) +
   #geom_line(size = 2, colour = "cornflowerblue") +
-    geom_smooth(
+  geom_smooth(
     method = "loess",
     span = 0.15,
     aes(x = year),
@@ -1373,9 +1376,6 @@ paleocar_paleomat_sites2 <- paleocar_paleomat_sites %>%
 MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
 
-df %>% 
-  group_by(A) %>% 
-  slice_min(x, with_ties = FALSE)
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
@@ -1395,7 +1395,7 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
   # Reorder so that the Min years are located in the column next to medianBP.
   dplyr::relocate(MinBP, .after = MedianBP) %>%
-  dplyr::filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado")) %>% 
+  dplyr::filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado")) %>%
   # Create 100 year bins.
   dplyr::mutate(bin = cut(
     MinBP,
@@ -1403,14 +1403,15 @@ MDB_full_cal_min <- MDB_full_cal %>%
     include.lowest = TRUE
   )) %>% 
   dplyr::group_by(bin) %>% 
-  dplyr::slice_min(gdd) %>% 
-  dplyr::slice_max(MinBP) %>% 
-  #dplyr::select(Lab_code, Site_name, MinBP, gdd) %>% 
+  # dplyr::slice_min(gdd) %>% 
+  # dplyr::slice_max(MinBP) %>% 
   dplyr::ungroup() %>% 
   dplyr::arrange(desc(MinBP)) %>% 
   dplyr::mutate(gdd = as.double(gdd)) %>% 
-  dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
-  dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
+  #dplyr::filter(gdd == cummin(gdd)) %>% 
+  #dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
+  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>% 
+  dplyr::select(Lab_code, Site_name, date, gdd, everything())
 
 
 MDB_full_cal_min %>% 
@@ -1418,14 +1419,14 @@ MDB_full_cal_min %>%
   dplyr::arrange(desc(MinBP)) %>% 
   dplyr::mutate(gdd = as.double(gdd)) %>% 
   mutate(next.smaller.day = row_number()[find.next.smaller(1, gdd)], 
-                                 next.smaller.day = replace(next.smaller.day, is.na(next.smaller.day), -1))
-  
+         next.smaller.day = replace(next.smaller.day, is.na(next.smaller.day), -1))
+
 find.next.smaller <- function(ini = 1, vec) {
-    if(length(vec) == 1) NA 
-    else c(ini + min(which(vec[1] > vec[-1])), 
-          find.next.smaller(ini + 1, vec[-1]))
+  if(length(vec) == 1) NA 
+  else c(ini + min(which(vec[1] > vec[-1])), 
+         find.next.smaller(ini + 1, vec[-1]))
 }       # the recursive function will go element by element through the vector and find out 
-        # the index of the next smaller value.
+# the index of the next smaller value.
 
 ok3 <- ok3 %>% 
   dplyr::mutate(ID = sample(100:3000, 45, replace=F)) %>% 
@@ -1475,12 +1476,12 @@ unique_bins <- unique(garb$bins)
 garb1 <- garb
 
 for (i in 1:length(unique_bins)){
-
+  
   if (i == 1){
     garb1 <- garb1 %>%
       dplyr::group_by(bins) %>%
       dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
-
+    
     max_agecurrent <- max(garb1$MinBP)
   } else {
     max_ageprev <- max_agecurrent
@@ -1490,13 +1491,13 @@ for (i in 1:length(unique_bins)){
     #   dplyr::filter(MinBP < max_ageprev) %>%
     #   dplyr::select(MinBP) %>%
     #   max(.)
-
+    
     subset <- garb1 %>%
       dplyr::ungroup() %>%
       dplyr::filter(bins == unique_bins[i]) %>%
       dplyr::filter(MinBP < max_ageprev) %>%
       nrow()
-
+    
     if (subset == 0) {
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
@@ -1507,7 +1508,7 @@ for (i in 1:length(unique_bins)){
         dplyr::filter(MinBP < max_ageprev) %>%
         dplyr::select(MinBP) %>%
         max(.)
-
+      
       garb1 <- garb1 %>%
         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
     }
@@ -1541,7 +1542,7 @@ allOther <- garb %>%
   dplyr::mutate(date = paleomat::BPtoBCAD(MinBP),
                 date = as.numeric(date),
                 Latitude = as.double(Latitude))
-  
+
 
 ```
 
@@ -1582,18 +1583,18 @@ MDB_full_cal_min %>%
                      minor_breaks = seq(-4500, 2000, 250),
                      limits = c(-4500, 2000)) +
   scale_y_continuous(trans = "reverse",
-                     breaks = seq(500, 4000, 500),
-                     limits = c(4000, 500),
-                     minor_breaks = seq(500, 4000, 250),
+                     breaks = seq(500, 5500, 500),
+                     limits = c(5500, 500),
+                     minor_breaks = seq(500, 5500, 250),
                      guide = "axis_minor") +
   xlab("Years BC/AD") +
   ylab("Annual Accumulated Growing Degree Days") +
-  ggpubr::color_palette(palette = "jco") +
+  #ggpubr::color_palette(palette = "jco") +
   theme_bw()  +
   guides(color = guide_legend(override.aes = list(fill = NA))) +
   theme(
-    legend.justification = 'left',
-    legend.position = c(0.01, 0.87),
+    #legend.justification = 'left',
+    #legend.position = c(0.01, 0.87),
     legend.title = element_blank(),
     legend.direction = "vertical",
     legend.text = element_text(size = 18, colour = "black"), 
