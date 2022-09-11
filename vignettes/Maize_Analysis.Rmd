@@ -1651,4 +1651,25 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_timeBins.png", dpi = 600)
 ```
 
 
+```{r}
 
+library(plotly)
+
+plot_ly(
+  x = MDB_full_cal_min$Longitude ,
+  y = MDB_full_cal_min$Latitude,
+  z = MDB_full_cal_min$date,
+  type = "scatter3d",
+  mode = "markers",
+       marker = list(color = MDB_full_cal_min$gdd,
+                     # Use either a named palette in the above list:
+                     #colorscale = 'Greys',
+                     # Or use a list of vector scales.
+                     colorscale = list(c(0, 1), c("blue", "red")),
+                     showscale = TRUE)) %>%
+  layout(scene = list(xaxis = list(range = c(-105, -111)), 
+                      yaxis = list(range = c(39, 32)),
+                      zaxis=list(range = c(-2500,1500))))
+
+
+```
