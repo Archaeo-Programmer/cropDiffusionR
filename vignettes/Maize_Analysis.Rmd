@@ -25,6 +25,11 @@ knitr::opts_chunk$set(echo = TRUE)
 #devtools::install_github("zeehio/facetscales")
 library(ENSOMaizeImpacts)
 require(ggh4x)
+# 
+# rcarbon_output <-
+#   rcarbon::calibrate(x = c(2137, 1938, 1878), # normalized age
+#                      errors = c(20, 19, 19), # one sigma error
+#                      ids = c("AA-111725", "AA-110821", "AA-110819")) # unique ID for each 
 
 ```
 
@@ -1416,8 +1421,8 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::slice_max(MinBP) %>%
   dplyr::ungroup() %>% 
   dplyr::arrange(desc(MinBP)) %>% 
-  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
-  dplyr::select(Lab_code, Site_name, date, bin, Latitude, gdd, everything())
+  # dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
+  # dplyr::select(Lab_code, Site_name, date, bin, Latitude, gdd, everything())
   #dplyr::mutate(gdd = as.double(Latitude)) %>% 
   dplyr::filter(Latitude == cummax(Latitude)) %>%
   #dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
