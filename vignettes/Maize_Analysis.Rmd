@@ -206,7 +206,8 @@ anom_plot <- temp_anom %>%
     limits = c(-3000, 2100),
     breaks = seq(-3000, 2000, 500),
     minor_breaks = seq(-2900, 2000, by = 100),
-    guide = "axis_minor"
+    guide = "axis_minor",
+    labels = c(seq(-3000, -500, 500), 1, seq(500, 2000, 500))
   ) +
   scale_y_continuous(
     limits = c(-2.5, 2.5),
@@ -259,20 +260,109 @@ anom_plot <- temp_anom %>%
 
 
 plot.with.inset <-
-  ggdraw() +
-  draw_plot(anom_plot) +
-  draw_plot(paleomat_extent, x = 0.04, y = .638, width = .51, height = .34)
+  cowplot::ggdraw() +
+  cowplot::draw_plot(anom_plot) +
+  cowplot::draw_plot(paleomat_extent, x = 0.04, y = .638, width = .51, height = .34)
 
 
 ggplot2::ggsave(filename = "vignettes/figures/Figure_1.png", 
        plot = plot.with.inset,
-       dpi = 600)
+       width = 15.51, height = 10.32, dpi = 600)
 
 
 ```
 
-
 ```{r Figure_2, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+temp_anom_standard <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programmer/paleoMAT/master/vignettes/tables/supp_table_s2.csv") %>%
+  dplyr::mutate(Year = as.integer(Year)) %>%
+  dplyr::filter(Year >= 133 & Year <= 1900) %>%
+  dplyr::mutate(Series = "This study") %>%
+  dplyr::select(year = Year, anom = 2, Series)
+
+Moberg_standard <- paleomat::moberg_2005 %>%
+  dplyr::mutate(Series = "Moberg et al. 2005") %>%
+  dplyr::select(year = date, anom = LF, Series) %>%
+  dplyr::filter(year >= 133 & year <= 1900)
+
+Moberg_paleomat <-
+  dplyr::bind_rows(temp_anom_standard, Moberg_standard)
+
+# Moberg LF and paleomat
+Moberg_paleomat_fig <- Moberg_paleomat %>%
+  dplyr::group_by(Series) %>%
+  dplyr::mutate(update = (anom - mean(anom)) / sd(anom)) %>%
+  ggplot2::ggplot(aes(x = year, y = update, colour = Series)) +
+  geom_hline(
+    yintercept = 0,
+    color = "darkgrey",
+    lty = 2,
+    lwd = 1.25
+  ) +
+  geom_line(size = 2.0) +
+  scale_color_manual(values = c("#A60F2D", "cornflowerblue")) +
+  xlab("Years AD") +
+  ylab("Standardized Temperature Values (Z-Scores)") +
+  scale_x_continuous(
+    limits = c(0, 2000),
+    breaks = seq(0, 2000, 200),
+    minor_breaks = seq(0, 2000, by = 100),
+    guide = "axis_minor",
+    labels = c(1, seq(200, 2000, 200))
+  ) +
+  scale_y_continuous(breaks = seq(-2, 3, 0.5)) +
+  theme_bw() +
+  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
+  theme(
+    legend.text = element_text(size = 19, family = "Helvetica"),
+    legend.title = element_blank(),
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(Moberg_paleomat_fig, filename = "vignettes/figures/Figure_2.png", width = 17.25, height = 11.5, dpi = 600)
+  
+```
+
+```{r Figure_3, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
@@ -318,7 +408,7 @@ setNames(
 )
 
 # Plot using a linear model.
-figure2 <-
+figure3 <-
   MDB_full_cal_min %>%
   dplyr::mutate(State_prov = as.factor(State_prov)) %>%
   dplyr::arrange(date) %>%
@@ -350,7 +440,8 @@ figure2 <-
     breaks = seq(-4500, 1500, 500),
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
-    guide = "axis_minor"
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(10, 45, 5),
@@ -412,12 +503,12 @@ figure2 <-
     )
   )
 
-ggplot2::ggsave(figure2, filename = "vignettes/figures/Figure_2.png", width = 17.25, height = 11.5, dpi = 600)
+ggplot2::ggsave(figure3, filename = "vignettes/figures/Figure_3.png", width = 17.25, height = 11.5, dpi = 600)
 
 ```
 
 
-```{r Figure_3, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
@@ -477,7 +568,7 @@ setNames(
 )
 
 # Plot using a linear model.
-figure3 <-
+figure4 <-
   MDB_full_cal_min %>%
   dplyr::mutate(
     State_prov = as.factor(State_prov),
@@ -510,7 +601,8 @@ figure3 <-
     breaks = seq(-4500, 1500, 500),
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
-    guide = "axis_minor"
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(15, 45, 5),
@@ -578,12 +670,12 @@ figure3 <-
     )
   )
 
-ggplot2::ggsave(figure3, filename = "vignettes/figures/Figure_3.png", width = 17.25, height = 11.5, dpi = 600)
+ggplot2::ggsave(figure4, filename = "vignettes/figures/Figure_4.png", width = 17.25, height = 11.5, dpi = 600)
 
 ```
 
 
-```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_5, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
@@ -651,7 +743,7 @@ setNames(
 )
 
 # Plot using a linear model.
-figure4 <-
+figure5 <-
   MDB_full_cal_min %>%
   dplyr::mutate(State_prov = as.factor(State_prov)) %>%
   dplyr::arrange(date) %>%
@@ -680,7 +772,8 @@ figure4 <-
     breaks = seq(-4500, 1500, 500),
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
-    guide = "axis_minor"
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(30, 42, 2),
@@ -746,7 +839,7 @@ figure4 <-
     )
   )
 
-ggplot2::ggsave(figure4, filename = "vignettes/figures/Figure_4.png", width = 17.25, height = 11.5, dpi = 600)
+ggplot2::ggsave(figure5, filename = "vignettes/figures/Figure_5.png", width = 17.25, height = 11.5, dpi = 600)
 
 ```
 
