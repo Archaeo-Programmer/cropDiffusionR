@@ -42,7 +42,12 @@ temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programm
   dplyr::rename(year = 1, anom = 2, ci = 3, se = 4)
 
 # Get calibrated maize database, extract GDD from the WorldClim dataset, then add back to the calibrated database.
-MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated.csv")
+# MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated.csv") %>% 
+#   filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+# 
+# readr::write_csv(MDB_full_cal, "../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv")
+
+MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv", col_types = cols())
 
 MDB_full_cal <-  MDB_full_cal %>% 
   sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
@@ -1382,15 +1387,16 @@ MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
 
 # Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
-NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry)) > 0
+NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
 NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
   dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
-  dplyr::filter(stringr::str_detect(Location_name, "^Mexico") | stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
-  #  dplyr::filter(stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
+  #dplyr::filter(stringr::str_detect(Location_name, "^Mexico") | stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
+  dplyr::filter(stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
+
 
 # subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_full_cal_min <- MDB_full_cal %>%
@@ -1406,8 +1412,8 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
   # Reorder so that the Min years are located in the column next to medianBP.
   dplyr::relocate(MinBP, .after = MedianBP) %>%
-  # group_by(State_prov) %>% 
-  # slice_max(MinBP) %>% 
+  # group_by(State_prov) %>%
+  # slice_max(MinBP) %>%
   #   dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
   # dplyr::select(Lab_code, Site_name, date, Latitude, gdd, everything())
   # Create 100 year bins.
@@ -1436,12 +1442,6 @@ MDB_full_cal_min <- MDB_full_cal %>%
 
 
 
-
-
-
-
-
-
 # MDB_full_cal_min %>% 
 #   ungroup() %>% 
 #   dplyr::arrange(desc(MinBP)) %>% 
@@ -1456,147 +1456,47 @@ MDB_full_cal_min <- MDB_full_cal %>%
 # }       # the recursive function will go element by element through the vector and find out 
 # # the index of the next smaller value.
 # 
-# ok3 <- ok3 %>% 
-#   dplyr::mutate(ID = sample(100:3000, 45, replace=F)) %>% 
-#   dplyr::select(ID, abc = MinBP, value = gdd)
-# 
-# 
-# # Reorder the gdd to be in descending order.
-# garb <- MDB_full_cal_min %>%
-#   dplyr::arrange(desc(gdd))
-# 
-# # Find index of the oldest date in maize data using the minimum BP year, then remove all rows above that date.
-# delrows <- which.max(garb$MinBP) - 1
-# garb <- garb %>%
-#   dplyr::slice(-1:-delrows)
-# 
-# # Get the actual year and gdd for the oldest maize sample.
-# starting_maize <- which.max(garb$MinBP)
-# garb$MinBP <- as.numeric(garb$MinBP)
-# garb$gdd <- as.double(garb$gdd)
-# starting_date <- garb[starting_maize, ] %>% .$MinBP
-# starting_gdd <- garb[starting_maize, ] %>% .$gdd
-# 
-# # Limit just to SW.
-# garb <- garb %>%
-#   filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
-# 
-# # Get the minimum gdd in the dataset.
-# min_gdd <- plyr::round_any(as.double(min(garb$gdd)), 100, f = floor)
-# max_gdd <- plyr::round_any(as.double(max(garb$gdd)), 100, f = ceiling)
-# 
-# noBins <- (max_gdd - min_gdd)/1
-# 
-# # Create new dataframe that has the northern frontier of maize through time. Pick a site that has fewer GDD than the previous site and is younger.
-# # LOOP: Set up a loop by first determining how many bins there are. For example, if I do a bin size of 400 GDD, and if the GDD range is from 1500 to 5100, then I would have 9 bins. That would give me how many times I need to loop through. Then, I would find the starting point for the first record, whether that is starting with the absolute oldest date or starting at the greatest GDD with the oldest date. Once I have a starting point, then I want to loop through each bin (e.g., 1500-1900, 1900-2300, etc.) and find the oldest date, but it must be younger than the previous selection.
-# 
-# # Create bins.
-# # Find cutoffs for the GDD bins in the dataset.
-# cutOffs <- seq(min_gdd, max_gdd, 1)
-# 
-# # Convert to make sure columns are numeric then create the actual bins (as factors).
-# garb$bins <- cut(as.numeric(garb$gdd), breaks = cutOffs)
-# garb$binsNo <- cut(as.numeric(garb$gdd), breaks = cutOffs, labels = FALSE)
-# 
-# #test <- garb %>% group_by(bins) %>% top_n(1, MinBP)
-# unique_bins <- unique(garb$bins)
-# 
-# garb1 <- garb
-# 
-# for (i in 1:length(unique_bins)){
-#   
-#   if (i == 1){
-#     garb1 <- garb1 %>%
-#       dplyr::group_by(bins) %>%
-#       dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max(MinBP), NA))
-#     
-#     max_agecurrent <- max(garb1$MinBP)
-#   } else {
-#     max_ageprev <- max_agecurrent
-#     # garb1 %>%
-#     #   ungroup() %>%
-#     #   dplyr::filter(bins == unique_bins[i-1]) %>%
-#     #   dplyr::filter(MinBP < max_ageprev) %>%
-#     #   dplyr::select(MinBP) %>%
-#     #   max(.)
-#     
-#     subset <- garb1 %>%
-#       dplyr::ungroup() %>%
-#       dplyr::filter(bins == unique_bins[i]) %>%
-#       dplyr::filter(MinBP < max_ageprev) %>%
-#       nrow()
-#     
-#     if (subset == 0) {
-#       garb1 <- garb1 %>%
-#         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], -9999, maxage))
-#     } else {
-#       max_agecurrent <- garb1 %>%
-#         dplyr::ungroup() %>%
-#         dplyr::filter(bins == unique_bins[i]) %>%
-#         dplyr::filter(MinBP < max_ageprev) %>%
-#         dplyr::select(MinBP) %>%
-#         max(.)
-#       
-#       garb1 <- garb1 %>%
-#         dplyr::mutate(maxage = ifelse(bins == unique_bins[i], max_agecurrent, maxage))
-#     }
-#   }
-# }
-# 
-# # Remove rows (GDD bins) that did not have a year returned (i.e., there were no dates younger than the previous GDD).
-# garb2 <- garb1 %>%
-#   dplyr::filter(maxage != -9999)
-# 
-# # Get the unique years for each latitude.
-# maize_index <- unique(garb2$maxage)
-# 
-# garb3 <- garb2 %>%
-#   dplyr::filter(MinBP == maxage)
-# 
-# garb3 <- garb3 %>%
-#   dplyr::mutate(date = paleomat::BPtoBCAD(MinBP))
-# 
-# # now just plot the northern frontier
-# # progressively younger sites must be farther north than the previous site
-# # EarlyMaizeNF <- EarlyMaize %>%
-# #   filter(ID==279 | ID==271 | ID==76 | ID==46 | ID==49 | ID==135 | ID==445
-# #          | ID==441 | ID==469 | ID==473)
-# 
-# garb3$Elevation_masl <- as.numeric(garb3$Elevation_masl)
-# 
-# # All other points to plot.
-# allOther <- garb %>%
-#   dplyr::filter(!Lab_code %in% garb3$Lab_code) %>%
-#   dplyr::mutate(date = paleomat::BPtoBCAD(MinBP),
-#                 date = as.numeric(date),
-#                 Latitude = as.double(Latitude))
 
 
 ```
 
 ```{r maize_frontier_gdd_century_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
+lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
+
+plot(MDB_full_cal_min$date, MDB_full_cal_min$Latitude,
+     xlab = "date", ylab = "Latitude")
+abline(lm1, col = "blue")
+
+
 # Plot using a linear model.
+output <- 
 MDB_full_cal_min %>%
   dplyr::mutate(
     State_prov = as.factor(State_prov),
     date = as.numeric(date),
     gdd = as.double(gdd)
   ) %>%
-  arrange(date) %>%
+  dplyr::arrange(date) %>%
+  #dplyr::mutate(labels = paste0(str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""), ", \n ", State_prov)) %>% 
   ggplot(., aes(x = date, y = Latitude)) +
   #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
   geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  #geom_point(size = 4, aes(shape = fct_rev(Country))) +
   #   geom_smooth(
   #   method = "loess",
   #   span = 0.15,
   #   size = 2,
   #   colour = "cornflowerblue"
   # ) +
+  #scale_shape_manual(values=c(19, 15), name = "Country")+
   geom_smooth(aes(group = 1),
               method = 'lm',
               se = FALSE,
-              linetype = 1) +
+              linetype = 1,
+              color = "black") +
+    # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+    #                              after_stat(rr.label), sep = "*\", \"*"))) +
   # stat_smooth(
   #   method = loess,
   #   span = 0.9,
@@ -1605,26 +1505,170 @@ MDB_full_cal_min %>%
   # )  +
   ggrepel::geom_label_repel(
     aes(colour = State_prov, label = Site_name),
-    max.iter = 4000,
-    cex = 6.5,
+    #aes(label = labels),
+    max.iter = 4500,
+    cex = 6.7,
     show.legend  = F,
     min.segment.length = unit(0, 'lines'),
     # xlim = c (-6500, 0),
     #nudge_y = 3,
     #nudge_x = 50,
-    force = 60,
+    force = 25,
     box.padding = 1
   ) +
   scale_x_continuous(
-    breaks = seq(-5000, 1500, 500),
-    minor_breaks = seq(-5000, 1500, 100),
-    limits = c(-5100, 1500),
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor"
+  ) +
+  # scale_y_continuous(
+  #   breaks = seq(10, 45, 5),
+  #   minor_breaks = seq(10, 45, 1),
+  #   limits = c(10, 45),
+  #   guide = "axis_minor"
+  # ) +
+  # scale_x_continuous(
+  #   breaks = seq(-4000, 1500, 500),
+  #   minor_breaks = seq(-4000, 1500, 100),
+  #   limits = c(-4100, 1500),
+  #   guide = "axis_minor"
+  # ) +
+  scale_y_continuous(
+    breaks = seq(30, 42, 2),
+    minor_breaks = seq(30, 42, 1),
+    limits = c(30, 42),
+    guide = "axis_minor"
+  ) +
+  # scale_y_continuous(trans = "reverse",
+  #                    breaks = seq(500, 6500, 500),
+  #                    limits = c(6500, 500),
+  #                    minor_breaks = seq(500, 6500, 250),
+  #                    guide = "axis_minor") +
+  # scale_y_continuous(breaks = seq(0, 2000, 100),
+  #                minor_breaks = seq(0, 2000, 50),
+  #                limits = c(0, 2100),
+  #               guide = "axis_minor") +
+  xlab("Years BC/AD") +
+  # ylab("Annual Accumulated Growing Degree Days") +
+  ylab("Latitude") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(override.aes = list(fill = NA), title="States", direction = "horizontal")) +
+  theme(
+    #legend.justification = 'left',
+    legend.position = "bottom",
+    legend.title = element_text(size = 19, family = "Helvetica", face = "bold"),
+    #legend.title = element_blank(),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(output, filename = "vignettes/figures/maize_frontier_latitude_SW_ONLY_timeBins.png", width = 17.25, height = 11.5, dpi = 600)
+
+
+# Figure 2
+# lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
+# 
+# plot(MDB_full_cal_min$date, MDB_full_cal_min$Latitude, 
+#      xlab = "date", ylab = "Latitude")
+# abline(lm1, col = "blue")
+
+
+# Plot using a linear model.
+output <- 
+MDB_full_cal_min %>%
+  dplyr::mutate(
+    State_prov = as.factor(State_prov),
+    date = as.numeric(date),
+    gdd = as.double(gdd)
+  ) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = paste0(str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""), ", \n ", State_prov)) %>% 
+  ggplot(., aes(x = date, y = Latitude)) +
+  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
+  #geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_point(size = 4, aes(shape = fct_rev(Country))) +
+  #   geom_smooth(
+  #   method = "loess",
+  #   span = 0.15,
+  #   size = 2,
+  #   colour = "cornflowerblue"
+  # ) +
+  scale_shape_manual(values=c(19, 15), name = "Country")+
+  geom_smooth(aes(group = 1),
+              method = 'lm',
+              se = FALSE,
+              linetype = 1,
+              color = "black") +
+    # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+    #                              after_stat(rr.label), sep = "*\", \"*"))) +
+  # stat_smooth(
+  #   method = loess,
+  #   span = 0.9,
+  #   se = FALSE,
+  #   size = 1.5
+  # )  +
+  ggrepel::geom_label_repel(
+    aes(label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    # xlim = c (-6500, 0),
+    #nudge_y = 3,
+    #nudge_x = 50,
+    force = 25,
+    box.padding = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
     guide = "axis_minor"
   ) +
   scale_y_continuous(
-    breaks = seq(10, 40, 5),
-    minor_breaks = seq(10, 40, 1),
-    limits = c(10, 40),
+    breaks = seq(10, 45, 5),
+    minor_breaks = seq(10, 45, 1),
+    limits = c(10, 45),
     guide = "axis_minor"
   ) +
   # scale_x_continuous(
@@ -1651,15 +1695,17 @@ MDB_full_cal_min %>%
   xlab("Years BC/AD") +
   # ylab("Annual Accumulated Growing Degree Days") +
   ylab("Latitude") +
-  ggpubr::color_palette(palette = "jco") +
+  #ggpubr::color_palette(palette = "jco") +
   theme_bw()  +
-  guides(color = guide_legend(override.aes = list(fill = NA))) +
+  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
   theme(
     #legend.justification = 'left',
     #legend.position = c(0.01, 0.87),
-    legend.title = element_blank(),
-    legend.direction = "vertical",
+    legend.title = element_text(size = 19, family = "Helvetica", face = "bold"),
+    legend.position = "bottom",
+    legend.direction = "horizontal",
     legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
     axis.ticks.length = unit(0.125, "inch"),
     ggh4x.axis.ticks.length.minor = rel(0.5),
     panel.border = element_blank(),
@@ -1674,7 +1720,7 @@ MDB_full_cal_min %>%
       family = "Helvetica",
       margin = margin(
         t = 10,
-        r = 5,
+        r = 7,
         b = 10,
         l = 10
       )
@@ -1683,7 +1729,7 @@ MDB_full_cal_min %>%
       size = 28,
       family = "Helvetica",
       margin = margin(
-        t = 5,
+        t = 7,
         r = 10,
         b = 10,
         l = 10
@@ -1699,7 +1745,7 @@ MDB_full_cal_min %>%
     )
   )
 
-ggplot2::ggsave("vignettes/figures/maize_frontier_latitude_SW_ONLY_timeBins.png", dpi = 600)
+ggplot2::ggsave(output, filename = "vignettes/figures/earliest_sites_by_state_province.png", width = 17.25, height = 11.5, dpi = 600)
 
 ```
 
