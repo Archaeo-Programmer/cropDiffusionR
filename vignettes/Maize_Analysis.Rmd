@@ -63,7 +63,698 @@ ok <- MDB_full_cal
 # MDB_full_cal <- ok %>% 
 #   dplyr::filter(Type == "MacroSample")
 
+# Extract GDD for each location.
+# MDB_full_cal <- ok %>%
+#   dplyr::filter(Type == "MacroSample") %>%
+#   dplyr::select(-gdd)
+# 
+# MDB_full_cal <-
+#   raster::extract(
+#     x =  global_gdd,
+#     y = MDB_full_cal %>%
+#       dplyr::select(Longitude, Latitude) %>%
+#       dplyr::mutate(dplyr::across(everything(), ~ as.numeric(.x))),
+#     df = TRUE
+#   ) %>%
+#   dplyr::select(gdd = 2) %>%
+#   dplyr::bind_cols(MDB_full_cal, .)
+
 ```
+
+
+```{r Figure_1, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# Create a bounding box for limits of this study
+bb <-
+  c(
+    "xmin" = -112.81446,
+    "xmax" = -105.52416,
+    "ymin" = 32.65757,
+    "ymax" = 38.089
+  ) %>%
+  sf::st_bbox() %>%
+  sf::st_as_sfc() %>%
+  sf::st_as_sf(crs = 4326) %>%
+  sf::st_transform(crs = 4326)
+
+usa <-
+  sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
+  sf::st_transform(., crs = 4326) %>% 
+  dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico"))
+
+paleomat_extent <- 
+  ggplot2::ggplot() +
+  theme_bw() +
+  scale_x_continuous(breaks = seq(-115, -103, 2.0),
+                     limits = c(-115, -103.2)) +
+  scale_y_continuous(breaks = seq(31, 39, 2.0),
+                     limits = c(31.25, 39)) +
+  geom_sf(
+    data = usa,
+    color = "#2b2b2b",
+    fill = "transparent",
+    size = 0.25
+  ) +
+  geom_sf(
+    data = bb,
+    size = 0.75,
+    fill = NA,
+    aes(colour = "slategrey",
+        linetype = "dashed"),
+    show.legend = "line",
+    inherit.aes = FALSE
+  ) +
+  scale_color_manual(
+    values = c("slategrey" = "slategrey"),
+    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
+    name = "Data Extent"
+  ) +
+  scale_linetype_manual(
+    values = c("dashed" = "dashed"),
+    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
+    name = "Data Extent"
+  ) +
+  labs(colour = "") +
+  annotate(
+    "text",
+    x = -109.2,
+    y = 37.5,
+    label = "UTAH",
+    size = 4,
+    fontface = 2,
+    hjust = 1.0
+  ) +
+  annotate(
+    "text",
+    x = -108.90,
+    y = 37.5,
+    label = "COLORADO",
+    size = 4,
+    fontface = 2,
+    hjust = 0
+  ) +
+  annotate(
+    "text",
+    x = -109.2,
+    y = 36.3,
+    label = "ARIZONA",
+    size = 4,
+    fontface = 2,
+    hjust = 1
+  ) +
+  annotate(
+    "text",
+    x = -108.90,
+    y = 36.3,
+    label = "NEW MEXICO",
+    size = 4,
+    fontface = 2,
+    hjust = 0
+  ) +
+  theme(
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text=element_text(size=12),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    panel.background = element_rect(fill = "transparent",
+                                    colour = NA_character_),
+    plot.background = element_rect(fill = "transparent",
+                                   colour = NA_character_), # necessary to avoid drawing plot outline
+    legend.background = element_rect(fill = "transparent", color = NA),
+    legend.box.background = element_rect(fill = "transparent", color = NA),
+    legend.key = element_rect(fill = "transparent", color = NA),
+    legend.box.margin=margin(-10,-10,-10,-20)
+  )
+
+
+anom_plot <- temp_anom %>%
+  ggplot2::ggplot(aes(x = year, y = anom)) +
+  geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
+  geom_line(size = 2, colour = "cornflowerblue") +
+  geom_hline(
+    yintercept = 0,
+    linetype = 'dashed',
+    color = c('darkslategray')
+  ) +
+  scale_x_continuous(
+    limits = c(-3000, 2100),
+    breaks = seq(-3000, 2000, 500),
+    minor_breaks = seq(-2900, 2000, by = 100),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(
+    limits = c(-2.5, 2.5),
+    breaks = seq(-2.5, 2.5, 0.5),
+    minor_breaks = seq(-2.5, 2.5, by = 0.25),
+    guide = "axis_minor"
+  ) +
+  theme_bw() +
+  xlab("Years BC/AD") +
+  ylab("Temperature Anomaly (°C)") +
+  theme(
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 5,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 5,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+
+plot.with.inset <-
+  ggdraw() +
+  draw_plot(anom_plot) +
+  draw_plot(paleomat_extent, x = 0.04, y = .638, width = .51, height = .34)
+
+
+ggplot2::ggsave(filename = "vignettes/figures/Figure_1.png", 
+       plot = plot.with.inset,
+       dpi = 600)
+
+
+```
+
+
+```{r Figure_2, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+MDB_full_cal <- ok %>%
+  dplyr::filter(Type == "MacroSample")
+
+# Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
+NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
+NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
+
+# Find minimum 2 sigma for each row.
+# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
+MDB_full_cal <- MDB_full_cal %>%
+  dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
+  dplyr::filter(Country == "Mexico" | State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
+
+# subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_full_cal_min <- MDB_full_cal %>%
+  dplyr::select(1, starts_with("TwoSigma")) %>%
+  tidyr::pivot_longer(-Lab_code) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::group_by(Lab_code) %>%
+  dplyr::slice(n()) %>%
+  dplyr::select(Lab_code, MinBP = value) %>%
+  # Extract the minimum year from the range of the 2 sigma date.
+  dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
+  # Add this data back to the large dataframe.
+  dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
+  # Reorder so that the Min years are located in the column next to medianBP.
+  dplyr::relocate(MinBP, .after = MedianBP) %>%
+  dplyr::group_by(State_prov) %>%
+  dplyr::slice_max(MinBP) %>%
+  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
+  dplyr::select(Lab_code, Site_name, date, Latitude, gdd, everything())
+
+# Linear Model and Stats
+lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
+setNames(
+  c(
+    lm1$coefficients[["date"]],
+    summary(lm1)$r.squared,
+    summary(lm1)$coefficients[2, 4]
+  ),
+  c("slope", "r2", "pvalue")
+)
+
+# Plot using a linear model.
+figure2 <-
+  MDB_full_cal_min %>%
+  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = paste0(
+    str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
+    ", \n ",
+    State_prov
+  )) %>%
+  ggplot(aes(x = date, y = Latitude)) +
+  geom_point(size = 4, aes(shape = fct_rev(Country))) +
+  scale_shape_manual(values = c(19, 15), name = "Country") +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  ggrepel::geom_label_repel(
+    aes(label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(
+    breaks = seq(10, 45, 5),
+    minor_breaks = seq(10, 45, 1),
+    limits = c(10, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  # ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
+  theme(
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(figure2, filename = "vignettes/figures/Figure_2.png", width = 17.25, height = 11.5, dpi = 600)
+
+```
+
+
+```{r Figure_3, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+MDB_full_cal <- ok %>%
+  dplyr::filter(Type == "MacroSample")
+
+# Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
+NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
+NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
+
+# Find minimum 2 sigma for each row.
+# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
+MDB_full_cal <- MDB_full_cal %>%
+  dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
+  dplyr::filter(Country == "Mexico" | State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
+
+# Subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_full_cal_min <- MDB_full_cal %>%
+  dplyr::select(1, starts_with("TwoSigma")) %>%
+  tidyr::pivot_longer(-Lab_code) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::group_by(Lab_code) %>%
+  dplyr::slice(n()) %>%
+  dplyr::select(Lab_code, MinBP = value) %>%
+  # Extract the minimum year from the range of the 2 sigma date.
+  dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
+  # Add this data back to the large dataframe.
+  dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
+  # Reorder so that the Min years are located in the column next to medianBP.
+  dplyr::relocate(MinBP, .after = MedianBP) %>%
+  # Create 100 year bins.
+  dplyr::mutate(bin = cut(
+    MinBP,
+    breaks = seq(plyr::round_any(min(MinBP), 100, f = floor), plyr::round_any(max(MinBP), 100, f = ceiling), by = 100),
+    include.lowest = TRUE
+  )) %>% 
+  dplyr::group_by(bin) %>%
+  dplyr::slice_max(Latitude) %>%
+  dplyr::slice_max(MinBP) %>%
+  dplyr::ungroup() %>% 
+  dplyr::arrange(desc(MinBP)) %>% 
+  dplyr::filter(Latitude == cummax(Latitude)) %>%
+  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>% 
+  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>% 
+  dplyr::filter(date <= 1500) %>% 
+  dplyr::group_by(Site_name) %>% 
+  dplyr::slice_min(date, with_ties = FALSE) %>% 
+  dplyr::ungroup()
+
+# Linear Model and Stats
+lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
+setNames(
+  c(
+    lm1$coefficients[["date"]],
+    summary(lm1)$r.squared,
+    summary(lm1)$coefficients[2, 4]
+  ),
+  c("slope", "r2", "pvalue")
+)
+
+# Plot using a linear model.
+figure3 <-
+  MDB_full_cal_min %>%
+  dplyr::mutate(
+    State_prov = as.factor(State_prov),
+    date = as.numeric(date),
+    gdd = as.double(gdd)
+  ) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)", "")) %>%
+  ggplot(aes(x = date, y = Latitude)) +
+  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+  #                              after_stat(rr.label), sep = "*\", \"*"))) +
+  ggrepel::geom_label_repel(
+    aes(colour = State_prov, label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(
+    breaks = seq(15, 45, 5),
+    minor_breaks = seq(15, 45, 1),
+    limits = c(15, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(
+    override.aes = list(fill = NA),
+    title = "States",
+    direction = "horizontal"
+  )) +
+  theme(
+    #legend.justification = 'left',
+    legend.position = "bottom",
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    #legend.title = element_blank(),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(figure3, filename = "vignettes/figures/Figure_3.png", width = 17.25, height = 11.5, dpi = 600)
+
+```
+
+
+```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+MDB_full_cal <- ok %>%
+  dplyr::filter(Type == "MacroSample")
+
+# Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
+NA_select <-
+  colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
+NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
+
+# Find minimum 2 sigma for each row.
+# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
+MDB_full_cal <- MDB_full_cal %>%
+  dplyr::mutate(dplyr::across(
+    NA_select,
+    ~ stringr::str_replace_all(.x, "NA to NA", NA_character_)
+  )) %>%
+  dplyr::filter(State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
+
+# subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_full_cal_min <- MDB_full_cal %>%
+  dplyr::select(1, starts_with("TwoSigma")) %>%
+  tidyr::pivot_longer(-Lab_code) %>%
+  dplyr::filter(!is.na(value)) %>%
+  dplyr::group_by(Lab_code) %>%
+  dplyr::slice(n()) %>%
+  dplyr::select(Lab_code, MinBP = value) %>%
+  # Extract the minimum year from the range of the 2 sigma date.
+  dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
+  # Add this data back to the large dataframe.
+  dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
+  # Reorder so that the Min years are located in the column next to medianBP.
+  dplyr::relocate(MinBP, .after = MedianBP) %>%
+  # Create 100 year bins.
+  dplyr::mutate(bin = cut(
+    MinBP,
+    breaks = seq(
+      plyr::round_any(min(MinBP), 100, f = floor),
+      plyr::round_any(max(MinBP), 100, f = ceiling),
+      by = 100
+    ),
+    include.lowest = TRUE
+  )) %>%
+  dplyr::group_by(bin) %>%
+  dplyr::slice_max(Latitude) %>%
+  dplyr::slice_max(MinBP) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(desc(MinBP)) %>%
+  dplyr::filter(Latitude == cummax(Latitude)) %>%
+  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
+  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>%
+  dplyr::filter(date <= 1500) %>%
+  dplyr::group_by(Site_name) %>%
+  dplyr::slice_min(date, with_ties = FALSE) %>%
+  dplyr::ungroup()
+
+# Linear Model and Stats
+lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
+setNames(
+  c(
+    lm1$coefficients[["date"]],
+    summary(lm1)$r.squared,
+    summary(lm1)$coefficients[2, 4]
+  ),
+  c("slope", "r2", "pvalue")
+)
+
+# Plot using a linear model.
+figure4 <-
+  MDB_full_cal_min %>%
+  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)+$", "")) %>%
+  ggplot(aes(x = date, y = Latitude)) +
+  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+  #                              after_stat(rr.label), sep = "*\", \"*"))) +
+  ggrepel::geom_label_repel(
+    aes(colour = State_prov, label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor"
+  ) +
+  scale_y_continuous(
+    breaks = seq(30, 42, 2),
+    minor_breaks = seq(30, 42, 1),
+    limits = c(30, 42),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(
+    override.aes = list(fill = NA),
+    title = "States",
+    direction = "horizontal"
+  )) +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.direction = "vertical",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(figure4, filename = "vignettes/figures/Figure_4.png", width = 17.25, height = 11.5, dpi = 600)
+
+```
+
+
+
+
+
+
 
 
 ```{r process_maize_frontier, message = FALSE, warning = FALSE, results = 'hide'}
@@ -943,194 +1634,6 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbi
 
 
 
-```{r Figure1}
-
-# Create a bounding box for limits of this study
-bb <-
-  c(
-    "xmin" = -112.81446,
-    "xmax" = -105.52416,
-    "ymin" = 32.65757,
-    "ymax" = 38.089
-  ) %>%
-  sf::st_bbox() %>%
-  sf::st_as_sfc() %>%
-  sf::st_as_sf(crs = 4326) %>%
-  sf::st_transform(crs = 4326)
-
-usa <-
-  sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
-  sf::st_transform(., crs = 4326) %>% 
-  dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico"))
-
-paleomat_extent <- 
-  ggplot2::ggplot() +
-  theme_bw() +
-  scale_x_continuous(breaks = seq(-115, -103, 2.0),
-                     limits = c(-115, -103.2)) +
-  scale_y_continuous(breaks = seq(31, 39, 2.0),
-                     limits = c(31.25, 39)) +
-  geom_sf(
-    data = usa,
-    color = "#2b2b2b",
-    fill = "transparent",
-    size = 0.25
-  ) +
-  geom_sf(
-    data = bb,
-    size = 0.75,
-    fill = NA,
-    aes(colour = "slategrey",
-        linetype = "dashed"),
-    show.legend = "line",
-    inherit.aes = FALSE
-  ) +
-  scale_color_manual(
-    values = c("slategrey" = "slategrey"),
-    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
-    name = "Data Extent"
-  ) +
-  scale_linetype_manual(
-    values = c("dashed" = "dashed"),
-    labels = c("Gillreath-Brown et al. 2022 \n Study Area"),
-    name = "Data Extent"
-  ) +
-  labs(colour = "") +
-  annotate(
-    "text",
-    x = -109.2,
-    y = 37.5,
-    label = "UTAH",
-    size = 4,
-    fontface = 2,
-    hjust = 1.0
-  ) +
-  annotate(
-    "text",
-    x = -108.90,
-    y = 37.5,
-    label = "COLORADO",
-    size = 4,
-    fontface = 2,
-    hjust = 0
-  ) +
-  annotate(
-    "text",
-    x = -109.2,
-    y = 36.3,
-    label = "ARIZONA",
-    size = 4,
-    fontface = 2,
-    hjust = 1
-  ) +
-  annotate(
-    "text",
-    x = -108.90,
-    y = 36.3,
-    label = "NEW MEXICO",
-    size = 4,
-    fontface = 2,
-    hjust = 0
-  ) +
-  theme(
-    legend.position = "right",
-    legend.title = element_blank(),
-    legend.text=element_text(size=12),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.text.x = element_blank(),
-    axis.title = element_blank(),
-    axis.line = element_blank(),
-    axis.ticks = element_blank(),
-    panel.background = element_rect(fill = "transparent",
-                                    colour = NA_character_),
-    plot.background = element_rect(fill = "transparent",
-                                   colour = NA_character_), # necessary to avoid drawing plot outline
-    legend.background = element_rect(fill = "transparent", color = NA),
-    legend.box.background = element_rect(fill = "transparent", color = NA),
-    legend.key = element_rect(fill = "transparent", color = NA),
-    legend.box.margin=margin(-10,-10,-10,-20)
-  )
-
-
-anom_plot <- temp_anom %>%
-  ggplot2::ggplot(aes(x = year, y = anom)) +
-  geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
-  geom_line(size = 2, colour = "cornflowerblue") +
-  geom_hline(
-    yintercept = 0,
-    linetype = 'dashed',
-    color = c('darkslategray')
-  ) +
-  scale_x_continuous(
-    limits = c(-3000, 2100),
-    breaks = seq(-3000, 2000, 500),
-    minor_breaks = seq(-2900, 2000, by = 100),
-    guide = "axis_minor"
-  ) +
-  scale_y_continuous(
-    limits = c(-2.5, 2.5),
-    breaks = seq(-2.5, 2.5, 0.5),
-    minor_breaks = seq(-2.5, 2.5, by = 0.25),
-    guide = "axis_minor"
-  ) +
-  theme_bw() +
-  xlab("Years BC/AD") +
-  ylab("Temperature Anomaly (°C)") +
-  theme(
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 5,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 5,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-
-plot.with.inset <-
-  ggdraw() +
-  draw_plot(anom_plot) +
-  draw_plot(paleomat_extent, x = 0.04, y = .638, width = .51, height = .34)
-
-
-ggsave(filename = "vignettes/figures/paleomat_with_studyArea.png", 
-       plot = plot.with.inset,
-       dpi = 600)
-
-
-```
 
 
 
@@ -1364,390 +1867,6 @@ paleocar_paleomat_sites2 <- paleocar_paleomat_sites %>%
 
 
 
-
-```{r process_maize_frontier_gdd_century, message = FALSE, warning = FALSE, results = 'hide'}
-
-# Extract GDD for each location.
-# MDB_full_cal <- ok %>%
-#   dplyr::filter(Type == "MacroSample") %>%
-#   dplyr::select(-gdd)
-# 
-# MDB_full_cal <-
-#   raster::extract(
-#     x =  global_gdd,
-#     y = MDB_full_cal %>%
-#       dplyr::select(Longitude, Latitude) %>%
-#       dplyr::mutate(dplyr::across(everything(), ~ as.numeric(.x))),
-#     df = TRUE
-#   ) %>%
-#   dplyr::select(gdd = 2) %>%
-#   dplyr::bind_cols(MDB_full_cal, .)
-
-MDB_full_cal <- ok %>%
-  dplyr::filter(Type == "MacroSample")
-
-# Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
-NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
-NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
-
-# Find minimum 2 sigma for each row.
-# Change all text that says "NA to NA" from the rcarbon output to a regular NA.
-MDB_full_cal <- MDB_full_cal %>%
-  dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
-  #dplyr::filter(stringr::str_detect(Location_name, "^Mexico") | stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
-  dplyr::filter(stringr::str_detect(State_prov, "Arizona|New Mexico|Utah|Colorado"))
-
-
-# subset the dataframe to only have the 2 sigma data and the unique lab code.
-MDB_full_cal_min <- MDB_full_cal %>%
-  dplyr::select(1, starts_with("TwoSigma")) %>%
-  tidyr::pivot_longer(-Lab_code) %>%
-  dplyr::filter(!is.na(value)) %>%
-  dplyr::group_by(Lab_code) %>%
-  dplyr::slice(n()) %>%
-  dplyr::select(Lab_code, MinBP = value) %>%
-  # Extract the minimum year from the range of the 2 sigma date.
-  dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
-  # Add this data back to the large dataframe.
-  dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
-  # Reorder so that the Min years are located in the column next to medianBP.
-  dplyr::relocate(MinBP, .after = MedianBP) %>%
-  # group_by(State_prov) %>%
-  # slice_max(MinBP) %>%
-  #   dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
-  # dplyr::select(Lab_code, Site_name, date, Latitude, gdd, everything())
-  # Create 100 year bins.
-  dplyr::mutate(bin = cut(
-    MinBP,
-    breaks = seq(plyr::round_any(min(MinBP), 100, f = floor), plyr::round_any(max(MinBP), 100, f = ceiling), by = 100),
-    include.lowest = TRUE
-  )) %>% 
-  dplyr::group_by(bin) %>%
-  dplyr::slice_max(Latitude) %>%
-  dplyr::slice_max(MinBP) %>%
-  dplyr::ungroup() %>% 
-  dplyr::arrange(desc(MinBP)) %>% 
-  # dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
-  # dplyr::select(Lab_code, Site_name, date, bin, Latitude, gdd, everything())
-  #dplyr::mutate(gdd = as.double(Latitude)) %>% 
-  dplyr::filter(Latitude == cummax(Latitude)) %>%
-  #dplyr::filter(row_number() %in% c(1, 8:10, 12, 36:37, 39:41)) %>% 
-  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>% 
-  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>% 
-  dplyr::filter(date <= 1500) %>% 
-  dplyr::group_by(Site_name) %>% 
-  dplyr::slice_min(date, with_ties = FALSE) %>% 
-  dplyr::ungroup()
-
-
-
-
-# MDB_full_cal_min %>% 
-#   ungroup() %>% 
-#   dplyr::arrange(desc(MinBP)) %>% 
-#   dplyr::mutate(gdd = as.double(gdd)) %>% 
-#   mutate(next.smaller.day = row_number()[find.next.smaller(1, gdd)], 
-#          next.smaller.day = replace(next.smaller.day, is.na(next.smaller.day), -1))
-# 
-# find.next.smaller <- function(ini = 1, vec) {
-#   if(length(vec) == 1) NA 
-#   else c(ini + min(which(vec[1] > vec[-1])), 
-#          find.next.smaller(ini + 1, vec[-1]))
-# }       # the recursive function will go element by element through the vector and find out 
-# # the index of the next smaller value.
-# 
-
-
-```
-
-```{r maize_frontier_gdd_century_fig, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
-
-lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
-
-plot(MDB_full_cal_min$date, MDB_full_cal_min$Latitude,
-     xlab = "date", ylab = "Latitude")
-abline(lm1, col = "blue")
-
-
-# Plot using a linear model.
-output <- 
-MDB_full_cal_min %>%
-  dplyr::mutate(
-    State_prov = as.factor(State_prov),
-    date = as.numeric(date),
-    gdd = as.double(gdd)
-  ) %>%
-  dplyr::arrange(date) %>%
-  #dplyr::mutate(labels = paste0(str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""), ", \n ", State_prov)) %>% 
-  ggplot(., aes(x = date, y = Latitude)) +
-  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
-  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
-  #geom_point(size = 4, aes(shape = fct_rev(Country))) +
-  #   geom_smooth(
-  #   method = "loess",
-  #   span = 0.15,
-  #   size = 2,
-  #   colour = "cornflowerblue"
-  # ) +
-  #scale_shape_manual(values=c(19, 15), name = "Country")+
-  geom_smooth(aes(group = 1),
-              method = 'lm',
-              se = FALSE,
-              linetype = 1,
-              color = "black") +
-    # stat_poly_eq(aes(label = paste(after_stat(eq.label),
-    #                              after_stat(rr.label), sep = "*\", \"*"))) +
-  # stat_smooth(
-  #   method = loess,
-  #   span = 0.9,
-  #   se = FALSE,
-  #   size = 1.5
-  # )  +
-  ggrepel::geom_label_repel(
-    aes(colour = State_prov, label = Site_name),
-    #aes(label = labels),
-    max.iter = 4500,
-    cex = 6.7,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    # xlim = c (-6500, 0),
-    #nudge_y = 3,
-    #nudge_x = 50,
-    force = 25,
-    box.padding = 1
-  ) +
-  scale_x_continuous(
-    breaks = seq(-4500, 1500, 500),
-    minor_breaks = seq(-4500, 1500, 100),
-    limits = c(-4500, 1500),
-    guide = "axis_minor"
-  ) +
-  # scale_y_continuous(
-  #   breaks = seq(10, 45, 5),
-  #   minor_breaks = seq(10, 45, 1),
-  #   limits = c(10, 45),
-  #   guide = "axis_minor"
-  # ) +
-  # scale_x_continuous(
-  #   breaks = seq(-4000, 1500, 500),
-  #   minor_breaks = seq(-4000, 1500, 100),
-  #   limits = c(-4100, 1500),
-  #   guide = "axis_minor"
-  # ) +
-  scale_y_continuous(
-    breaks = seq(30, 42, 2),
-    minor_breaks = seq(30, 42, 1),
-    limits = c(30, 42),
-    guide = "axis_minor"
-  ) +
-  # scale_y_continuous(trans = "reverse",
-  #                    breaks = seq(500, 6500, 500),
-  #                    limits = c(6500, 500),
-  #                    minor_breaks = seq(500, 6500, 250),
-  #                    guide = "axis_minor") +
-  # scale_y_continuous(breaks = seq(0, 2000, 100),
-  #                minor_breaks = seq(0, 2000, 50),
-  #                limits = c(0, 2100),
-  #               guide = "axis_minor") +
-  xlab("Years BC/AD") +
-  # ylab("Annual Accumulated Growing Degree Days") +
-  ylab("Latitude") +
-  ggpubr::color_palette(palette = "jco") +
-  theme_bw()  +
-  guides(color = guide_legend(override.aes = list(fill = NA), title="States", direction = "horizontal")) +
-  theme(
-    #legend.justification = 'left',
-    legend.position = "bottom",
-    legend.title = element_text(size = 19, family = "Helvetica", face = "bold"),
-    #legend.title = element_blank(),
-    legend.direction = "vertical",
-    legend.text = element_text(size = 18, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-ggplot2::ggsave(output, filename = "vignettes/figures/maize_frontier_latitude_SW_ONLY_timeBins.png", width = 17.25, height = 11.5, dpi = 600)
-
-
-# Figure 2
-# lm1 <- lm(Latitude ~ date, data = MDB_full_cal_min)
-# 
-# plot(MDB_full_cal_min$date, MDB_full_cal_min$Latitude, 
-#      xlab = "date", ylab = "Latitude")
-# abline(lm1, col = "blue")
-
-
-# Plot using a linear model.
-output <- 
-MDB_full_cal_min %>%
-  dplyr::mutate(
-    State_prov = as.factor(State_prov),
-    date = as.numeric(date),
-    gdd = as.double(gdd)
-  ) %>%
-  dplyr::arrange(date) %>%
-  dplyr::mutate(labels = paste0(str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""), ", \n ", State_prov)) %>% 
-  ggplot(., aes(x = date, y = Latitude)) +
-  #geom_point(data = allOther, aes(x = date, y = gdd, color = NULL), colour = "darkgrey", fill = "darkgrey", alpha = 0.45) +
-  #geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
-  geom_point(size = 4, aes(shape = fct_rev(Country))) +
-  #   geom_smooth(
-  #   method = "loess",
-  #   span = 0.15,
-  #   size = 2,
-  #   colour = "cornflowerblue"
-  # ) +
-  scale_shape_manual(values=c(19, 15), name = "Country")+
-  geom_smooth(aes(group = 1),
-              method = 'lm',
-              se = FALSE,
-              linetype = 1,
-              color = "black") +
-    # stat_poly_eq(aes(label = paste(after_stat(eq.label),
-    #                              after_stat(rr.label), sep = "*\", \"*"))) +
-  # stat_smooth(
-  #   method = loess,
-  #   span = 0.9,
-  #   se = FALSE,
-  #   size = 1.5
-  # )  +
-  ggrepel::geom_label_repel(
-    aes(label = labels),
-    max.iter = 4500,
-    cex = 6.7,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    # xlim = c (-6500, 0),
-    #nudge_y = 3,
-    #nudge_x = 50,
-    force = 25,
-    box.padding = 1
-  ) +
-  scale_x_continuous(
-    breaks = seq(-4500, 1500, 500),
-    minor_breaks = seq(-4500, 1500, 100),
-    limits = c(-4500, 1500),
-    guide = "axis_minor"
-  ) +
-  scale_y_continuous(
-    breaks = seq(10, 45, 5),
-    minor_breaks = seq(10, 45, 1),
-    limits = c(10, 45),
-    guide = "axis_minor"
-  ) +
-  # scale_x_continuous(
-  #   breaks = seq(-4000, 1500, 500),
-  #   minor_breaks = seq(-4000, 1500, 100),
-  #   limits = c(-4100, 1500),
-  #   guide = "axis_minor"
-  # ) +
-  # scale_y_continuous(
-  #   breaks = seq(30, 40, 5),
-  #   minor_breaks = seq(30, 40, 1),
-  #   limits = c(30, 40),
-  #   guide = "axis_minor"
-  # ) +
-  # scale_y_continuous(trans = "reverse",
-  #                    breaks = seq(500, 6500, 500),
-  #                    limits = c(6500, 500),
-  #                    minor_breaks = seq(500, 6500, 250),
-  #                    guide = "axis_minor") +
-  # scale_y_continuous(breaks = seq(0, 2000, 100),
-  #                minor_breaks = seq(0, 2000, 50),
-  #                limits = c(0, 2100),
-  #               guide = "axis_minor") +
-  xlab("Years BC/AD") +
-  # ylab("Annual Accumulated Growing Degree Days") +
-  ylab("Latitude") +
-  #ggpubr::color_palette(palette = "jco") +
-  theme_bw()  +
-  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
-  theme(
-    #legend.justification = 'left',
-    #legend.position = c(0.01, 0.87),
-    legend.title = element_text(size = 19, family = "Helvetica", face = "bold"),
-    legend.position = "bottom",
-    legend.direction = "horizontal",
-    legend.text = element_text(size = 18, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-ggplot2::ggsave(output, filename = "vignettes/figures/earliest_sites_by_state_province.png", width = 17.25, height = 11.5, dpi = 600)
-
-```
 
 
 ```{r}
