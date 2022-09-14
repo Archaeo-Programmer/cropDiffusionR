@@ -514,14 +514,19 @@ MDB_full_cal <- ok %>%
   dplyr::filter(Type == "MacroSample")
 
 # Determine which columns have "NA to NA" present (mostly just the 'sigma' date columns), so that we can replace with NA.
-NA_select <- colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
+NA_select <-
+  colSums("NA to NA" == MDB_full_cal %>% dplyr::select(-geometry), na.rm = TRUE) > 0
 NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
 
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
-  dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
-  dplyr::filter(Country == "Mexico" | State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
+  dplyr::mutate(dplyr::across(
+    NA_select,
+    ~ stringr::str_replace_all(.x, "NA to NA", NA_character_)
+  )) %>%
+  dplyr::filter(Country == "Mexico" |
+                  State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_full_cal_min <- MDB_full_cal %>%
@@ -540,20 +545,24 @@ MDB_full_cal_min <- MDB_full_cal %>%
   # Create 100 year bins.
   dplyr::mutate(bin = cut(
     MinBP,
-    breaks = seq(plyr::round_any(min(MinBP), 100, f = floor), plyr::round_any(max(MinBP), 100, f = ceiling), by = 100),
+    breaks = seq(
+      plyr::round_any(min(MinBP), 100, f = floor),
+      plyr::round_any(max(MinBP), 100, f = ceiling),
+      by = 100
+    ),
     include.lowest = TRUE
-  )) %>% 
+  )) %>%
   dplyr::group_by(bin) %>%
   dplyr::slice_max(Latitude) %>%
   dplyr::slice_max(MinBP) %>%
-  dplyr::ungroup() %>% 
-  dplyr::arrange(desc(MinBP)) %>% 
+  dplyr::ungroup() %>%
+  dplyr::arrange(desc(MinBP)) %>%
   dplyr::filter(Latitude == cummax(Latitude)) %>%
-  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>% 
-  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>% 
-  dplyr::filter(date <= 1500) %>% 
-  dplyr::group_by(Site_name) %>% 
-  dplyr::slice_min(date, with_ties = FALSE) %>% 
+  dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
+  dplyr::select(Lab_code, Site_name, date, bin, gdd, everything()) %>%
+  dplyr::filter(date <= 1500) %>%
+  dplyr::group_by(Site_name) %>%
+  dplyr::slice_min(date, with_ties = FALSE) %>%
   dplyr::ungroup()
 
 # Linear Model and Stats
@@ -570,15 +579,11 @@ setNames(
 # Plot using a linear model.
 figure4 <-
   MDB_full_cal_min %>%
-  dplyr::mutate(
-    State_prov = as.factor(State_prov),
-    date = as.numeric(date),
-    gdd = as.double(gdd)
-  ) %>%
+  dplyr::mutate(State_prov = fct_reorder(State_prov, date, .fun = 'min')) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)", "")) %>%
   ggplot(aes(x = date, y = Latitude)) +
-  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_point(size = 4, aes(color = State_prov, shape = State_prov)) +
   geom_smooth(
     aes(group = 1),
     method = 'lm',
@@ -602,7 +607,7 @@ figure4 <-
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(15, 45, 5),
@@ -612,23 +617,25 @@ figure4 <-
   ) +
   xlab("Years BC/AD") +
   ylab("Latitude") +
-  ggpubr::color_palette(palette = "jco") +
+  scale_shape_manual(
+    values = c(3, 19, 15, 17, 9),
+    name = "States",
+    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  scale_color_manual(
+    values = ggsci::pal_jco("default")(10)[c(1, 3, 2, 4, 6)],
+    name = "States",
+    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
   theme_bw()  +
-  guides(color = guide_legend(
-    override.aes = list(fill = NA),
-    title = "States",
-    direction = "horizontal"
-  )) +
   theme(
-    #legend.justification = 'left',
     legend.position = "bottom",
     legend.title = element_text(
       size = 19,
       family = "Helvetica",
       face = "bold"
     ),
-    #legend.title = element_blank(),
-    legend.direction = "vertical",
+    legend.direction = "horizontal",
     legend.text = element_text(size = 18, colour = "black"),
     legend.margin = margin(t = -14),
     axis.ticks.length = unit(0.125, "inch"),
@@ -670,7 +677,13 @@ figure4 <-
     )
   )
 
-ggplot2::ggsave(figure4, filename = "vignettes/figures/Figure_4.png", width = 17.25, height = 11.5, dpi = 600)
+ggplot2::ggsave(
+  figure4,
+  filename = "vignettes/figures/Figure_4.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
 
 ```
 
@@ -745,11 +758,11 @@ setNames(
 # Plot using a linear model.
 figure5 <-
   MDB_full_cal_min %>%
-  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  dplyr::mutate(State_prov = fct_reorder(State_prov, date, .fun = 'min')) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)+$", "")) %>%
   ggplot(aes(x = date, y = Latitude)) +
-  geom_point(shape = 19, size = 4, aes(color = fct_rev(State_prov))) +
+  geom_point(size = 4, aes(color = State_prov, shape = State_prov)) +
   geom_smooth(
     aes(group = 1),
     method = 'lm',
@@ -768,12 +781,22 @@ figure5 <-
     force = 25,
     box.padding = 1
   ) +
+  scale_shape_manual(
+    values = c(19, 15, 17, 9),
+    name = "States",
+    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  scale_color_manual(
+    values = ggsci::pal_jco("default")(10)[c(3, 2, 4, 6)],
+    name = "States",
+    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
   scale_x_continuous(
     breaks = seq(-4500, 1500, 500),
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(30, 42, 2),
@@ -783,13 +806,7 @@ figure5 <-
   ) +
   xlab("Years BC/AD") +
   ylab("Latitude") +
-  ggpubr::color_palette(palette = "jco") +
   theme_bw()  +
-  guides(color = guide_legend(
-    override.aes = list(fill = NA),
-    title = "States",
-    direction = "horizontal"
-  )) +
   theme(
     legend.position = "bottom",
     legend.title = element_text(
@@ -797,7 +814,7 @@ figure5 <-
       family = "Helvetica",
       face = "bold"
     ),
-    legend.direction = "vertical",
+    legend.direction = "horizontal",
     legend.text = element_text(size = 18, colour = "black"),
     legend.margin = margin(t = -14),
     axis.ticks.length = unit(0.125, "inch"),
@@ -839,7 +856,13 @@ figure5 <-
     )
   )
 
-ggplot2::ggsave(figure5, filename = "vignettes/figures/Figure_5.png", width = 17.25, height = 11.5, dpi = 600)
+ggplot2::ggsave(
+  figure5,
+  filename = "vignettes/figures/Figure_5.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
 
 ```
 

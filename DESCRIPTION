@@ -53,7 +53,9 @@ Imports:
     data.table,
     httr,
     ggpubr,
-    gganimate
+    gganimate,
+    ggsci,
+    paleomat
 LazyData: TRUE
 Suggests: testthat
 Encoding: UTF-8
