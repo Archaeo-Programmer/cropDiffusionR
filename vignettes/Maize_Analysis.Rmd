@@ -867,8 +867,77 @@ ggplot2::ggsave(
 ```
 
 
+# Other Possible Figures
+```{r GDD_SW_map}
 
+# raster::crs(temp.raster) <-
+#   "+proj=lcc +lat_1=49 +lat_2=77 +lat_0=0 +lon_0=-95 +x_0=0 +y_0=0 +ellps=GRS80 +datum=WGS84 +units=m +no_defs"
+accum_GDD_annual_data <- raster::as.data.frame(accum_GDD_annual, xy = TRUE)
+names(accum_GDD_annual_data) <- c("long", "lat", "GDD")
+accum_GDD_annual_data_transformed <-
+  usmap::usmap_transform(
+    accum_GDD_annual_data,
+    input_names = c("long", "lat"),
+    output_names = c("x", "y")
+  )
 
+# usa_mexico_states2 <- usa_mexico_states %>% 
+#   # MDB_full_cal_min is the data from Figure 3
+#   dplyr::mutate(state_abbr = ifelse(state_name %in% c(MDB_full_cal_min$State_prov, "Mexico"), state_abbr, NA_character_))
+usa_mexico_states2 <- usa_mexico_states %>% 
+  # MDB_full_cal_min is the data from Figure 3
+  dplyr::mutate(state_name = ifelse(state_name %in% c(MDB_full_cal_min$State_prov, "Mexico"), state_name, NA_character_))
+   
+  
+GDD_map <- ggplot2::ggplot() +
+  geom_raster(
+    data = accum_GDD_annual_data_transformed,
+    aes(x = long, y = lat, fill = GDD),
+    alpha = 0.8,
+    na.rm = TRUE
+  ) +
+  scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                       na.value = "transparent",
+                       name = "Annual GDDs") +
+  coord_equal() +
+  theme_classic() +
+  # scale_x_continuous(breaks = seq(-115, -103, 2.0),
+  #                    limits = c(-115, -103.2)) +
+  # scale_y_continuous(breaks = seq(31, 39, 2.0),
+  #                    limits = c(31.25, 39)) +
+  geom_sf(
+    data = usa_mexico_states,
+    color = "#2b2b2b",
+    fill = "transparent",
+    size = 0.5, inherit.aes = FALSE
+  ) +
+    ggrepel::geom_label_repel(
+    data = usa_mexico_states2,
+    aes(label = state_name, geometry = geometry),
+    stat = "sf_coordinates",
+    min.segment.length = 0.4,
+    force = 40.5,
+    label.size = 0.33
+  ) +
+  theme(
+    #legend.key.width = unit(1.25, 'cm'),
+    legend.position=c(.15,.2),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    legend.text = element_text(size = 15, family = "Helvetica"),
+    legend.title = element_text(size = 16, family = "Helvetica", face = "bold")
+  )
+
+ggplot2::ggsave(GDD_map, 
+                filename = "vignettes/figures/GDD_map.png", 
+       width = 15.43, height = 13.15, dpi = 600)
+
+```
 
 
 
@@ -1292,19 +1361,6 @@ ggplot(multi.plot, mapping = aes(x = date, y = value)) +
 ggplot2::ggsave("vignettes/figures/anomaly_maize_plot.png", dpi = 600)
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1755,7 +1811,8 @@ ggplot2::ggsave("vignettes/figures/maize_frontier_gdd_fig_macrofossils_smallerbi
 
 ```{r paleocar}
 
-paleocar <- raster::brick("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleocar_GDD_MAT_extent.tif")
+#paleocar <- raster::brick("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleocar_GDD_MAT_extent.tif")
+paleocar <- raster::brick("/Users/andrew/Dropbox/WSU/SKOPEII/model/paleocar_GDD_Full_Dataset.tif")
 
 x.stats <- data.frame(x.mean=raster::cellStats(paleocar, "mean"))
 x.stats2 <- x.stats %>% 
