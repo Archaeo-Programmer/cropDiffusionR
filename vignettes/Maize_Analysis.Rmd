@@ -374,7 +374,7 @@ NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
 # Find minimum 2 sigma for each row.
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
-  dplyr::mutate(dplyr::across(NA_select, ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
+  dplyr::mutate(dplyr::across(dplyr::all_of(NA_select), ~ stringr::str_replace_all(.x, "NA to NA", NA_character_))) %>% 
   dplyr::filter(Country == "Mexico" | State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
 
 # subset the dataframe to only have the 2 sigma data and the unique lab code.
@@ -505,6 +505,105 @@ figure3 <-
 
 ggplot2::ggsave(figure3, filename = "vignettes/figures/Figure_3.png", width = 17.25, height = 11.5, dpi = 600)
 
+
+
+mtplot =
+    MDB_full_cal_min %>%
+  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = paste0(
+    str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
+    ", \n ",
+    State_prov
+  )) %>%
+  ggplot(aes(x = date, y = Latitude, color = gdd)) +
+  geom_point(size=2) +
+  scale_colour_gradientn(limits = c(0, 7000), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
+  scale_x_continuous(
+    breaks = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000)),
+    minor_breaks = c(seq(-4000, -1000, 1000), 1000),
+    limits = c(-4500, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000))
+  ) +
+  scale_y_continuous(
+    breaks = seq(10, 45, 5),
+    minor_breaks = seq(10, 45, 1),
+    limits = c(10, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  labs(colour = "GDD") +
+  theme_bw()  +
+  theme(
+       legend.title = element_text(
+      size = 14,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.title.align=1.0,
+    legend.position = "right",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 12, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 12,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+
+plot_gg(
+  mtplot,
+  width = 6.5,
+  height = 4,
+  multicore = TRUE,
+  windowsize = c(1000, 1000),
+  zoom = 0.77,
+  phi = 50,
+  theta = 35,
+  sunangle = 225,
+  soliddepth = -0.5,
+  pointcontract = 0.7,
+  scale = 200
+)
+render_snapshot(clear = TRUE, filename = "vignettes/figures/rayshader.png")
+
+
 ```
 
 
@@ -522,7 +621,7 @@ NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
   dplyr::mutate(dplyr::across(
-    NA_select,
+    dplyr::all_of(NA_select),
     ~ stringr::str_replace_all(.x, "NA to NA", NA_character_)
   )) %>%
   dplyr::filter(Country == "Mexico" |
@@ -702,7 +801,7 @@ NA_select <- names(NA_select[NA_select == TRUE & !is.na(NA_select)])
 # Change all text that says "NA to NA" from the rcarbon output to a regular NA.
 MDB_full_cal <- MDB_full_cal %>%
   dplyr::mutate(dplyr::across(
-    NA_select,
+    dplyr::all_of(NA_select),
     ~ stringr::str_replace_all(.x, "NA to NA", NA_character_)
   )) %>%
   dplyr::filter(State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado"))
@@ -887,41 +986,84 @@ accum_GDD_annual_data_transformed <-
 usa_mexico_states2 <- usa_mexico_states %>% 
   # MDB_full_cal_min is the data from Figure 3
   dplyr::mutate(state_name = ifelse(state_name %in% c(MDB_full_cal_min$State_prov, "Mexico"), state_name, NA_character_))
+
+america_dem <- elevatr::get_elev_raster(locations = usa_mexico_states, z = 10)
+
+# Put elevation and temperature rasters in the same resolution.
+ned_SW <- raster::projectRaster(america_dem, accum_GDD_annual, method = 'ngb')
+
+ned_SW_crop <- raster::crop(ned_SW, usa_mexico_states)
+#then mask out (i.e. assign NA) the values outside the polygon
+ned_SW_mask <- raster::mask(ned_SW_crop, usa_mexico_states)
+
+# Create a hillshade file.
+slope <- raster::terrain(ned_SW_mask, opt='slope')
+aspect <- raster::terrain(ned_SW_mask, opt='aspect')
+hill <- raster::hillShade(slope, aspect,
+                          angle = 40,
+                          direction = 270)
+hill_spdf <- as(hill, "SpatialPixelsDataFrame")
+hill_spdf <- raster::as.data.frame(hill_spdf)
+colnames(hill_spdf) <- c("value", "x", "y")
    
   
-GDD_map <- ggplot2::ggplot() +
+GDD_map <-
+  ggplot2::ggplot() +
+      ggplot2::geom_raster(
+    data = hill_spdf,
+    mapping = aes(x = x,
+                  y = y,
+                  alpha = value),
+    na.rm = TRUE
+  ) +
+  # use the "alpha hack"
+  scale_alpha(
+    name = "",
+    range = c(0.8, 0),
+    na.value = 0,
+    limits = c(0,255),
+    guide = "none"
+  )  +
   geom_raster(
     data = accum_GDD_annual_data_transformed,
     aes(x = long, y = lat, fill = GDD),
     alpha = 0.8,
     na.rm = TRUE
   ) +
+  # scale_fill_gradientn(
+  #   colors = grey.colors(
+  #     10,
+  #     start = 0.15,
+  #     end = 0.9,
+  #     rev = TRUE
+  #   ),
+  #   na.value = "transparent",
+  #   name = "Annual GDDs"
+  # ) +
   scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
                        na.value = "transparent",
                        name = "Annual GDDs") +
   coord_equal() +
   theme_classic() +
-  # scale_x_continuous(breaks = seq(-115, -103, 2.0),
-  #                    limits = c(-115, -103.2)) +
-  # scale_y_continuous(breaks = seq(31, 39, 2.0),
-  #                    limits = c(31.25, 39)) +
   geom_sf(
     data = usa_mexico_states,
     color = "#2b2b2b",
     fill = "transparent",
-    size = 0.5, inherit.aes = FALSE
+    size = 0.4,
+    inherit.aes = FALSE
   ) +
-    ggrepel::geom_label_repel(
+  ggrepel::geom_label_repel(
     data = usa_mexico_states2,
     aes(label = state_name, geometry = geometry),
     stat = "sf_coordinates",
     min.segment.length = 0.4,
     force = 40.5,
-    label.size = 0.33
+    label.size = 0,
+    size = 4.5
   ) +
   theme(
     #legend.key.width = unit(1.25, 'cm'),
-    legend.position=c(.15,.2),
+    legend.position = c(.15, .2),
     panel.border = element_blank(),
     panel.grid.major = element_blank(),
     axis.text = element_blank(),
@@ -930,11 +1072,15 @@ GDD_map <- ggplot2::ggplot() +
     axis.line = element_blank(),
     axis.ticks = element_blank(),
     legend.text = element_text(size = 15, family = "Helvetica"),
-    legend.title = element_text(size = 16, family = "Helvetica", face = "bold")
+    legend.title = element_text(
+      size = 16,
+      family = "Helvetica",
+      face = "bold"
+    )
   )
 
 ggplot2::ggsave(GDD_map, 
-                filename = "vignettes/figures/GDD_map.png", 
+                filename = "vignettes/figures/GDD_map2.png", 
        width = 15.43, height = 13.15, dpi = 600)
 
 ```
