@@ -58,7 +58,7 @@ temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programm
 
 # Get calibrated maize database, extract GDD from the WorldClim dataset, then add back to the calibrated database.
 # MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated.csv") %>% 
-#   filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+#   filter(str_detect(Country, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
 # 
 # readr::write_csv(MDB_full_cal, "../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv")
 
@@ -1261,7 +1261,7 @@ floor_lat <- floor(starting_lat)
 
 # Limit just to SW.
 garb <- garb %>%
-  filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+  filter(str_detect(Country, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
 
 # Get the maximum latitude in the dataset.
 max_lat <- as.double(max(garb$Latitude))
@@ -1693,7 +1693,7 @@ starting_gdd <- garb[starting_maize, ] %>% .$gdd
 
 # Limit just to SW.
 garb <- garb %>%
-  filter(str_detect(Location_name, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
+  filter(str_detect(Country, "^Mexico") | str_detect(State_prov, "Arizona|Mexico|Utah|Colorado"))
 
 # Get the minimum gdd in the dataset.
 min_gdd <- plyr::round_any(as.double(min(garb$gdd)), 100, f = floor)
