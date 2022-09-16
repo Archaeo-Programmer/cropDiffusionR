@@ -31,6 +31,21 @@ require(ggh4x)
 #                      errors = c(20, 19, 19), # one sigma error
 #                      ids = c("AA-111725", "AA-110821", "AA-110819")) # unique ID for each 
 
+
+ out <-  rcarbon::calibrate(x = c(2040), # normalized age
+                     errors = c(13), # one sigma error
+                     #calCurves = "intcal13",
+                     ids = c("AA-89374")) # unique ID for each
+summary(out)
+
+# calib_curve <- read.csv("/Users/andrew/Downloads/3Col_intcal04.csv", header = F) %>% 
+#   type.convert(as.is=TRUE) %>% 
+#   arrange(V2) %>% 
+#   complete(V2 = min(V2):max(V2)) %>% 
+#   fill(V1, V3) %>% 
+#   select(V1, V2, V3)
+
+
 ```
 
 # Load the final reconstruction data.
@@ -47,7 +62,7 @@ temp_anom <- readr::read_csv("https://raw.githubusercontent.com/Archaeo-Programm
 # 
 # readr::write_csv(MDB_full_cal, "../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv")
 
-MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv", col_types = cols())
+MDB_full_cal <- readr::read_csv("../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv", col_types = readr::cols())
 
 MDB_full_cal <-  MDB_full_cal %>% 
   sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
@@ -383,7 +398,7 @@ MDB_full_cal_min <- MDB_full_cal %>%
   tidyr::pivot_longer(-Lab_code) %>%
   dplyr::filter(!is.na(value)) %>%
   dplyr::group_by(Lab_code) %>%
-  dplyr::slice(n()) %>%
+  dplyr::slice(dplyr::n()) %>%
   dplyr::select(Lab_code, MinBP = value) %>%
   # Extract the minimum year from the range of the 2 sigma date.
   dplyr::mutate(MinBP = as.numeric(stringr::str_extract(MinBP, "(?i)(?<=to\\D)\\d+"))) %>%
@@ -391,8 +406,8 @@ MDB_full_cal_min <- MDB_full_cal %>%
   dplyr::left_join(MDB_full_cal, ., by = "Lab_code") %>%
   # Reorder so that the Min years are located in the column next to medianBP.
   dplyr::relocate(MinBP, .after = MedianBP) %>%
-  dplyr::group_by(State_prov) %>%
-  dplyr::slice_max(MinBP) %>%
+  # dplyr::group_by(State_prov) %>%
+  # dplyr::slice_max(MinBP) %>%
   dplyr::mutate(date = rcarbon::BPtoBCAD(MinBP)) %>%
   dplyr::select(Lab_code, Site_name, date, Latitude, gdd, everything())
 
@@ -413,7 +428,7 @@ figure3 <-
   dplyr::mutate(State_prov = as.factor(State_prov)) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(labels = paste0(
-    str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
+    stringr::str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
     ", \n ",
     State_prov
   )) %>%
@@ -506,25 +521,26 @@ figure3 <-
 ggplot2::ggsave(figure3, filename = "vignettes/figures/Figure_3.png", width = 17.25, height = 11.5, dpi = 600)
 
 
-
-mtplot =
-    MDB_full_cal_min %>%
+# Using rayshader with GDD.
+mtplot <- 
+  MDB_full_cal_min %>%
+  dplyr::left_join(., temp_anom, by = c("date" = "year")) %>%
   dplyr::mutate(State_prov = as.factor(State_prov)) %>%
   dplyr::arrange(date) %>%
   dplyr::mutate(labels = paste0(
-    str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
+    stringr::str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
     ", \n ",
     State_prov
   )) %>%
-  ggplot(aes(x = date, y = Latitude, color = gdd)) +
-  geom_point(size=2) +
+  ggplot(aes(x = date, y = Latitude, color = anom)) +
+  geom_point(size = 2) +
   scale_colour_gradientn(limits = c(0, 7000), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
   scale_x_continuous(
-    breaks = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000)),
-    minor_breaks = c(seq(-4000, -1000, 1000), 1000),
+    breaks = c(seq(-4500,-500, 1000), 1, seq(500, 1500, 1000)),
+    minor_breaks = c(seq(-4000,-1000, 1000), 1000),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000))
+    labels = c(seq(-4500,-500, 1000), 1, seq(500, 1500, 1000))
   ) +
   scale_y_continuous(
     breaks = seq(10, 45, 5),
@@ -537,12 +553,12 @@ mtplot =
   labs(colour = "GDD") +
   theme_bw()  +
   theme(
-       legend.title = element_text(
+    legend.title = element_text(
       size = 14,
       family = "Helvetica",
       face = "bold"
     ),
-    legend.title.align=1.0,
+    legend.title.align = 1.0,
     legend.position = "right",
     legend.direction = "vertical",
     legend.text = element_text(size = 12, colour = "black"),
@@ -602,6 +618,107 @@ plot_gg(
   scale = 200
 )
 render_snapshot(clear = TRUE, filename = "vignettes/figures/rayshader.png")
+
+
+
+mtplot2 <- 
+  MDB_full_cal_min %>%
+  dplyr::filter(State_prov %in% c("Arizona", "New Mexico", "Utah", "Colorado")) %>% 
+  dplyr::left_join(., temp_anom, by = c("date" = "year")) %>%
+  dplyr::mutate(State_prov = as.factor(State_prov)) %>%
+  dplyr::arrange(date) %>%
+  dplyr::mutate(labels = paste0(
+    stringr::str_replace(Site_name, " \\s*\\([^\\)]+\\)", ""),
+    ", \n ",
+    State_prov
+  )) %>%
+  ggplot(aes(x = date, y = Latitude, color = anom)) +
+  geom_point(size = 2) +
+  scale_colour_gradientn(limits = c(-2.0, 2.0), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
+  scale_x_continuous(
+    breaks = c(seq(-3000,-500, 500), 1, seq(500, 1500, 500)),
+    minor_breaks = c(seq(-3000,-100, 100), seq(100,1400, 100)),
+    limits = c(-3000, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-3000,-500, 500), 1, seq(500, 1500, 500))
+  ) +
+  scale_y_continuous(
+    breaks = seq(30, 42, 2),
+    minor_breaks = seq(30, 42, 1),
+    limits = c(30, 42),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  labs(colour = "Anomaly\n(°C)") +
+  theme_bw()  +
+  theme(
+    legend.title = element_text(
+      size = 13,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.title.align = 1.0,
+    legend.position = "right",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 11, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 11,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+
+plot_gg(
+  mtplot2,
+  width = 6.5,
+  height = 4,
+  multicore = TRUE,
+  windowsize = c(1000, 1000),
+  zoom = 0.77,
+  phi = 50,
+  theta = 35,
+  sunangle = 225,
+  soliddepth = -0.5,
+  pointcontract = 0.7,
+  scale = 200
+)
+
+render_snapshot(clear = TRUE, filename = "vignettes/figures/rayshader_Anom.png")
 
 
 ```
@@ -680,7 +797,7 @@ figure4 <-
   MDB_full_cal_min %>%
   dplyr::mutate(State_prov = fct_reorder(State_prov, date, .fun = 'min')) %>%
   dplyr::arrange(date) %>%
-  dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)", "")) %>%
+  dplyr::mutate(labels = stringr::str_replace(Site_name, " \\s*\\([^\\)]+\\)", "")) %>%
   ggplot(aes(x = date, y = Latitude)) +
   geom_point(size = 4, aes(color = State_prov, shape = State_prov)) +
   geom_smooth(
@@ -859,7 +976,7 @@ figure5 <-
   MDB_full_cal_min %>%
   dplyr::mutate(State_prov = fct_reorder(State_prov, date, .fun = 'min')) %>%
   dplyr::arrange(date) %>%
-  dplyr::mutate(labels = str_replace(Site_name, " \\s*\\([^\\)]+\\)+$", "")) %>%
+  dplyr::mutate(labels = stringr::str_replace(Site_name, " \\s*\\([^\\)]+\\)+$", "")) %>%
   ggplot(aes(x = date, y = Latitude)) +
   geom_point(size = 4, aes(color = State_prov, shape = State_prov)) +
   geom_smooth(
@@ -1009,20 +1126,21 @@ colnames(hill_spdf) <- c("value", "x", "y")
   
 GDD_map <-
   ggplot2::ggplot() +
-      ggplot2::geom_raster(
+  ggplot2::geom_raster(
     data = hill_spdf,
     mapping = aes(x = x,
                   y = y,
                   alpha = value),
-    na.rm = TRUE
+    na.rm = TRUE,
+    inherit.aes = FALSE
   ) +
   # use the "alpha hack"
   scale_alpha(
     name = "",
-    range = c(0.8, 0),
+    range = c(0.6, 0),
     na.value = 0,
-    limits = c(0,255),
-    guide = "none"
+    #limits = c(0,255),
+    guide = FALSE
   )  +
   geom_raster(
     data = accum_GDD_annual_data_transformed,
@@ -1044,7 +1162,7 @@ GDD_map <-
                        na.value = "transparent",
                        name = "Annual GDDs") +
   coord_equal() +
-  theme_classic() +
+  theme_map() +
   geom_sf(
     data = usa_mexico_states,
     color = "#2b2b2b",

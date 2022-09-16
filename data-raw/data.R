@@ -7,3 +7,10 @@ global_gdd <- raster::raster(here::here("data-raw/gdd1.tif"), crs = "+proj=utm +
 
 usethis::use_data(global_gdd,
                   overwrite = TRUE)
+
+
+# Get DEM for 4 Corners States and Mexico.
+america_dem <- elevatr::get_elev_raster(locations = usa_mexico_states, z = 10)
+
+usethis::use_data(america_dem,
+                  overwrite = TRUE)
