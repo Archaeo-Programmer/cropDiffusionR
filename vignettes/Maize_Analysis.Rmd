@@ -94,6 +94,45 @@ ok <- MDB_full_cal
 #   dplyr::select(gdd = 2) %>%
 #   dplyr::bind_cols(MDB_full_cal, .)
 
+# p3k14c_dates <- readr::read_csv("/Users/andrew/Downloads/p3k14c_raw.csv", col_types = readr::cols()) %>% 
+#   dplyr::filter(Source == "CARD" & Country %in% c("USA", "Mexico")) %>% 
+#   dplyr::select(LabID, Long, Lat)
+# 
+# 
+# ok2 <- p3k14c::p3k14c_data %>% 
+#   dplyr::filter(Province %in% c("Utah", "Arizona", "New Mexico", "Nevada", "Colorado") | Country == "Mexico") %>% 
+#   dplyr::filter(str_detect(Taxa, "(?i)Zea mays|Maize|Zea maize")) %>% 
+#   dplyr::select(-c(Long, Lat)) %>% 
+#   dplyr::left_join(., p3k14c_dates, by = "LabID")
+
+
+ok3 <-
+  readr::read_csv("../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv",
+                  col_types = readr::cols()) %>%
+  dplyr::left_join(.,
+                   p3k14c::p3k14c_data %>% dplyr::select(LabID, Age, Error),
+                   by = c("Lab_code" = "LabID")) %>%
+  dplyr::select(1:5,
+                Conventional_14C_age_BP,
+                Age,
+                plus_minus_1_sigma_yrs,
+                Error) %>%
+  filter(Country == "United States") %>% 
+  filter(!is.na(Age)) %>% 
+    dplyr::left_join(.,
+                   p3k14c::p3k14c_data %>% dplyr::filter(str_detect(Taxa, "(?i)Zea may|Maize|Zea maize")) %>% dplyr::select(LabID, Age, Error),
+                   by = c("Lab_code" = "LabID")) %>%
+    dplyr::select(1:5,
+                Conventional_14C_age_BP,
+                Age,
+                plus_minus_1_sigma_yrs,
+                Error) 
+  dplyr::mutate(
+    Conventional_14C_age_BP = ifelse(!is.na(Age), Age, Conventional_14C_age_BP),
+    plus_minus_1_sigma_yrs = ifelse(!is.na(Error), Age, Error)
+  )
+                                      
+
 ```
 
 
