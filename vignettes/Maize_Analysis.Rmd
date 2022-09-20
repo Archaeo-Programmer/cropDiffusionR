@@ -26,17 +26,17 @@ knitr::opts_chunk$set(echo = TRUE)
 library(ENSOMaizeImpacts)
 require(ggh4x)
 # 
-# rcarbon_output <-
-#   rcarbon::calibrate(x = c(2137, 1938, 1878), # normalized age
-#                      errors = c(20, 19, 19), # one sigma error
-#                      ids = c("AA-111725", "AA-110821", "AA-110819")) # unique ID for each 
+rcarbon_output <-
+  rcarbon::calibrate(x = ok3$Conventional_14C_age_BP, # normalized age
+                     errors = ok3$plus_minus_1_sigma_yrs, # one sigma error
+                     ids = ok3$Lab_code) # unique ID for each
 
 
  out <-  rcarbon::calibrate(x = c(2040), # normalized age
                      errors = c(13), # one sigma error
                      #calCurves = "intcal13",
                      ids = c("AA-89374")) # unique ID for each
-summary(out)
+summary(rcarbon_output)
 
 # calib_curve <- read.csv("/Users/andrew/Downloads/3Col_intcal04.csv", header = F) %>% 
 #   type.convert(as.is=TRUE) %>% 
@@ -107,7 +107,7 @@ ok <- MDB_full_cal
 
 
 ok3 <-
-  readr::read_csv("../Paper 2/Maize_Database_Calibrated_SW_ONLY.csv",
+  readr::read_csv("../Paper 2/processing_data/Utah_maize_dates_updated.csv",
                   col_types = readr::cols()) %>%
   dplyr::left_join(.,
                    p3k14c::p3k14c_data %>% dplyr::select(LabID, Age, Error),
@@ -117,8 +117,8 @@ ok3 <-
                 Age,
                 plus_minus_1_sigma_yrs,
                 Error) %>%
-  filter(Country == "United States") %>% 
-  filter(!is.na(Age)) %>% 
+  #filter(Country == "United States") %>% 
+  filter(is.na(Age)) %>% 
     dplyr::left_join(.,
                    p3k14c::p3k14c_data %>% dplyr::filter(str_detect(Taxa, "(?i)Zea may|Maize|Zea maize")) %>% dplyr::select(LabID, Age, Error),
                    by = c("Lab_code" = "LabID")) %>%
@@ -131,7 +131,13 @@ ok3 <-
     Conventional_14C_age_BP = ifelse(!is.na(Age), Age, Conventional_14C_age_BP),
     plus_minus_1_sigma_yrs = ifelse(!is.na(Error), Age, Error)
   )
-                                      
+  
+  colorado <- p3k14c::p3k14c_data %>%
+    dplyr::filter(Province == "Colorado") %>%
+    dplyr::filter(str_detect(Taxa, "(?i)Zea mays|Maize|Zea maize") & Material != "CHARCOAL") %>% 
+    dplyr::filter(!LabID %in% readr::read_csv("../Paper 2/processing_data/Utah_maize_dates_updated.csv",
+                  col_types = readr::cols())[,1][[1]])
+  write.csv(colorado, "../Paper 2/processing_data/colorado_maize.csv", row.names = F)
 
 ```
 
