@@ -365,6 +365,12 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
 
 ```{r Figure_3, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
+NASW_sites <- dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::select(SiteName, SiteID, Long, Lat) %>% 
+  dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>% 
+  dplyr::distinct(SiteName, .keep_all = TRUE)
+
 # raster::crs(temp.raster) <-
 #   "+proj=lcc +lat_1=49 +lat_2=77 +lat_0=0 +lon_0=-95 +x_0=0 +y_0=0 +ellps=GRS80 +datum=WGS84 +units=m +no_defs"
 accum_GDD_annual_data <- raster::as.data.frame(accum_GDD_annual, xy = TRUE)

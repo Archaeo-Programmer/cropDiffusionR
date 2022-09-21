@@ -58,7 +58,7 @@ usethis::use_data(maizeDB,
 # Accumulated growing degree days for the year with a base temperature of 10 degrees Celsius.
 # Data was downloaded from https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_tavg.zip,
 # then was converted to a rasterstack. 
-NASW_gdd <- raster::raster(here::here("data-raw/NASW_gdd.tif"), crs = "+proj=utm +zone=15 +datum=NAD83 +units=m +no_defs")
+NASW_gdd <- accum_GDD_annual
 
 usethis::use_data(NASW_gdd,
                   overwrite = TRUE)
