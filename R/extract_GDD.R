@@ -35,17 +35,17 @@ extract_GDD <-
     raster::extract(x = c.stack,
                     y = sites) %>%
       `colnames<-`(month.name) %>%
-      dplyr::bind_cols(Lab_code = sites$Lab_code, .) %>%
-      tidyr::pivot_longer(-Lab_code) %>%
+      dplyr::bind_cols(LabID = sites$LabID, .) %>%
+      tidyr::pivot_longer(-LabID) %>%
       dplyr::left_join(., month_days, by = c("name" = "month")) %>%
       dplyr::mutate(value = dplyr::case_when(value < 10.00 ~ 10.00,
                                              value > 30.00 ~ 30.00,
                                              TRUE ~ value)) %>%
       dplyr::rowwise() %>%
       dplyr::mutate(month_GDD = (value - 10.00) * days) %>%
-      dplyr::group_by(Lab_code) %>%
+      dplyr::group_by(LabID) %>%
       dplyr::summarise(gdd = sum(month_GDD)) %>%
-      dplyr::left_join(., sites, by = "Lab_code") %>%
+      dplyr::left_join(., sites, by = "LabID") %>%
       dplyr::filter(!is.na(gdd))
     
   }

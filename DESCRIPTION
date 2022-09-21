@@ -55,7 +55,8 @@ Imports:
     ggpubr,
     gganimate,
     ggsci,
-    paleomat
+    paleomat,
+    p3k14c
 LazyData: TRUE
 Suggests: testthat
 Encoding: UTF-8

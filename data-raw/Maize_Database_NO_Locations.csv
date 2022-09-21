@@ -1,0 +1,1057 @@
+LabID,SiteName,SiteID,Country,Province,Age,Error,Taxa,Material,Condition,d13C,Method,Source
+Beta-62920,Aquiles Serdan,,Mexico,Chiapas,3000,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62918,Aquiles Serdan,,Mexico,Chiapas,3100,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62915,Aquiles Serdan,,Mexico,Chiapas,3145,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62919,Chilo,MZ-17,Mexico,Chiapas,3080,50,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62916,Paso de la Amada,,Mexico,Chiapas,3050,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62914,Paso de la Amada,,Mexico,Chiapas,3135,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+Beta-62917,Paso de la Amada,,Mexico,Chiapas,3240,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-33923,San Andres,,Mexico,Tabasco,2565,45,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-33925,San Andres,,Mexico,Tabasco,2390,50,Zea mays,cob,NA,NA,AMS,p3k14c
+AA-33924,San Andres,,Mexico,Tabasco,2430,35,Zea mays,cob,NA,NA,AMS,p3k14c
+AA-33926,San Andres,,Mexico,Tabasco,2505,45,Zea mays,cob,NA,NA,AMS,p3k14c
+Beta-62911,San Carlos,,Mexico,Chiapas,3365,55,Zea mays,kernel,charred,NA,AMS,p3k14c
+UCIAMS-7033,Cuauhtemoc,,Mexico,Chiapas,3225,15,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-33185,La Playa,SON F:10:3,USA,Arizona,1825,50,Zea mays,maize,NA,NA,NA,Carpenter et al. 2015
+AA-33184,La Playa,SON F:10:3,Mexico,Sonora,1885,50,Zea mays,Maize,NA,NA,NA,p3k14c
+Beta-325660,Las Capas,AA:12:111,USA,Arizona,2860,30,Zea mays,maize,NA,-24.5,NA,p3k14c
+Beta-339689,Las Capas,AA:12:111,USA,Arizona,2490,30,Zea mays,maize,NA,-23.5,NA,p3k14c
+Beta-325657,Las Capas,AA:12:111,USA,Arizona,2890,30,Zea mays,maize,NA,-11.4,NA,p3k14c
+Beta-292145,Las Capas,AA:12:111,USA,Arizona,2820,30,Zea mays,maize,NA,-11.2,NA,p3k14c
+Beta-304541,Las Capas,AA:12:111,USA,Arizona,2920,30,Zea mays,maize,NA,-11.2,NA,p3k14c
+Beta-325655,Las Capas,AA:12:111,USA,Arizona,2920,30,Zea mays,maize,NA,-11.2,NA,p3k14c
+Beta-333936,Las Capas,AA:12:111,USA,Arizona,2660,30,Zea mays,maize cupules and kernels,NA,-11.2,NA,p3k14c
+Beta-339696,Las Capas,AA:12:111,USA,Arizona,2450,30,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-358014,Las Capas,AA:12:111,USA,Arizona,2530,30,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-304532,Las Capas,AA:12:111,USA,Arizona,2860,40,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-304536,Las Capas,AA:12:111,USA,Arizona,2870,40,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-304534,Las Capas,AA:12:111,USA,Arizona,2900,40,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-304547,Las Capas,AA:12:111,USA,Arizona,2880,30,Zea mays,maize,NA,-11,NA,p3k14c
+Beta-306695,Las Capas,AA:12:111,USA,Arizona,2880,30,Zea mays,maize,NA,-11,NA,p3k14c
+Beta-325663,Las Capas,AA:12:111,USA,Arizona,2930,30,Zea mays,maize,NA,-11,NA,p3k14c
+Beta-344169,Las Capas,AA:12:111,USA,Arizona,2470,30,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-339688,Las Capas,AA:12:111,USA,Arizona,2560,30,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-306693,Las Capas,AA:12:111,USA,Arizona,2730,30,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-304542,Las Capas,AA:12:111,USA,Arizona,2930,30,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-292153,Las Capas,AA:12:111,USA,Arizona,2530,30,Zea mays,maize,NA,-10.8,NA,p3k14c
+Beta-325664,Las Capas,AA:12:111,USA,Arizona,2930,30,Zea mays,maize,NA,-10.8,NA,p3k14c
+Beta-333939,Las Capas,AA:12:111,USA,Arizona,2980,30,Zea mays,maize 14-row cob fragment,NA,-10.8,NA,p3k14c
+Beta-325658,Las Capas,AA:12:111,USA,Arizona,2780,30,Zea mays,maize,NA,-10.7,NA,p3k14c
+Beta-304533,Las Capas,AA:12:111,USA,Arizona,2860,40,Zea mays,maize,NA,-10.7,NA,p3k14c
+Beta-306684,Las Capas,AA:12:111,USA,Arizona,2450,30,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-306687,Las Capas,AA:12:111,USA,Arizona,2730,30,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-306686,Las Capas,AA:12:111,USA,Arizona,2790,30,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-304535,Las Capas,AA:12:111,USA,Arizona,2880,40,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-306694,Las Capas,AA:12:111,USA,Arizona,2770,30,Zea mays,maize,NA,-10.5,NA,p3k14c
+Beta-304544,Las Capas,AA:12:111,USA,Arizona,2840,30,Zea mays,maize,NA,-10.5,NA,p3k14c
+Beta-304531,Las Capas,AA:12:111,USA,Arizona,2900,40,Zea mays,maize,NA,-10.5,NA,p3k14c
+Beta-339697,Las Capas,AA:12:111,USA,Arizona,2710,30,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-325654,Las Capas,AA:12:111,USA,Arizona,2790,30,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-292147,Las Capas,AA:12:111,USA,Arizona,2870,30,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-292146,Las Capas,AA:12:111,USA,Arizona,2890,30,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-339686,Las Capas,AA:12:111,USA,Arizona,2500,30,Zea mays,maize,NA,-10.3,NA,p3k14c
+Beta-306691,Las Capas,AA:12:111,USA,Arizona,2740,30,Zea mays,maize,NA,-10.3,NA,p3k14c
+Beta-304545,Las Capas,AA:12:111,USA,Arizona,2950,30,Zea mays,maize,NA,-10.3,NA,p3k14c
+Beta-358015,Las Capas,AA:12:111,USA,Arizona,2650,30,Zea mays,maize cupules,NA,-10.3,NA,p3k14c
+Beta-339690,Las Capas,AA:12:111,USA,Arizona,2600,30,Zea mays,maize,NA,-10.2,NA,p3k14c
+Beta-325661,Las Capas,AA:12:111,USA,Arizona,2880,30,Zea mays,maize,NA,-10.2,NA,p3k14c
+Beta-292151,Las Capas,AA:12:111,USA,Arizona,2890,30,Zea mays,maize,NA,-10.2,NA,p3k14c
+Beta-325659,Las Capas,AA:12:111,USA,Arizona,2900,30,Zea mays,maize,NA,-10.2,NA,p3k14c
+Beta-333937,Las Capas,AA:12:111,USA,Arizona,2720,30,Zea mays,maize cupule,NA,-10.2,NA,p3k14c
+Beta-304539,Las Capas,AA:12:111,USA,Arizona,2880,40,Zea mays,maize,NA,-10.1,NA,p3k14c
+Beta-333940,Las Capas,AA:12:111,USA,Arizona,2920,30,Zea mays,maize 8-row cob fragment,NA,-10.1,NA,p3k14c
+Beta-333930,Las Capas,AA:12:111,USA,Arizona,2530,30,Zea mays,maize 12-row cob fragment,NA,-10,NA,p3k14c
+Beta-344168,Las Capas,AA:12:111,USA,Arizona,2540,30,Zea mays,maize cob frag,NA,-10,NA,p3k14c
+Beta-304538,Las Capas,AA:12:111,USA,Arizona,2940,30,Zea mays,maize,NA,-9.9,NA,p3k14c
+Beta-333932,Las Capas,AA:12:111,USA,Arizona,2630,30,Zea mays,maize cupule,NA,-9.9,NA,p3k14c
+Beta-325656,Las Capas,AA:12:111,USA,Arizona,2720,30,Zea mays,maize,NA,-9.8,NA,p3k14c
+Beta-344167,Las Capas,AA:12:111,USA,Arizona,2520,30,Zea mays,maize cob frag,NA,-9.7,NA,p3k14c
+Beta-306692,Las Capas,AA:12:111,USA,Arizona,2770,30,Zea mays,maize,NA,-9.6,NA,p3k14c
+Beta-358013,Las Capas,AA:12:111,USA,Arizona,2380,30,Zea mays,maize kernel,NA,-9.5,NA,p3k14c
+Beta-333934,Las Capas,AA:12:111,USA,Arizona,2730,30,Zea mays,maize kernel,NA,-8.7,NA,p3k14c
+Beta-304540,Las Capas,AA:12:111,USA,Arizona,2820,40,Zea mays,maize,NA,-8.6,NA,p3k14c
+Beta-339685,Las Capas,AA:12:111,USA,Arizona,2720,30,Zea mays,maize,NA,-8.5,NA,p3k14c
+Beta-333938,Las Capas,AA:12:111,USA,Arizona,2700,30,Zea mays,maize kernel,NA,-7.9,NA,p3k14c
+Beta-179353,Las Capas,AA:12:111,USA,Arizona,2530,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-179351,Las Capas,AA:12:111,USA,Arizona,2540,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-179352,Las Capas,AA:12:111,USA,Arizona,2560,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-306685,Las Capas,,USA,Arizona,2710,30,Zea mays,unknown,NA,-12.6,AMS,p3k14c
+Beta-119630,Las Capas,,USA,Arizona,2750,50,Zea mays,unknown,NA,-11.7,AMS,p3k14c
+Beta-129427,Las Capas,,USA,Arizona,2849,50,Zea mays,unknown,NA,-11.7,AMS,p3k14c
+Beta-119634,Las Capas,,USA,Arizona,2660,40,Zea mays,unknown,NA,-11.6,AMS,p3k14c
+Beta-119632,Las Capas,,USA,Arizona,2550,40,Zea mays,unknown,NA,-11.3,AMS,p3k14c
+Beta-140054,Las Capas,,USA,Arizona,3000,30,Zea mays,unknown,NA,-11.2,AMS,p3k14c
+Beta-140062,Las Capas,,USA,Arizona,2920,30,Zea mays,unknown,NA,-11,AMS,p3k14c
+Beta-119633,Las Capas,,USA,Arizona,2930,40,Zea mays,unknown,NA,-11,AMS,p3k14c
+Beta-140063,Las Capas,,USA,Arizona,2960,40,Zea mays,unknown,NA,-11,AMS,p3k14c
+Beta-140057,Las Capas,,USA,Arizona,2740,30,Zea mays,unknown,NA,-10.9,AMS,p3k14c
+Beta-119631,Las Capas,,USA,Arizona,2820,50,Zea mays,unknown,NA,-10.9,AMS,p3k14c
+Beta-133893,Las Capas,,USA,Arizona,2650,40,Zea mays,kernel,charred,-10.8,AMS,p3k14c
+Beta-339693,Las Capas,,USA,Arizona,2270,30,Zea mays,unknown,NA,-10.8,AMS,p3k14c
+Beta-140053,Las Capas,,USA,Arizona,2690,50,Zea mays,unknown,NA,-10.8,AMS,p3k14c
+Beta-118150,Las Capas,,USA,Arizona,2730,50,Zea mays,unknown,NA,-10.8,AMS,p3k14c
+Beta-140055,Las Capas,,USA,Arizona,3020,30,Zea mays,unknown,NA,-10.8,AMS,p3k14c
+Beta-133898,Las Capas,,USA,Arizona,2770,40,Zea mays,unknown,NA,-10.7,AMS,p3k14c
+Beta-148409,Las Capas,,USA,Arizona,3670,40,Zea mays,kernel,charred,-10.6,AMS,p3k14c
+Beta-133897,Las Capas,,USA,Arizona,2500,40,Zea mays,unknown,NA,-10.6,AMS,p3k14c
+Beta-140061,Las Capas,,USA,Arizona,2630,40,Zea mays,unknown,NA,-10.6,AMS,p3k14c
+Beta-306688,Las Capas,,USA,Arizona,2630,30,Zea mays,unknown,NA,-10.5,AMS,p3k14c
+Beta-133892,Las Capas,,USA,Arizona,2670,40,Zea mays,unknown,NA,-10.5,AMS,p3k14c
+Beta-140051,Las Capas,,USA,Arizona,2750,40,Zea mays,unknown,NA,-10.5,AMS,p3k14c
+Beta-140059,Las Capas,,USA,Arizona,2780,40,Zea mays,unknown,NA,-10.5,AMS,p3k14c
+Beta-140064,Las Capas,,USA,Arizona,2970,30,Zea mays,unknown,NA,-10.5,AMS,p3k14c
+Beta-306689,Las Capas,,USA,Arizona,2610,30,Zea mays,unknown,NA,-10.4,AMS,p3k14c
+Beta-140056,Las Capas,,USA,Arizona,2730,60,Zea mays,unknown,NA,-10.4,AMS,p3k14c
+Beta-140050,Las Capas,,USA,Arizona,2690,30,Zea mays,unknown,NA,-10.3,AMS,p3k14c
+Beta-129426,Las Capas,,USA,Arizona,2880,40,Zea mays,unknown,NA,-10.3,AMS,p3k14c
+Beta-145108,Las Capas,,USA,Arizona,3060,40,Zea mays,unknown,NA,-10.3,AMS,p3k14c
+Beta-339694,Las Capas,,USA,Arizona,2250,30,Zea mays,unknown,NA,-10,AMS,p3k14c
+Beta-140052,Las Capas,,USA,Arizona,2530,40,Zea mays,kernel,charred,-9.9,AMS,p3k14c
+Beta-339695,Las Capas,,USA,Arizona,2280,30,Zea mays,unknown,NA,-9.8,AMS,p3k14c
+Beta-133890,Las Capas,,USA,Arizona,2710,40,Zea mays,unknown,NA,-9.8,AMS,p3k14c
+Beta-148408,Las Capas,,USA,Arizona,3060,40,Zea mays,unknown,NA,-9.8,AMS,p3k14c
+Beta-140058,Las Capas,,USA,Arizona,2740,40,Zea mays,unknown,NA,-9.6,AMS,p3k14c
+Beta-140060,Las Capas,,USA,Arizona,2710,50,Zea mays,unknown,NA,-9.5,AMS,p3k14c
+Beta-133891,Las Capas,,USA,Arizona,2770,40,Zea mays,unknown,NA,-9.3,AMS,p3k14c
+Beta-123450,Las Capas,,USA,Arizona,2810,70,Zea mays,unknown,NA,-9.1,AMS,p3k14c
+Beta-292154,Las Capas,,USA,Arizona,3170,40,Zea mays,unknown,NA,-8.7,AMS,p3k14c
+Beta-133894,Las Capas,,USA,Arizona,2760,60,Zea mays,unknown,NA,NA,AMS,p3k14c
+Beta-118416,Las Capas,,USA,Arizona,2930,50,Zea mays,unknown,NA,NA,AMS,p3k14c
+Beta-145105,Las Capas,,USA,Arizona,2940,40,Zea mays,unknown,NA,NA,AMS,p3k14c
+Beta-148405,Las Capas,,USA,Arizona,2940,40,Zea mays,unknown,NA,NA,AMS,p3k14c
+Beta-148407,Las Capas,,USA,Arizona,2940,40,Zea mays,unknown,NA,NA,AMS,p3k14c
+Beta-145107,Las Capas,,USA,Arizona,2960,40,Zea mays,unknown,NA,NA,AMS,p3k14c
+AA-2783,Cortaro Fan,,USA,Arizona,2595,70,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-2782,Cortaro Fan,,USA,Arizona,2790,60,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-28496,Valley Farms,,USA,Arizona,3145,50,Zea mays,Maize,charred,-9.1,AMS,p3k14c
+AA-27430,Valley Farms,,USA,Arizona,2750,60,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27428,Valley Farms,,USA,Arizona,2760,45,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27432,Valley Farms,,USA,Arizona,2790,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27434,Valley Farms,,USA,Arizona,2800,55,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27431,Valley Farms,,USA,Arizona,2820,70,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27433,Valley Farms,,USA,Arizona,2820,45,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27436,Valley Farms,,USA,Arizona,2830,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-28495,Valley Farms,,USA,Arizona,2835,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27437,Valley Farms,,USA,Arizona,2895,55,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27837,Valley Farms,,USA,Arizona,2895,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27435,Valley Farms,,USA,Arizona,2910,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27429,Valley Farms,,USA,Arizona,2915,55,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27427,Valley Farms,,USA,Arizona,2920,45,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27838,Valley Farms,,USA,Arizona,2923,63,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-28498,Valley Farms,,USA,Arizona,2930,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27438,Valley Farms,,USA,Arizona,2940,50,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-28497,Valley Farms,,USA,Arizona,2950,55,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27836,Valley Farms,,USA,Arizona,2952,55,Zea mays,Maize,charred,NA,AMS,p3k14c
+AA-27835,Valley Farms,,USA,Arizona,2974,45,Zea mays,Maize,charred,NA,AMS,p3k14c
+Beta-161851,Rillito Fan,,USA,Arizona,760,40,Zea mays,cupule,charred,-10.8,AMS,p3k14c
+Beta-90318,Rillito Fan,,USA,Arizona,2860,40,Zea mays,cupule,charred,NA,AMS,p3k14c
+Beta-89860,Costello-King,,USA,Arizona,2770,60,Zea mays,cob,charred,-12.4,AMS,p3k14c
+Beta-89861,Costello-King,,USA,Arizona,2770,60,Zea mays,cupule,charred,-12.3,AMS,p3k14c
+Beta-89862,Costello-King,,USA,Arizona,2690,60,Zea mays,cupule,charred,-11.5,AMS,p3k14c
+Beta-89859,Costello-King,,USA,Arizona,2780,60,Zea mays,cupule,charred,-11.5,AMS,p3k14c
+Beta-89863,Costello-King,,USA,Arizona,2620,60,Zea mays,cob,charred,-11.3,AMS,p3k14c
+Beta-161850,El Taller,AA:12:92,USA,Arizona,3730,40,Zea mays,maize,NA,-24,NA,p3k14c
+Beta-164173,El Taller,,USA,Arizona,2830,40,Zea mays,cupule,charred,-12.3,AMS,p3k14c
+Beta-161854,El Taller,,USA,Arizona,3080,50,Zea mays,cupule,charred,-10.3,AMS,p3k14c
+Beta-161855,El Taller,,USA,Arizona,3010,40,Zea mays,cupule,charred,-10,AMS,p3k14c
+Beta-414202,Los Pozos,AA:12:91,USA,Arizona,3040,30,Zea mays,maize,NA,-11.7,NA,p3k14c
+Beta-430933,Los Pozos,AA:12:91,USA,Arizona,3030,30,Zea mays,maize,NA,-11.3,NA,p3k14c
+Beta-414201,Los Pozos,AA:12:91,USA,Arizona,3020,30,Zea mays,maize,NA,-11,NA,p3k14c
+Beta-430932,Los Pozos,AA:12:91,USA,Arizona,3040,30,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-430931,Los Pozos,AA:12:91,USA,Arizona,3110,30,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-126948,Los Pozos,,USA,Arizona,2100,40,Zea mays,cupule,charred,-16,AMS,p3k14c
+Beta-123600,Los Pozos,,USA,Arizona,2380,40,Zea mays,cupule,charred,-12.7,AMS,p3k14c
+Beta-123599,Los Pozos,,USA,Arizona,2190,50,Zea mays,cupule,charred,-11.7,AMS,p3k14c
+Beta-123603,Los Pozos,,USA,Arizona,2240,40,Zea mays,cupule,charred,-11.7,AMS,p3k14c
+Beta-95631,Los Pozos,,USA,Arizona,2060,80,Zea mays,cupule,charred,-11.6,AMS,p3k14c
+Beta-91145,Los Pozos,,USA,Arizona,2110,50,Zea mays,cupule,charred,-11.6,AMS,p3k14c
+Beta-95632,Los Pozos,,USA,Arizona,2090,80,Zea mays,cupule,charred,-11.3,AMS,p3k14c
+Beta-95628,Los Pozos,,USA,Arizona,2190,80,Zea mays,cupule,charred,-11.3,AMS,p3k14c
+Beta-95629,Los Pozos,,USA,Arizona,2150,80,Zea mays,cupule,charred,-11,AMS,p3k14c
+Beta-124700,Los Pozos,,USA,Arizona,2190,50,Zea mays,cupule,charred,-11,AMS,p3k14c
+Beta-124699,Los Pozos,,USA,Arizona,2100,60,Zea mays,cupule,charred,-10.9,AMS,p3k14c
+Beta-95630,Los Pozos,,USA,Arizona,2110,80,Zea mays,cupule,charred,-10.7,AMS,p3k14c
+Beta-126951,Los Pozos,,USA,Arizona,2120,40,Zea mays,cupule,charred,-10.7,AMS,p3k14c
+Beta-123602,Los Pozos,,USA,Arizona,2140,50,Zea mays,cupule,charred,-10.7,AMS,p3k14c
+Beta-124112,Los Pozos,,USA,Arizona,3140,50,Zea mays,kernel,charred,-10.7,AMS,p3k14c
+Beta-124111,Los Pozos,,USA,Arizona,3340,60,Zea mays,kernel,charred,-10.7,AMS,p3k14c
+Beta-126949,Los Pozos,,USA,Arizona,2190,40,Zea mays,cupule,charred,-10.6,AMS,p3k14c
+Beta-124698,Los Pozos,,USA,Arizona,2150,60,Zea mays,cupule,charred,-10.5,AMS,p3k14c
+Beta-125225,Los Pozos,,USA,Arizona,2160,30,Zea mays,cupule,charred,-10.5,AMS,p3k14c
+Beta-124696,Los Pozos,,USA,Arizona,2150,60,Zea mays,cupule,charred,-10.4,AMS,p3k14c
+Beta-124114,Los Pozos,,USA,Arizona,3300,80,Zea mays,kernel,charred,-10.4,AMS,p3k14c
+Beta-124113,Los Pozos,,USA,Arizona,3230,50,Zea mays,kernel,charred,-10.3,AMS,p3k14c
+Beta-126950,Los Pozos,,USA,Arizona,2110,40,Zea mays,cupule,charred,-10.2,AMS,p3k14c
+Beta-125222,Los Pozos,,USA,Arizona,2180,50,Zea mays,cupule,charred,-10.2,AMS,p3k14c
+Beta-123601,Los Pozos,,USA,Arizona,2130,40,Zea mays,kernel,charred,-10.2,AMS,p3k14c
+Beta-126332,Los Pozos,,USA,Arizona,2070,50,Zea mays,cupule,charred,-10.1,AMS,p3k14c
+Beta-124697,Los Pozos,,USA,Arizona,2130,50,Zea mays,cupule,charred,-10.1,AMS,p3k14c
+Beta-125224,Los Pozos,,USA,Arizona,2230,40,Zea mays,cupule,charred,-10.1,AMS,p3k14c
+Beta-91148,Los Pozos,,USA,Arizona,2140,50,Zea mays,cupule,charred,-9.6,AMS,p3k14c
+Beta-125223,Los Pozos,,USA,Arizona,2190,50,Zea mays,cupule,charred,-9.3,AMS,p3k14c
+Beta-125226,Los Pozos,,USA,Arizona,2140,40,Zea mays,cupule,charred,-8.9,AMS,p3k14c
+Beta-91146,Los Pozos,,USA,Arizona,2090,60,Zea mays,cupule,charred,-8.3,AMS,p3k14c
+Beta-126328,Los Pozos,,USA,Arizona,2140,50,Zea mays,kernel,charred,-8.3,AMS,p3k14c
+Beta-91141,Los Pozos,,USA,Arizona,2120,60,Zea mays,cupule,charred,-8.2,AMS,p3k14c
+Beta-91144,Los Pozos,,USA,Arizona,2170,60,Zea mays,cupule,charred,-8.2,AMS,p3k14c
+Beta-91147,Los Pozos,,USA,Arizona,2240,60,Zea mays,cupule,charred,-8,AMS,p3k14c
+Beta-91142,Los Pozos,,USA,Arizona,2150,50,Zea mays,cupule,charred,-7.6,AMS,p3k14c
+Beta-91143,Los Pozos,,USA,Arizona,2050,50,Zea mays,cupule,charred,-7.5,AMS,p3k14c
+Beta-91149,Los Pozos,,USA,Arizona,2160,60,Zea mays,cupule,charred,-6.7,AMS,p3k14c
+Beta-91140,Los Pozos,,USA,Arizona,2140,60,Zea mays,cupule,charred,-2.5,AMS,p3k14c
+CAMS-34923,Los Pozos,,USA,Arizona,4050,50,Zea mays,cupule,charred,NA,AMS,p3k14c
+AA-6640,Solar Well,,USA,Arizona,2245,60,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-6641,Solar Well,,USA,Arizona,2835,85,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-6638,Clearwater,AZ BB:13:6,USA,Arizona,2450,75,Zea mays,Maize,charred,-16.9,AMS,p3k14c
+Beta-193146,Clearwater,AZ BB:13:6,USA,Arizona,1760,40,Zea mays,Maize,charred,-11.7,AMS,p3k14c
+Beta-190717,Clearwater,AZ BB:13:6,USA,Arizona,2010,40,Zea mays,Maize,charred,-11.4,AMS,p3k14c
+Beta-90228,Clearwater,AZ BB:13:6,USA,Arizona,2390,50,Zea mays,Maize,charred,-11.3,AMS,p3k14c
+Beta-175842,Clearwater,AZ BB:13:6,USA,Arizona,3690,40,Zea mays,kernel,charred,-10.9,AMS,p3k14c
+Beta-193152,Clearwater,AZ BB:13:6,USA,Arizona,2430,50,Zea mays,Maize,charred,-10.9,AMS,p3k14c
+Beta-90229,Clearwater,AZ BB:13:6,USA,Arizona,2420,50,Zea mays,Maize,charred,-10.8,AMS,p3k14c
+AA-6636,Clearwater,AZ BB:13:6,USA,Arizona,2390,65,Zea mays,Maize,charred,-10.6,AMS,p3k14c
+Beta-193149,Clearwater,AZ BB:13:6,USA,Arizona,2500,50,Zea mays,Maize,charred,-10.6,AMS,p3k14c
+Beta-190710,Clearwater,AZ BB:13:6,USA,Arizona,1650,40,Zea mays,Maize,charred,-10.5,AMS,p3k14c
+Beta-85405,Clearwater,AZ BB:13:6,USA,Arizona,2520,40,Zea mays,Maize,charred,-10.5,AMS,p3k14c
+Beta-193151,Clearwater,AZ BB:13:6,USA,Arizona,2620,40,Zea mays,Maize,charred,-10.5,AMS,p3k14c
+Beta-160381,Clearwater,AZ BB:13:6,USA,Arizona,3650,40,Zea mays,kernel,charred,-10.4,AMS,p3k14c
+Beta-90226,Clearwater,AZ BB:13:6,USA,Arizona,2500,60,Zea mays,Maize,charred,-10,AMS,p3k14c
+AA-6637,Clearwater,AZ BB:13:6,USA,Arizona,2395,60,Zea mays,Maize,charred,-9.9,AMS,p3k14c
+Beta-193148,Clearwater,AZ BB:13:6,USA,Arizona,2530,50,Zea mays,Maize,charred,-9.9,AMS,p3k14c
+Beta-92619,Clearwater,AZ BB:13:6,USA,Arizona,2430,60,Zea mays,Maize,charred,-9.5,AMS,p3k14c
+Beta-160379,Clearwater,AZ BB:13:6,USA,Arizona,2470,40,Zea mays,Maize,charred,-9.2,AMS,p3k14c
+Beta-242211,Clearwater,AZ BB:13:6,USA,Arizona,3720,40,Zea mays,kernel,charred,-9.1,AMS,p3k14c
+Beta-90225,Clearwater,AZ BB:13:6,USA,Arizona,2580,60,Zea mays,Maize,charred,-8.7,AMS,p3k14c
+AA-12054,Milagro,,USA,Arizona,2775,60,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-1074,Milagro,,USA,Arizona,2780,90,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-12053,Milagro,,USA,Arizona,2910,45,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-12056,Milagro,,USA,Arizona,2915,45,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-12055,Milagro,,USA,Arizona,2930,45,Zea mays,kernel,charred,NA,AMS,p3k14c
+CAMS-45662,McEuen Cave,,USA,Arizona,2270,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-43176,McEuen Cave,,USA,Arizona,2290,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-45663,McEuen Cave,,USA,Arizona,2290,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-45664,McEuen Cave,,USA,Arizona,2320,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-43178,McEuen Cave,,USA,Arizona,2430,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-43180,McEuen Cave,,USA,Arizona,2780,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-43179,McEuen Cave,,USA,Arizona,2790,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+CAMS-43177,McEuen Cave,,USA,Arizona,3690,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-210888,El Abra,,Mexico,Guerrero,120,40,Zea mays,cob,NA,NA,AMS,p3k14c
+AA-3314,Coxcatlan,,Mexico,Puebla,450,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3309,Coxcatlan,,Mexico,Puebla,1860,45,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3307,Coxcatlan,,Mexico,Puebla,1900,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3313,Coxcatlan,,Mexico,Puebla,3740,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3312,Coxcatlan,,Mexico,Puebla,4040,100,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3308,Coxcatlan,,Mexico,Puebla,4090,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-203460,El Abra 2,,Mexico,Guerrero,360,40,Zea mays,cob,NA,NA,AMS,p3k14c
+Beta-203461,El Abra 2,,Mexico,Guerrero,2080,40,Zea mays,cob,NA,NA,AMS,p3k14c
+Beta-166756,Romero and Valenzuela Caves,,Mexico,Tamaulipas,2340,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-85432,Romero and Valenzuela Caves,,Mexico,Tamaulipas,2560,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-166757,Romero and Valenzuela Caves,,Mexico,Tamaulipas,2600,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-85433,Romero and Valenzuela Caves,,Mexico,Tamaulipas,3890,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-85431,Romero and Valenzuela Caves,,Mexico,Tamaulipas,3930,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-4811,West End,,USA,Arizona,2675,80,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-4810,West End,,USA,Arizona,2735,75,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-4458,Fairbank,,USA,Arizona,2800,140,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-4457,Fairbank,,USA,Arizona,2815,80,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-4459,Fairbank,,USA,Arizona,2590,75,Zea mays,kernel,NA,NA,AMS,p3k14c
+Beta-22623,El Cerrito,,Mexico,Chiapas,2185,95,Zea mays,cob,charred,NA,AMS,p3k14c
+A-3500,Los Ojitos,,USA,Arizona,2170,150,Zea mays,kernel,charred,NA,AMS,p3k14c
+AA-13124,Donaldson / Matty Canyon,,USA,Arizona,2320,55,Zea mays,cupule,charred,NA,AMS,p3k14c
+AA-13125,Donaldson / Matty Canyon,,USA,Arizona,2505,50,Zea mays,cupule,charred,NA,AMS,p3k14c
+NSRL-12484,Cerro Juanaquena,,Mexico,Chihuahua,3130,55,Zea mays,maize,charred,NA,AMS,p3k14c
+AA-3315,San Marcos,,Mexico,Puebla,1560,45,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3306,San Marcos,,Mexico,Puebla,4150,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3310,San Marcos,,Mexico,Puebla,4600,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3304,San Marcos,,Mexico,Puebla,4680,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3305,San Marcos,,Mexico,Puebla,4700,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-3311,San Marcos,,Mexico,Puebla,4700,110,Zea mays,cob,uncharred,NA,AMS,p3k14c
+GX-12720,Tornillo Shelter,LA17687,USA,New Mexico,3175,240,Zea mays,cob,NA,NA,RADIOMETRIC,CARD
+AA-52706,El Riego,,Mexico,Puebla,135,41,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52704,El Riego,,Mexico,Puebla,195,61,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52705,El Riego,,Mexico,Puebla,294,41,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52698,El Riego,,Mexico,Puebla,429,48,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52702,El Riego,,Mexico,Puebla,986,36,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52692,El Riego,,Mexico,Puebla,1520,62,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52703,El Riego,,Mexico,Puebla,1562,55,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52691,El Riego,,Mexico,Puebla,1582,35,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52700,El Riego,,Mexico,Puebla,1585,45,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52690,El Riego,,Mexico,Puebla,1598,35,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-62685,El Riego,,Mexico,Puebla,1625,39,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52689,El Riego,,Mexico,Puebla,1630,49,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52697,El Riego,,Mexico,Puebla,1709,72,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52694,El Riego,,Mexico,Puebla,1759,89,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52701,El Riego,,Mexico,Puebla,1777,45,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52696,El Riego,,Mexico,Puebla,1800,130,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-62686,El Riego,,Mexico,Puebla,1805,39,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-62684,El Riego,,Mexico,Puebla,1845,39,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52699,El Riego,,Mexico,Puebla,1900,62,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52693,El Riego,,Mexico,Puebla,1920,110,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52695,El Riego,,Mexico,Puebla,2290,100,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52687,El Riego,,Mexico,Puebla,3107,220,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52685,El Riego,,Mexico,Puebla,3210,490,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-52684,El Riego,,Mexico,Puebla,3850,240,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-84948,Turkey Pen Ruin,,USA,Utah,1839,36,Zea mays,cob,uncharred,-11.3,AMS,p3k14c
+WSU-3512,Turkey Pen Ruin,,USA,Utah,1980,60,Zea mays,cob,uncharred,NA,NA,p3k14c
+WSU-3513,Turkey Pen Ruin,,USA,Utah,2050,80,Zea mays,cob,uncharred,NA,NA,p3k14c
+Beta-402794,San Luis de Cabezon,,USA,New Mexico,3000,30,Zea mays,cupule,NA,-11,AMS,p3k14c
+Beta-402780,San Luis de Cabezon,,USA,New Mexico,3040,30,Zea mays,cupule,NA,-10.8,AMS,p3k14c
+Beta-402800,San Luis de Cabezon,,USA,New Mexico,3050,30,Zea mays,cupule,NA,-10.7,AMS,Ancient Maize Map
+Beta-402782,San Luis de Cabezon,,USA,New Mexico,3130,30,Zea mays,cupule,NA,-10.7,AMS,p3k14c
+AA-34173,San Luis de Cabezon,,USA,New Mexico,3125,45,Zea mays,Maize,charred,-9.4,AMS,p3k14c
+Beta-402784,San Luis de Cabezon,,USA,New Mexico,3120,30,Zea mays,kernel,NA,-9,AMS,p3k14c
+AA-34176,San Luis de Cabezon,,USA,New Mexico,3055,45,Zea mays,Maize,charred,-8.9,AMS,p3k14c
+Beta-402789,San Luis de Cabezon,,USA,New Mexico,3110,30,Zea mays,kernel,NA,-8.9,AMS,p3k14c
+Beta-402791,San Luis de Cabezon,,USA,New Mexico,3120,30,Zea mays,kernel,NA,-8.9,AMS,p3k14c
+Beta-402781,San Luis de Cabezon,,USA,New Mexico,3110,30,Zea mays,kernel,NA,-8.6,AMS,p3k14c
+Beta-402796,San Luis de Cabezon,,USA,New Mexico,3040,30,Zea mays,kernel,NA,-8.2,AMS,p3k14c
+Beta-402788,San Luis de Cabezon,,USA,New Mexico,3120,30,Zea mays,kernel,NA,-8.1,AMS,p3k14c
+Beta-402798,San Luis de Cabezon,,USA,New Mexico,3120,30,Zea mays,kernel,NA,NA,AMS,p3k14c
+AA-34172,San Luis de Cabezon,,USA,New Mexico,3085,45,Zea mays,kernel,NA,-10.1,RADIOMETRIC,Ancient Maize Map
+AA-34175,San Luis de Cabezon,,USA,New Mexico,3115,50,Zea mays,kernel,NA,-9.7,RADIOMETRIC,Ancient Maize Map
+AA-34174,San Luis de Cabezon,,USA,New Mexico,3120,45,Zea mays,kernel,NA,-9.4,RADIOMETRIC,Ancient Maize Map
+AA-6409,Fresnal Shelter,,USA,New Mexico,2880,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-6402,Fresnal Shelter,,USA,New Mexico,2945,55,Zea mays,cob,uncharred,NA,AMS,p3k14c
+AA-6403,Fresnal Shelter,,USA,New Mexico,1665,55,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+AA-6411,Fresnal Shelter,,USA,New Mexico,1690,55,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+AA-6410,Fresnal Shelter,,USA,New Mexico,1720,65,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+AA-6406,Fresnal Shelter,,USA,New Mexico,1935,65,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+AA-6408,Fresnal Shelter,,USA,New Mexico,2015,60,Zea mays,stalk,uncharred,NA,AMS,p3k14c
+A-3070,Fresnal Shelter,,USA,New Mexico,2540,200,Zea mays,cob,uncharred,NA,NA,p3k14c
+A-3071,Fresnal Shelter,,USA,New Mexico,1990,320,Zea mays,kernel,uncharred,NA,NA,p3k14c
+Beta-179558,Old Corn,LA 137258,USA,New Mexico,3680,40,Zea mays,kernel,charred,-11.1,AMS,p3k14c
+Beta-179557,Old Corn,LA 137258,USA,New Mexico,3660,40,Zea mays,kernel,charred,-10.9,AMS,p3k14c
+Beta-185023,Old Corn,LA 137258,USA,New Mexico,3810,50,Zea mays,kernel,charred,-10.9,AMS,p3k14c
+Beta-185022,Old Corn,LA 137258,USA,New Mexico,3760,50,Zea mays,cob,charred,-10.6,AMS,p3k14c
+Beta-185027,Old Corn,LA 137258,USA,New Mexico,3660,50,Zea mays,cupule,charred,-10.5,AMS,p3k14c
+Beta-178616,Old Corn,LA 137258,USA,New Mexico,3620,40,Zea mays,cob,charred,-10.2,AMS,p3k14c
+Beta-179496,Old Corn,LA 137258,USA,New Mexico,3640,40,Zea mays,kernel,charred,-10.2,AMS,p3k14c
+Beta-185025,Old Corn,LA 137258,USA,New Mexico,3700,50,Zea mays,kernel,charred,-9.7,AMS,p3k14c
+Beta-185024,Old Corn,LA 137258,USA,New Mexico,3710,50,Zea mays,kernel,charred,-9.1,AMS,p3k14c
+Beta-185026,Old Corn,LA 137258,USA,New Mexico,3730,40,Zea mays,kernel,charred,-8.9,AMS,p3k14c
+Beta-132510,Guila Naquitz,,Mexico,Oaxaca,5410,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-132511,Guila Naquitz,,Mexico,Oaxaca,5420,60,Zea mays,cob,uncharred,NA,AMS,p3k14c
+A-3395,Sheep Camp Shelter,,USA,New Mexico,2170,180,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+A-3396,Sheep Camp Shelter,,USA,New Mexico,2290,210,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+Beta-84648,Chama Alcove,,USA,New Mexico,1840,50,Zea mays,cob,uncharred,-10.9,AMS,p3k14c
+Beta-84646,Chama Alcove,,USA,New Mexico,1630,70,Zea mays,cob,uncharred,NA,AMS,p3k14c
+UGa-4179,LA 18091,,USA,New Mexico,2965,267,Zea mays,maize kernel,charred,NA,RADIOMETRIC,"Simmons, A. H. 1986. New Evidence for the Early Use of Cultigens in the American Southwest. American Antiquity 51(1):73-89."
+Beta-97789,Three Fir Shelter,,USA,Arizona,2220,60,Zea mays,cob,NA,-12,NA,p3k14c
+Beta-97790,Three Fir Shelter,,USA,Arizona,2230,50,Zea mays,cob,NA,-10.9,NA,p3k14c
+Beta-26275,Three Fir Shelter,,USA,Arizona,3610,170,Zea mays,cob,uncharred,NA,RADIOMETRIC,CARD
+Beta-183772,Jemez Cave,,USA,New Mexico,2980,40,Zea mays,maize kernel,NA,NA,AMS,p3k14c
+Beta-183771,Jemez Cave,,USA,New Mexico,2990,40,Zea mays,maize kernel,NA,NA,AMS,p3k14c
+A-3359,Jemez Cave,,USA,New Mexico,2410,360,Zea mays,cob,uncharred,NA,NA,p3k14c
+M-466,Jemez Cave,,USA,New Mexico,2440,250,Zea mays,cob,uncharred,NA,RADIOMETRIC,Vierra and Ford 2006:499
+Beta-162533,Tularosa Cave,,USA,New Mexico,710,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-162534,Tularosa Cave,,USA,New Mexico,830,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-166754,Tularosa Cave,,USA,New Mexico,850,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-160185,Tularosa Cave,,USA,New Mexico,950,50,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-166753,Tularosa Cave,,USA,New Mexico,1900,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+Beta-166755,Tularosa Cave,,USA,New Mexico,1920,40,Zea mays,cob,uncharred,NA,AMS,p3k14c
+A-2791,Bat Cave,,USA,New Mexico,2430,420,Zea mays,cupule,uncharred,NA,AMS,p3k14c
+A-4167,Bat Cave,,USA,New Mexico,3010,150,Zea mays,cupule,uncharred,NA,AMS,p3k14c
+AA-679,Bat Cave,,USA,New Mexico,2420,170,Zea mays,kernel,uncharred,NA,AMS,p3k14c
+A-4188,Bat Cave,,USA,New Mexico,3120,70,Zea mays,Maize,uncharred,NA,AMS,p3k14c
+A-4187,Bat Cave,,USA,New Mexico,3740,70,Zea mays,Maize,uncharred,NA,AMS,p3k14c
+A-4183,Bat Cave,,USA,New Mexico,2460,220,Zea mays,maize kernel,uncharred,NA,AMS,p3k14c
+Beta-275719,Lake Xaltocan,,Mexico,State of Mexico,1240,40,Zea mays,cob,charred,NA,AMS,p3k14c
+Beta-275721,Lake Xaltocan,,Mexico,State of Mexico,1350,40,Zea mays,cob,charred,NA,AMS,p3k14c
+Beta-360445,Eagles Watch,42KA6165,USA,Utah,1220,30,Zea mays,kernel,NA,-12.1,AMS,p3k14c
+Beta-362335,Eagles Watch,42KA6165,USA,Utah,1360,30,Zea mays,kernel,NA,-11.5,AMS,p3k14c
+Beta-417361,Eagles Watch,42KA6165,USA,Utah,2000,30,Zea mays,kernel,NA,-11.2,AMS,p3k14c
+Beta-390949,Eagles Watch,42KA6165,USA,Utah,1190,30,Zea mays,kernel,NA,-11,AMS,p3k14c
+Beta-360451,Eagles Watch,42KA6165,USA,Utah,1250,30,Zea mays,kernel,NA,-10.8,AMS,p3k14c
+Beta-368073,Eagles Watch,42KA6165,USA,Utah,1460,30,Zea mays,kernel,NA,-10.8,AMS,p3k14c
+Beta-360447,Eagles Watch,42KA6165,USA,Utah,1970,30,Zea mays,kernel,NA,-10.8,AMS,p3k14c
+Beta-360444,Eagles Watch,42KA6165,USA,Utah,1920,30,Zea mays,kernel,NA,-10.6,AMS,p3k14c
+Beta-368072,Eagles Watch,42KA6165,USA,Utah,1150,30,Zea mays,kernel,NA,-10.4,AMS,p3k14c
+Beta-360453,Eagles Watch,42KA6165,USA,Utah,2980,30,Zea mays,kernel,NA,-10.4,AMS,p3k14c
+Beta-360450,Eagles Watch,42KA6165,USA,Utah,1210,30,Zea mays,kernel,NA,-10.3,AMS,p3k14c
+Beta-368074,Eagles Watch,42KA6165,USA,Utah,1420,30,Zea mays,kernel,NA,-10.3,AMS,p3k14c
+Beta-360454,Eagles Watch,42KA6165,USA,Utah,1580,30,Zea mays,kernel,NA,-10.3,AMS,p3k14c
+Beta-360449,Eagles Watch,42KA6165,USA,Utah,1450,30,Zea mays,kernel,NA,-10.2,AMS,p3k14c
+Beta-360448,Eagles Watch,42KA6165,USA,Utah,2080,30,Zea mays,kernel,NA,-10.2,AMS,p3k14c
+Beta-390945,Eagles Watch,42KA6165,USA,Utah,1170,30,Zea mays,kernel,NA,-10,AMS,p3k14c
+Beta-368075,Eagles Watch,42KA6165,USA,Utah,1450,30,Zea mays,kernel,NA,-9.9,AMS,p3k14c
+Beta-362337,Eagles Watch,42KA6165,USA,Utah,1570,30,Zea mays,kernel,NA,-9.6,AMS,p3k14c
+Beta-417359,Eagles Watch,42KA6165,USA,Utah,1530,30,Zea mays,kernel,NA,-9.3,AMS,p3k14c
+Beta-362336,Eagles Watch,42KA6165,USA,Utah,1470,30,Zea mays,kernel,NA,-9,AMS,p3k14c
+Beta-390952,Eagles Watch,42KA6165,USA,Utah,1550,30,Zea mays,kernel,NA,-8.6,AMS,p3k14c
+UGAMS-4223,Darkmold,5LP4991,USA,Colorado,2040,25,Zea mays,kernel,charred,-10,AMS,p3k14c
+Beta-218462,Outpost Estates,BB:10:59,USA,Arizona,2900,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-218463,Outpost Estates,BB:10:59,USA,Arizona,3100,40,Zea mays,maize,NA,NA,NA,p3k14c
+AA-11963,Eagle Ridge,V:5:104,USA,Arizona,1605,55,Zea mays,maize,NA,NA,NA,p3k14c
+AA-11955,Eagle Ridge,V:5:104,USA,Arizona,1675,55,Zea mays,maize,NA,NA,NA,p3k14c
+AA-11957,Eagle Ridge,V:5:104,USA,Arizona,1675,55,Zea mays,maize,NA,NA,NA,p3k14c
+AA-11964,Eagle Ridge,V:5:104,USA,Arizona,1675,55,Zea mays,maize,NA,NA,NA,p3k14c
+AA-13264,Square Hearth,AA:12:745,USA,Arizona,1565,60,Zea mays,maize,NA,-10,NA,p3k14c
+AA-13261,Square Hearth,AA:12:745,USA,Arizona,1585,55,Zea mays,maize,NA,-10,NA,p3k14c
+AA-13256,Square Hearth,AA:12:745,USA,Arizona,1630,65,Zea mays,maize,NA,-10,NA,p3k14c
+AA-13259,Square Hearth,AA:12:745,USA,Arizona,1765,55,Zea mays,maize,NA,-10,NA,p3k14c
+Beta-81071,Stone Pipe,BB:13:425,USA,Arizona,1650,60,Zea mays,maize,NA,-10.4,NA,p3k14c
+Beta-81065,Stone Pipe,BB:13:425,USA,Arizona,1720,60,Zea mays,maize,NA,-9.3,NA,p3k14c
+Beta-76001,Confluence,42EM1887,USA,Utah,1150,110,Zea mays,cob,charred,NA,AMS,p3k14c
+Beta-76002,Confluence,42EM1887,USA,Utah,1450,60,Zea mays,cob,charred,NA,AMS,p3k14c
+Beta-139119,Schmidt site,5MN4253,USA,Colorado,2010,40,Zea mays,SEEDS,NA,-11.2,NA,p3k14c
+Beta-139120,Schmidt site,5MN4253,USA,Colorado,2110,40,Zea mays,SEEDS,NA,-9.4,NA,p3k14c
+Beta-95307,Talus Village,,USA,Colorado,2010,50,Zea mays,kernel,NA,-11.4,NA,p3k14c
+Beta-95310,Talus Village,,USA,Colorado,2160,70,Zea mays,cob,NA,-10.6,NA,p3k14c
+Beta-95308,Talus Village,,USA,Colorado,1700,130,Zea mays,kernel,NA,-10.6,NA,p3k14c
+Beta-95309,Talus Village,,USA,Colorado,1800,100,Zea mays,kernel,NA,-10.3,NA,p3k14c
+Beta-197182,NA,5LP188,USA,Colorado,1600,40,Zea mays,SEEDS,NA,-10.8,AMS,p3k14c
+Beta-197181,NA,5LP188,USA,Colorado,1620,40,Zea mays,SEEDS,NA,-10.7,AMS,p3k14c
+Beta-197183,NA,5LP188,USA,Colorado,1840,40,Zea mays,SEEDS,NA,-10.5,AMS,p3k14c
+Beta-202835,NA,5LP570,USA,Colorado,1600,40,Zea mays,SEEDS,NA,-10.4,AMS,p3k14c
+Beta-75863,North Shelter (Falls Creek),5LP1434,USA,Colorado,2140,40,Zea mays,SEEDS,NA,-26,NA,p3k14c
+Beta-75864,North Shelter (Falls Creek),5LP1434,USA,Colorado,2240,40,Zea mays,SEEDS,NA,-26,NA,p3k14c
+Beta-75865,North Shelter (Falls Creek),5LP1434,USA,Colorado,2260,40,Zea mays,SEEDS,NA,-26,NA,p3k14c
+Beta-95303,Fall Creek South Shelter,,USA,Colorado,1790,110,Zea mays,stalk,NA,-11.3,NA,p3k14c
+Beta-122742,Valencia Vieja,BB:13:15,USA,Arizona,1850,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-228717,Columbus Park,AA:12:96,USA,Arizona,2510,40,Zea mays,maize,NA,-10.8,NA,p3k14c
+Beta-228718,Columbus Park,AA:12:96,USA,Arizona,2470,40,Zea mays,maize,NA,-10,NA,p3k14c
+Beta-115955,Phoenix Courthouse,T:12:95,USA,Arizona,1800,50,Zea mays,maize,NA,NA,NA,p3k14c
+AA-110819,Mogollon Village,LA 11568,USA,New Mexico,1878,19,Zea mays,cupule,charred,-10.9,AMS,p3k14c
+AA-110821,Mogollon Village,LA 11568,USA,New Mexico,1938,19,Zea mays,NA,charred,-9.3,AMS,p3k14c
+AA-111725,Mogollon Village,LA 11568,USA,New Mexico,2137,20,Zea mays,NA,charred,-8.8,AMS,p3k14c
+Beta-129536,Kearny,AZ V:13:201,USA,Arizona,1880,40,Zea mays,Maize,NA,NA,AMS,"Mabry, Jonathan, B. (Ed.), 2008. Las Capas: Early Irrigation and Sedentism in a Southwestern Floodplain, Anthropological Papers No. 28. Center for Desert Archaeology, Tucson."
+Beta-135424,Kearny,AZ V:13:201,USA,Arizona,1940,40,Zea mays,Maize,NA,NA,AMS,"Mabry, Jonathan, B. (Ed.), 2008. Las Capas: Early Irrigation and Sedentism in a Southwestern Floodplain, Anthropological Papers No. 28. Center for Desert Archaeology, Tucson."
+Beta-129537,Kearny,AZ V:13:201,USA,Arizona,2020,50,Zea mays,Maize,NA,NA,AMS,"Mabry, Jonathan, B. (Ed.), 2008. Las Capas: Early Irrigation and Sedentism in a Southwestern Floodplain, Anthropological Papers No. 28. Center for Desert Archaeology, Tucson."
+Beta-135423,Kearny,AZ V:13:201,USA,Arizona,2180,40,Zea mays,Maize,NA,NA,AMS,"Mabry, Jonathan, B. (Ed.), 2008. Las Capas: Early Irrigation and Sedentism in a Southwestern Floodplain, Anthropological Papers No. 28. Center for Desert Archaeology, Tucson."
+Beta-193388,Stewart Brickyard,AZ AA:12:51,USA,Arizona,2890,40,Zea mays,Maize,NA,-10.6,AMS,p3k14c
+Beta-208858,Stewart Brickyard,AZ AA:12:51,USA,Arizona,2840,40,Zea mays,Maize,NA,-8.6,AMS,p3k14c
+Beta-208861,Stewart Brickyard,AZ AA:12:51,USA,Arizona,2850,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-168796,Cortaro Road,AZ AA:12:232,USA,Arizona,2820,40,Zea mays,Maize,NA,-11.1,AMS,p3k14c
+Beta-168799,Cortaro Road,AZ AA:12:232,USA,Arizona,3320,40,Zea mays,Maize,NA,-10.1,AMS,p3k14c
+Beta-168795,Cortaro Road,AZ AA:12:232,USA,Arizona,2960,40,Zea mays,Maize,NA,-10,AMS,p3k14c
+Beta-168791,Cortaro Road,AZ AA:12:232,USA,Arizona,2630,40,Zea mays,Maize,NA,-9.7,AMS,p3k14c
+Beta-168793,Cortaro Road,AZ AA:12:232,USA,Arizona,2620,40,Zea mays,Maize,NA,-9.2,AMS,p3k14c
+Beta-168797,Cortaro Road,AZ AA:12:232,USA,Arizona,2840,40,Zea mays,Maize,NA,-9.1,AMS,p3k14c
+Beta-168802,Cortaro Road,AZ AA:12:232,USA,Arizona,2820,40,Zea mays,Maize,NA,-8.6,AMS,p3k14c
+Beta-168801,Cortaro Road,AZ AA:12:232,USA,Arizona,2840,40,Zea mays,Maize,NA,-8.6,AMS,p3k14c
+Beta-168788,Cortaro Road,AZ AA:12:232,USA,Arizona,2200,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-229374,Dairy Site,AZ AA:12:285/744,USA,Arizona,2830,40,Zea mays,Maize,NA,-11.1,AMS,p3k14c
+Beta-229375,Dairy Site,AZ AA:12:285/744,USA,Arizona,2820,40,Zea mays,Maize,NA,-10.3,AMS,p3k14c
+Beta-171881,Dairy Site,AZ AA:12:285/744,USA,Arizona,2680,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-171880,Dairy Site,AZ AA:12:285/744,USA,Arizona,2740,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-171878,Dairy Site,AZ AA:12:285/744,USA,Arizona,2810,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-171879,Dairy Site,AZ AA:12:285/744,USA,Arizona,2820,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-292150,Las Capas,AZ AA:12:111,USA,Arizona,3130,40,Zea mays,Maize,NA,-15.5,AMS,p3k14c
+Beta-344170,Las Capas,AZ AA:12:111,USA,Arizona,3990,30,Zea mays,Maize cupules,NA,-10.6,AMS,p3k14c
+Beta-325662,Las Capas,AZ AA:12:111,USA,Arizona,3010,30,Zea mays,Maize,NA,-10.5,AMS,p3k14c
+Beta-344171,Las Capas,AZ AA:12:111,USA,Arizona,4930,30,Zea mays,Maize cupules,NA,-10.5,AMS,p3k14c
+Beta-333931,Las Capas,AZ AA:12:111,USA,Arizona,4640,30,Zea mays,Maize cob fragment,NA,-10.3,AMS,p3k14c
+Beta-292149,Las Capas,AZ AA:12:111,USA,Arizona,3050,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-100418,Wetlands,AZ AA:12:90,USA,Arizona,2440,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-100409,Wetlands,AZ AA:12:90,USA,Arizona,2510,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-100410,Wetlands,AZ AA:12:90,USA,Arizona,2550,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-100415,Wetlands,AZ AA:12:90,USA,Arizona,2580,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-100413,Wetlands,AZ AA:12:90,USA,Arizona,2790,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-13257,Square Hearth,AZ AA:12:745,USA,Arizona,3505,65,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-13260,Square Hearth,,USA,Arizona,2135,80,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81061,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2010,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81060,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2180,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-67490,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2200,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81063,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2260,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81064,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2260,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81058,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2290,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81059,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2290,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-67489,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2390,70,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81062,Santa Cruz Bend,AZ AA:12:746,USA,Arizona,2440,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81066,Stone Pipe,AZ BB:13:425,USA,Arizona,2390,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81067,Stone Pipe,,USA,Arizona,2150,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-81069,Stone Pipe,,USA,Arizona,2360,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-6639,Clearwater,AZ BB:13:6,USA,Arizona,2360,60,Zea mays,"Zea mays cupule, charred (ID verified by Diehl)",NA,-22.5,AMS,p3k14c
+Beta-155367,Julian Wash,AZ BB:13:17 ,USA,Arizona,2200,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-155368,Julian Wash,AZ BB:13:17 ,USA,Arizona,2290,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-59604,NA,42Ws0964,USA,Utah,1130,60,Zea mays,Maize,NA,NA,NA,CARD
+Beta-311759,NA,42Ws5164,USA,Utah,1370,30,Zea mays,Zea Mays,NA,-12.9,AMS,p3k14c
+Beta-311762,NA,42Ws5164,USA,Utah,1240,30,Zea mays,Zea Mays,NA,-11.1,AMS,p3k14c
+Beta-311761,NA,42Ws5164,USA,Utah,1260,30,Zea mays,Zea Mays,NA,-10.2,AMS,p3k14c
+Beta-311760,NA,42Ws5164,USA,Utah,1230,30,Zea mays,Zea Mays,NA,-11.1,AMS,p3k14c
+Beta-311769,NA,42Ws5167,USA,Utah,1390,30,Zea mays,Zea Mays,NA,-11.5,AMS,p3k14c
+Beta-311777,NA,42Ws5167,USA,Utah,1320,30,Zea mays,Zea Mays,NA,-11.4,AMS,p3k14c
+Beta-311764,NA,42Ws5167,USA,Utah,1320,30,Zea mays,Zea Mays,NA,-11.3,AMS,p3k14c
+Beta-311773,NA,42Ws5167,USA,Utah,1330,30,Zea mays,Zea Mays,NA,-11.3,AMS,p3k14c
+Beta-311763,NA,42Ws5167,USA,Utah,1340,30,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+Beta-311772,NA,42Ws5167,USA,Utah,1340,30,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+Beta-311768,NA,42Ws5167,USA,Utah,1320,30,Zea mays,Zea Mays,NA,-10.6,AMS,p3k14c
+Beta-311771,NA,42Ws5167,USA,Utah,1360,30,Zea mays,Zea Mays,NA,-10.6,AMS,p3k14c
+Beta-311767,NA,42Ws5167,USA,Utah,1320,30,Zea mays,Zea Mays,NA,-10.2,AMS,p3k14c
+Beta-311766,NA,42Ws5167,USA,Utah,1410,30,Zea mays,Zea Mays,NA,-10.9,NA,p3k14c
+Beta-311770,NA,42Ws5167,USA,Utah,1300,30,Zea mays,Zea Mays,NA,-11.1,AMS,p3k14c
+Beta-311765,NA,42Ws5167,USA,Utah,1810,30,Zea mays,Zea Mays,NA,-12.1,AMS,p3k14c
+Beta-311775,NA,42Ws5167,USA,Utah,1820,30,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-353659,Ant Bite,42Ws1147,USA,Utah,860,30,Zea mays,Maize,NA,-10.4,AMS,p3k14c
+Beta-353661,Ant Bite,42Ws1147,USA,Utah,960,30,Zea mays,Zea Mays,NA,-9.1,AMS,p3k14c
+Beta-311754,NA,42Ws3887,USA,Utah,1290,30,Zea mays,Zea Mays,NA,-11.1,AMS,p3k14c
+Beta-311749,NA,42Ws3887,USA,Utah,1200,30,Zea mays,Zea Mays,NA,-11,AMS,p3k14c
+Beta-311747,NA,42Ws3887,USA,Utah,1280,30,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-311757,NA,42Ws3887,USA,Utah,1290,30,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-311748,NA,42Ws3887,USA,Utah,1230,30,Zea mays,Zea Mays,NA,-10.8,AMS,p3k14c
+Beta-311752,NA,42Ws3887,USA,Utah,1290,30,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+Beta-311756,NA,42Ws3887,USA,Utah,1300,30,Zea mays,Zea Mays,NA,-10.4,AMS,p3k14c
+Beta-311751,NA,42Ws3887,USA,Utah,1270,30,Zea mays,Zea Mays,NA,-10.2,AMS,p3k14c
+Beta-311758,NA,42Ws3887,USA,Utah,1300,30,Zea mays,Zea Mays,NA,-10,AMS,p3k14c
+Beta-311755,NA,42Ws3887,USA,Utah,1270,30,Zea mays,Zea Mays,NA,-9.9,AMS,p3k14c
+Beta-311753,NA,42Ws3887,USA,Utah,1260,30,Zea mays,Zea Mays,NA,-9.8,AMS,p3k14c
+Beta-240766,Obsidian Cache Pithouse,42Ws4474,USA,Utah,1870,40,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+Beta-244163,NA,42Ws1897,USA,Utah,300,40,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-239182,NA,42Ws1345,USA,Utah,930,40,Zea mays,Zea Mays,NA,-10.8,AMS,p3k14c
+Beta-239183,NA,42Ws1345,USA,Utah,880,40,Zea mays,Zea Mays,NA,-10.4,NA,p3k14c
+Beta-251829,NA,42Ws1890,USA,Utah,900,40,Zea mays,Zea Mays,NA,-10.5,AMS,p3k14c
+Beta-210735,NA,42Ws2188,USA,Utah,130,40,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-210733,NA,42Ws2187,USA,Utah,140,40,Zea mays,Zea Mays,NA,NA,AMS,CARD
+Beta-210734,NA,42Ws2187,USA,Utah,140,40,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-08-76-2844,NA,42Ws3544,USA,Utah,1815,15,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+AA-45911,Tumamoc Hill,AZ AA:16:6,USA,Arizona,2078,44,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-45912,Tumamoc Hill,AZ AA:16:6,USA,Arizona,2244,52,Zea mays,Maize,NA,NA,AMS,p3k14c
+A-3750,Tumamoc Hill,AZ AA:16:6,USA,Arizona,2470,270,Zea mays,Maize,NA,NA,NA,p3k14c
+Beta-244165,NA,42Ws1931,USA,Utah,1280,40,Zea mays,Zea Mays,NA,-10,AMS,p3k14c
+Beta-244164,NA,42Ws1931,USA,Utah,1260,40,Zea mays,Zea Mays,NA,-9.7,AMS,p3k14c
+Beta-244162,NA,42Ws0195,USA,Utah,1220,40,Zea mays,Zea Mays,NA,-9.1,AMS,p3k14c
+Beta-244161,NA,42Ws0195,USA,Utah,1300,40,Zea mays,Zea Mays,NA,-14.5,AMS,p3k14c
+Beta-206383,Mescal Wash,AZ EE:2:51 ,USA,Arizona,2580,40,Zea mays,Zea mays cupules,NA,-10.7,AMS,p3k14c
+Beta-206386,Mescal Wash,AZ EE:2:51 ,USA,Arizona,2820,40,Zea mays,Maize,NA,-10.2,AMS,p3k14c
+Beta-21478,Roadrunner Village,42Ws0326,USA,Utah,1465,85,Zea mays,Zea Mays,NA,NA,NA,CARD
+Beta-202725,Clark,AZ CC:8:16,USA,New Mexico,2570,40,Zea mays,Zea Mays cob,NA,-11.5,AMS,p3k14c
+Beta-202731,Clark,AZ CC:8:16,USA,New Mexico,2070,40,Zea mays,Zea mays cupule,NA,-11.1,AMS,p3k14c
+Beta-202727,Clark,AZ CC:8:16,USA,New Mexico,2340,40,Zea mays,Zea mays cupule,NA,-10.7,AMS,p3k14c
+Beta-202729,Clark,AZ CC:8:16,USA,New Mexico,2190,40,Zea mays,Zea mays cupule,NA,-10.6,AMS,p3k14c
+AA-4808,Charleston,AZ EE:8:11,USA,Arizona,2365,75,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-4809,Charleston,AZ EE:8:11,USA,Arizona,2565,75,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-161577,NA,42Ga4032,USA,Utah,1200,80,Zea mays,Zea Mays,NA,-8.6,NA,p3k14c
+AA-4174,Bechan Cave,42Ka2546,USA,Utah,1240,180,Zea mays,Zea Mays,NA,NA,TAMS,p3k14c
+Beta-377201,Bear River 3,42Bo0098,USA,Utah,940,30,Zea mays,Zea Mays,NA,-9.2,NA,p3k14c
+Beta-340989,Hot Spring Lake Site,42Dv0002,USA,Utah,1260,30,Zea mays,Maize,NA,-9.3,NA,p3k14c
+Beta-340987,Hot Spring Lake Site,42Dv0002,USA,Utah,1220,30,Zea mays,Maize,NA,-9,NA,p3k14c
+Beta-340988,Hot Spring Lake Site,42Dv0002,USA,Utah,1270,30,Zea mays,Maize,NA,-9,NA,p3k14c
+Beta-175367,Salt Lake Airport,42SL0230,USA,Utah,1080,50,Zea mays,Maize,NA,-10.3,NA,p3k14c
+Beta-331683,Warren Mounds,42Wb0057,USA,Utah,830,30,Zea mays,Maize,NA,-10.4,NA,p3k14c
+Beta-379247,Willard Mounds,42Bo0003-6,USA,Utah,1040,30,Zea mays,Maize,NA,-11.1,NA,p3k14c
+Beta-373439,South Temple,42SL0285,USA,Utah,870,30,Zea mays,Maize,NA,-10.5,NA,p3k14c
+Beta-373437,South Temple,42SL0285,USA,Utah,900,30,Zea mays,Maize,NA,-10.5,NA,p3k14c
+Beta-373438,South Temple,42SL0285,USA,Utah,810,30,Zea mays,Maize,NA,-10.4,NA,p3k14c
+Beta-122979,South Temple Site,42SL0285,USA,Utah,1080,60,Zea mays,Zea Mays,NA,-10.2,AMS,p3k14c
+Beta-161581,NA,42Ga4567,USA,Utah,1170,70,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-33794/ETH-5947,NA,42To0504,USA,Utah,1290,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-319043,Get Outta There Site,LA 159879,USA,New Mexico,2460,30,Zea mays,Maize,NA,-11.4,AMS,p3k14c
+Beta-217470,NA,42Em0760,USA,Utah,890,40,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-34942,Alvey Site,42Ka0172,USA,Utah,1690,80,Zea mays,Zea Mays,NA,-11.1,NA,p3k14c
+Beta-34944,Alvey Site,42Ka0172,USA,Utah,2260,90,Zea mays,Zea Mays,NA,-10.8,NA,p3k14c
+Beta-34943,Alvey Site,42Ka0172,USA,Utah,970,100,Zea mays,Zea Mays,NA,-10.6,NA,p3k14c
+AA-10373,Alvey Site,42Ka0172,USA,Utah,1735,50,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+AA-10374,Alvey Site,42Ka0172,USA,Utah,1755,50,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+AA-10375,Alvey Site,42Ka0172,USA,Utah,1830,50,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+OxA-25507,McEuen Cave,,USA,Arizona,2699,26,Zea mays,Uncharred maize cob,NA,NA,AMS,da Fonseca et al. 2015
+Beta-237356,Rangers Dormitory,42Cb2671,USA,Utah,950,40,Zea mays,Zea Mays,NA,-9.6,AMS,p3k14c
+Beta-373445,Smoking Pipe,42Ut0150,USA,Utah,850,30,Zea mays,Maize,NA,-10.3,NA,p3k14c
+Beta-373446,Smoking Pipe,42Ut0150,USA,Utah,800,30,Zea mays,Maize,NA,-10,NA,p3k14c
+Beta-373444,Smoking Pipe,42Ut0150,USA,Utah,830,30,Zea mays,Maize,NA,-8.8,NA,p3k14c
+Beta-373442,Woodard Mound,42Ut0102,USA,Utah,870,30,Zea mays,Maize,NA,-10.8,NA,p3k14c
+Beta-373443,Woodard Mound,42Ut0102,USA,Utah,870,30,Zea mays,Maize,NA,-10.8,NA,p3k14c
+Beta-161580,NA,42Ga4567,USA,Utah,770,50,Zea mays,Zea Mays,NA,-9.4,AMS,p3k14c
+Beta-97794,Bent Oak Shelter,,USA,Utah,840,60,Zea mays,stalk,NA,-12.6,NA,p3k14c
+Beta-95280,JJB Shelter,,USA,Utah,700,70,Zea mays,cob,NA,-10,NA,p3k14c
+Beta-95279,JJB Shelter,,USA,Utah,810,60,Zea mays,cob,NA,-9.9,NA,p3k14c
+Beta-95278,JJB Shelter,,USA,Utah,900,60,Zea mays,cob,NA,-9.8,NA,p3k14c
+Beta-95284,JJB Shelter,,USA,Utah,820,60,Zea mays,cob,NA,-9.5,NA,p3k14c
+Beta-252614,NA,42Cb0224,USA,Utah,240,80,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-102493,Desha Cave 1,42Sa00000,USA,Utah,1730,60,Zea mays,Zea Mays,NA,-9.3,NA,p3k14c
+Beta-102492,Desha Cave 1,42Sa00000,USA,Utah,1840,50,Zea mays,Zea Mays,NA,-9.3,NA,p3k14c
+Beta-252615,NA,42Cb2678,USA,Utah,1190,50,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-312653,Wolf Village,42Ut0273,USA,Utah,900,30,Zea mays,Maize,NA,-11.8,AMS,p3k14c
+Beta-440722,Wolf Village,42Ut0273,USA,Utah,890,30,Zea mays,Maize,NA,-11.5,AMS,p3k14c
+Beta-312657,Wolf Village,42Ut0273,USA,Utah,1340,30,Zea mays,Maize,NA,-11.4,AMS,p3k14c
+Beta-287720,Wolf Village,42Ut0273,USA,Utah,970,40,Zea mays,Maize,NA,-11.2,AMS,p3k14c
+Beta-441614,Wolf Village,42Ut0273,USA,Utah,940,30,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-287727,Wolf Village,42Ut0273,USA,Utah,1010,40,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-287730,Wolf Village,42Ut0273,USA,Utah,920,40,Zea mays,Maize,NA,-10.9,AMS,p3k14c
+Beta-287724,Wolf Village,42Ut0273,USA,Utah,960,40,Zea mays,Maize,NA,-10.9,AMS,p3k14c
+Beta-312654,Wolf Village,42Ut0273,USA,Utah,960,30,Zea mays,Maize,NA,-10.9,AMS,p3k14c
+Beta-361249,Wolf Village,42Ut0273,USA,Utah,900,30,Zea mays,Maize,NA,-10.8,AMS,p3k14c
+Beta-287722,Wolf Village,42Ut0273,USA,Utah,950,40,Zea mays,Maize,NA,-10.8,AMS,p3k14c
+Beta-287723,Wolf Village,42Ut0273,USA,Utah,980,40,Zea mays,Maize,NA,-10.7,AMS,p3k14c
+Beta-441613,Wolf Village,42Ut0273,USA,Utah,940,30,Zea mays,Maize,NA,-10.6,AMS,p3k14c
+Beta-440723,Wolf Village,42Ut0273,USA,Utah,980,30,Zea mays,Maize,NA,-10.6,AMS,p3k14c
+Beta-287728,Wolf Village,42Ut0273,USA,Utah,930,40,Zea mays,Maize,NA,-10.5,AMS,p3k14c
+Beta-287725,Wolf Village,42Ut0273,USA,Utah,980,40,Zea mays,Maize,NA,-10.5,AMS,p3k14c
+Beta-261681,Wolf Village,42Ut0273,USA,Utah,1300,40,Zea mays,Maize,NA,-10.5,AMS,p3k14c
+Beta-287726,Wolf Village,42Ut0273,USA,Utah,970,40,Zea mays,Maize,NA,-10.3,AMS,p3k14c
+Beta-261680,Wolf Village,42Ut0273,USA,Utah,1020,40,Zea mays,Maize,NA,-10.3,AMS,p3k14c
+Beta-361250,Wolf Village,42Ut0273,USA,Utah,1170,30,Zea mays,Maize,NA,-10.3,AMS,p3k14c
+Beta-338655,Wolf Village,42Ut0273,USA,Utah,900,30,Zea mays,Maize,NA,-10.2,AMS,p3k14c
+Beta-287729,Wolf Village,42Ut0273,USA,Utah,910,40,Zea mays,Maize,NA,-10.2,AMS,p3k14c
+Beta-261679,Wolf Village,42Ut0273,USA,Utah,960,40,Zea mays,Maize,NA,-10.2,AMS,p3k14c
+Beta-361251,Wolf Village,42Ut0273,USA,Utah,970,30,Zea mays,Maize,NA,-10.1,AMS,p3k14c
+Beta-287721,Wolf Village,42Ut0273,USA,Utah,990,40,Zea mays,Maize,NA,-10.1,AMS,p3k14c
+Beta-312655,Wolf Village,42Ut0273,USA,Utah,1000,30,Zea mays,Maize,NA,-9.8,AMS,p3k14c
+Beta-441612,Wolf Village,42Ut0273,USA,Utah,920,30,Zea mays,Maize,NA,-9.4,AMS,p3k14c
+Beta-361252,Wolf Village,42Ut0273,USA,Utah,1290,30,Zea mays,Maize,NA,-9.4,AMS,p3k14c
+Beta-338654,Wolf Village,42Ut0273,USA,Utah,910,30,Zea mays,Maize,NA,-8.7,AMS,p3k14c
+Beta-312656,Wolf Village,42Ut0273,USA,Utah,990,30,Zea mays,Maize,NA,-11.3,NA,p3k14c
+Beta-338653,Wolf Village,42Ut0273,USA,Utah,920,30,Zea mays,Maize,NA,-10.9,NA,p3k14c
+NSRL-10591,Cerro los Torres,,Mexico,Chihuahua,2920,55,Zea mays,maize cupule,NA,NA,AMS,p3k14c
+Beta-95269,Six-Toe Shelter,,USA,Utah,1830,70,Zea mays,cob,NA,-10.1,NA,p3k14c
+Beta-95268,Six-Toe Shelter,,USA,Utah,2030,90,Zea mays,cob,NA,-9.7,NA,p3k14c
+Beta-95271,Six-Toe Shelter,,USA,Utah,1940,80,Zea mays,cob,NA,-9,NA,p3k14c
+Beta-95270,Six-Toe Shelter,,USA,Utah,1060,70,Zea mays,cob,NA,-8.6,NA,p3k14c
+NSRL-3983,Cerro Juanaquena,,Mexico,Chihuahua,2980,50,Zea mays,maize cob,NA,-12.2,AMS,p3k14c
+NSRL-3986,Cerro Juanaquena,,Mexico,Chihuahua,2890,50,Zea mays,maize cob,NA,-9.9,AMS,p3k14c
+NSRL-3995,Cerro Juanaquena,,Mexico,Chihuahua,2930,50,Zea mays,17 maize cupules,NA,-9.3,AMS,p3k14c
+NSRL-10861,Cerro Juanaquena,,Mexico,Chihuahua,2140,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10594,Cerro Juanaquena,,Mexico,Chihuahua,2190,35,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-12482,Cerro Juanaquena,,Mexico,Chihuahua,2300,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10862,Cerro Juanaquena,,Mexico,Chihuahua,2870,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-11430,Cerro Juanaquena,,Mexico,Chihuahua,2940,75,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10596,Cerro Juanaquena,,Mexico,Chihuahua,2960,45,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10600,Cerro Juanaquena,,Mexico,Chihuahua,3010,65,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10598,Cerro Juanaquena,,Mexico,Chihuahua,3040,80,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10595,Cerro Juanaquena,,Mexico,Chihuahua,3050,45,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-12485,Cerro Juanaquena,,Mexico,Chihuahua,3050,35,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10599,Cerro Juanaquena,,Mexico,Chihuahua,3060,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10593,Cerro Juanaquena,,Mexico,Chihuahua,3080,70,Zea mays,Maize,NA,NA,AMS,p3k14c
+NSRL-10597,Cerro Juanaquena,,Mexico,Chihuahua,3080,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-67495,Dry Laid Heaven,42Ga0105,USA,Utah,1720,60,Zea mays,Zea Mays,NA,-12,NA,p3k14c
+Beta-34937,Pantry Alcove,42Ga0103,USA,Utah,1570,70,Zea mays,Zea Mays,NA,-12.1,NA,p3k14c
+Beta-34936,Pantry Alcove,42Ga0103,USA,Utah,1640,80,Zea mays,Zea Mays,NA,-12,NA,p3k14c
+Beta-227645,NA,42Cb2588,USA,Utah,1070,40,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-34945,Gates Roost,42Ka0178,USA,Utah,1420,70,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+Beta-34935,Sheep Horn Alcove,42Ga0102,USA,Utah,1180,70,Zea mays,Zea Mays,NA,-11.9,NA,p3k14c
+Beta-34934,Sheep Horn Alcove,42Ga0102,USA,Utah,1520,100,Zea mays,Zea Mays,NA,-11.5,NA,p3k14c
+Beta-345851,Spotten Cave,42Ut0104,USA,Utah,900,30,Zea mays,Maize,NA,-11.5,NA,p3k14c
+Beta-345853,Spotten Cave,42Ut0104,USA,Utah,900,30,Zea mays,Maize,NA,-11.4,NA,p3k14c
+Beta-345854,Spotten Cave,42Ut0104,USA,Utah,1040,30,Zea mays,Maize,NA,-8.8,NA,p3k14c
+Beta-134608,NA,42Ga1541,USA,Utah,1230,60,Zea mays,Zea Mays,NA,-9.5,NA,p3k14c
+Beta-175754,Six Figures,42Em2881,USA,Utah,1130,40,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-368071,Ravens Roost,42Ka6160,USA,Utah,1610,30,Zea mays,Zea Mays,NA,-8.2,AMS,p3k14c
+Beta-134616,NA,42Ga4543,USA,Utah,1590,80,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+NSRL-10592,Cerro Vidal,,Mexico,Chihuahua,2100,40,Zea mays,maize cupule,NA,NA,AMS,p3k14c
+NSRL-10712,Cerro Vidal,,Mexico,Chihuahua,2340,55,Zea mays,maize cupule,NA,NA,AMS,p3k14c
+UGAMS-3949,NickPat Granary,42Em2885,USA,Utah,965,23,Zea mays,Zea Mays,NA,-10.65,AMS,p3k14c
+Beta-175755,NickPat Granary,42Em2885,USA,Utah,940,50,Zea mays,Zea Mays,NA,-9.1,NA,p3k14c
+Beta-134619,NA,42Ga4561,USA,Utah,1320,70,Zea mays,Zea Mays,NA,-9.6,NA,p3k14c
+Beta-134617,White Sheep,42Ga4561,USA,Utah,1520,80,Zea mays,Zea Mays,NA,-9.6,NA,p3k14c
+Beta-134618,White Sheep,42Ga4561,USA,Utah,1500,80,Zea mays,Zea Mays,NA,9.9,NA,p3k14c
+Beta-134615,NA,42Ga4542,USA,Utah,1650,70,Zea mays,Zea Mays,NA,-10.4,NA,p3k14c
+Beta-134614,Little Cathedral,42Ga4540,USA,Utah,1610,40,Zea mays,Zea Mays,NA,-10.6,NA,p3k14c
+Beta-417357,Antechamber Site,42Ka6163,USA,Utah,1740,30,Zea mays,Zea Mays,NA,-11,AMS,p3k14c
+Beta-362329,Antechamber Site,42Ka6163,USA,Utah,1550,30,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-362330,Antechamber Site,42Ka6163,USA,Utah,1450,30,Zea mays,Zea Mays,NA,-8.7,AMS,p3k14c
+Beta-368068,Paint Pot Village,42Ka6164,USA,Utah,1550,30,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+Beta-362332,Paint Pot Village,42Ka6164,USA,Utah,1180,30,Zea mays,Zea Mays,NA,-10.6,AMS,p3k14c
+Beta-368067,Paint Pot Village,42Ka6164,USA,Utah,1510,30,Zea mays,Zea Mays,NA,-10.6,AMS,p3k14c
+Beta-362331,Paint Pot Village,42Ka6164,USA,Utah,1180,30,Zea mays,Zea Mays,NA,-10.5,AMS,p3k14c
+Beta-362333,Paint Pot Village,42Ka6164,USA,Utah,1220,30,Zea mays,Zea Mays,NA,-10.3,AMS,p3k14c
+Beta-368069,Paint Pot Village,42Ka6164,USA,Utah,1650,30,Zea mays,Zea Mays,NA,-10,AMS,p3k14c
+Beta-368070,Paint Pot Village,42Ka6164,USA,Utah,1660,30,Zea mays,Zea Mays,NA,-8,AMS,p3k14c
+Beta-362334,Paint Pot Village,42Ka6164,USA,Utah,1180,30,Zea mays,Zea Mays,NA,-10.7,AMS,p3k14c
+UGAMS-12219,NA,42Em4261,USA,Utah,1050,20,Zea mays,Zea Mays,NA,-9.5,AMS,p3k14c
+Beta-134613,NA,42Ga4538,USA,Utah,1490,70,Zea mays,Zea Mays,NA,-9.7,NA,p3k14c
+Beta-390953,Road Grade Site,42Ka6897,USA,Utah,900,30,Zea mays,Zea Mays,NA,-11.6,AMS,p3k14c
+Beta-134612,Bear Tracks,42Ga4536,USA,Utah,1760,80,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+Beta-78335,Red Feather,42Ga0276,USA,Utah,1360,80,Zea mays,Zea Mays,NA,-21.3,NA,p3k14c
+Beta-94775,NA,42Ws3105,USA,Utah,1810,80,Zea mays,Maize,NA,-13.4,AMS,p3k14c
+Beta-34939,Triangle Cave,42Ga0288,USA,Utah,1270,70,Zea mays,Zea Mays,NA,-11.2,NA,p3k14c
+Beta-34941,Triangle Cave,42Ga0288,USA,Utah,1770,90,Zea mays,Zea Mays,NA,-11.2,NA,p3k14c
+Beta-34940,Triangle Cave,42Ga0288,USA,Utah,1480,50,Zea mays,Zea Mays,NA,-11,NA,p3k14c
+AA-5224,Triangle Cave,42Ga0288,USA,Utah,1600,50,Zea mays,Zea Mays,NA,-10.3,NA,p3k14c
+Beta-34938,Triangle Cave,42Ga0288,USA,Utah,1570,80,Zea mays,Zea Mays,NA,-10.1,NA,p3k14c
+AA-6804,Sniper Site,AZ V:3:4,USA,Arizona,1840,60,Zea mays,maize cupule,NA,NA,AMS,Geib and Huckell 1994
+AA-6803,Sniper Site,AZ V:3:4,USA,Arizona,1870,75,Zea mays,maize cupule,NA,NA,AMS,Geib and Huckell 1994
+Beta-377204,Nephi Mounds,42Jb0002,USA,Utah,960,30,Zea mays,Maize,NA,-11.5,NA,p3k14c
+Beta-377202,Nephi Mounds,42Jb0002,USA,Utah,980,30,Zea mays,Maize,NA,-11.3,NA,p3k14c
+Beta-377203,Nephi Mounds,42Jb0002,USA,Utah,1010,30,Zea mays,Maize,NA,-10.8,NA,p3k14c
+Beta-283900,Eagle Rock Shelter,5DT813,USA,Colorado,1940,40,Zea mays,SEEDS,NA,-11.2,NA,p3k14c
+Beta-252926,NA,42Ka6293,USA,Utah,1170,40,Zea mays,Zea Mays,NA,-11.2,AMS,p3k14c
+Beta-252927,NA,42Ka6293,USA,Utah,1340,40,Zea mays,Zea Mays,NA,-9.8,AMS,p3k14c
+UCIAMS-198899,Burnt House Village,42Un0279,USA,Utah,1125,15,Zea mays,Zea Mays,NA,NA,AMS,CARD
+Beta-252613,NA,42Cb0109,USA,Utah,990,40,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-80770,NA,42Cb0109,USA,Utah,1190,80,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-101263,NA,42Ga4063,USA,Utah,1350,70,Zea mays,Zea Mays,NA,-11.4,NA,p3k14c
+Beta-180953,Omar's Site,42Ws1247,USA,Utah,1170,60,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+Beta-124187,NA,42Wn2278,USA,Utah,1270,60,Zea mays,Zea Mays,NA,-10.6,NA,p3k14c
+Beta-74066,Old Man Cave,42Sa21153,USA,Utah,1810,60,Zea mays,Zea Mays,NA,-10.5,NA,p3k14c
+Beta-134611,NA,42Ga4521,USA,Utah,1610,120,Zea mays,Zea Mays,NA,-10.1,NA,p3k14c
+Beta-134610,NA,42Ga4518,USA,Utah,950,80,Zea mays,Zea Mays,NA,-8.7,NA,p3k14c
+LUNK-1924,NA,42Dc0612,USA,Utah,1160,60,Zea mays,Zea Mays,NA,NA,NA,CARD
+UGAMS-3948,Gold Ghost,42Em2865,USA,Utah,1133,23,Zea mays,Zea Mays,NA,-11.43,AMS,p3k14c
+Beta-244159,Uintah River Mound #1,42Un2902,USA,Utah,1140,40,Zea mays,Maize,NA,-11.1,NA,p3k14c
+UGAMS-3952,NA,42Em3424,USA,Utah,958,23,Zea mays,Zea Mays,NA,-10.63,AMS,p3k14c
+Beta-168514,NA,42Un2889,USA,Utah,1670,100,Zea mays,Zea Mays,NA,-11.7,NA,p3k14c
+Beta-168511,NA,42Un2889,USA,Utah,1340,40,Zea mays,Zea Mays,NA,-11.3,NA,p3k14c
+Beta-168512,NA,42Un2889,USA,Utah,1520,80,Zea mays,Zea Mays,NA,-10.8,NA,p3k14c
+UCIAMS-198907,Wholeplace Village,42Un0081,USA,Utah,1155,15,Zea mays,Zea Mays,NA,NA,AMS,CARD
+Beta-361246,Turner-Look,42Gr0314,USA,Utah,940,30,Zea mays,Maize,NA,-10.7,NA,p3k14c
+Beta-361247,Turner-Look,42Gr0314,USA,Utah,950,30,Zea mays,Maize,NA,-11.4,NA,p3k14c
+Beta-361245,Turner-Look,42Gr0314,USA,Utah,940,30,Zea mays,Maize,NA,-10.8,NA,p3k14c
+Beta-361248,Turner-Look,42Gr0314,USA,Utah,960,30,Zea mays,Maize,NA,-10,NA,p3k14c
+Beta-330516,NA,42Cb2910,USA,Utah,1210,30,Zea mays,Zea Mays,NA,-10.5,NA,p3k14c
+Beta-330517,NA,42Cb2910,USA,Utah,1170,30,Zea mays,Zea Mays,NA,-10.4,NA,p3k14c
+Beta-289228,NA,42Cb0956,USA,Utah,920,40,Zea mays,Zea Mays,NA,-9.4,NA,p3k14c
+Beta-177171,Escalante Canyon Alcove,42Ga1434,USA,Utah,1070,60,Zea mays,Zea Mays,NA,-9.4,NA,p3k14c
+Beta-104596,Cave DuPont,,USA,Utah,1740,40,Zea mays,kernel,NA,-9.7,NA,p3k14c
+Beta-104597,Cave DuPont,,USA,Utah,1770,40,Zea mays,kernel,NA,-9.4,NA,p3k14c
+Beta-124182,NA,42Wn0181,USA,Utah,1700,50,Zea mays,Zea Mays,NA,-11.3,AMS,p3k14c
+Beta-11703,Backyard Village,42Sv0002,USA,Utah,920,60,Zea mays,Zea mays,NA,NA,NA,CARD
+Beta-377214,Steinaker Gap,42Un2004,USA,Utah,1600,30,Zea mays,Maize,NA,-11,NA,CARD
+Beta-377215,Steinaker Gap,42Un2004,USA,Utah,1650,30,Zea mays,Maize,NA,-10.7,NA,CARD
+Beta-377216,Steinaker Gap,42Un2004,USA,Utah,1570,30,Zea mays,Maize,NA,-10.4,NA,CARD
+Beta-150670,NA,42Ka5609,USA,Utah,1110,80,Zea mays,Zea Mays,NA,-10.6,NA,p3k14c
+Beta-132378,Deer Creek Pictographs,42Ka1499,USA,Utah,1310,40,Zea mays,Zea Mays,NA,-9,NA,p3k14c
+Beta-282092,Backhoe Village,42Sv0662,USA,Utah,960,40,Zea mays,Zea Mays,NA,-22.6,AMS,p3k14c
+Beta-140383,Backhoe Village,42Sv0662,USA,Utah,820,50,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-140953,NA,42Ka3684,USA,Utah,1690,80,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-161597,NA,42Wn0006,USA,Utah,850,80,Zea mays,Zea Mays,NA,-8.8,NA,p3k14c
+D-AMS-10871,Rasmussen Cave,42Cb0016,USA,Utah,1083,24,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+LUNK-1911,East Fork Village,42Md0974,USA,Utah,1000,55,Zea mays,Zea Mays,NA,NA,AMS,CARD
+Beta-377217,NA,42Un2093,USA,Utah,1140,30,Zea mays,Zea Mays,NA,-10.2,NA,CARD
+UGAMS-44801,NA,CKL-1-190810-8-1,USA,Utah,960,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-82600,Hidden Island,42Un1671,USA,Utah,1400,80,Zea mays,Zea Mays,NA,NA,NA,CARD
+Beta-361242,Caldwell Village,42Un0095,USA,Utah,940,30,Zea mays,Maize,NA,-10.7,NA,p3k14c
+Beta-361244,Caldwell Village,42Un0095,USA,Utah,890,30,Zea mays,Maize,NA,-10.4,NA,p3k14c
+Beta-361243,Caldwell Village,42Un0095,USA,Utah,870,30,Zea mays,Maize,NA,-9.7,NA,p3k14c
+Beta-346332,NA,42Ka7165,USA,Utah,960,30,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+OS-121086,Elsinore Burial,42Sv2111,USA,Utah,1790,20,Zea mays,Maize,NA,-11.5,NA,p3k14c
+Beta-373441,Elsinore Burial,42Sv2111,USA,Utah,1710,30,Zea mays,Maize,NA,-10.9,NA,p3k14c
+Beta-373440,Elsinore Burial,42Sv2111,USA,Utah,1790,30,Zea mays,Maize,NA,-10.5,NA,p3k14c
+Beta-357026,Elsinore Burial,42Sv2111,USA,Utah,1180,30,Zea mays,Maize,NA,-9.9,NA,p3k14c
+Beta-13414,Elsinore Burial,42Sv2111,USA,Utah,2140,100,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-48829,NA,42Dc0655,USA,Utah,830,70,Zea mays,Zea Mays,NA,-12.1,NA,p3k14c
+Beta-194328,Hog Canyon Alcove,42Ka4309,USA,Utah,1340,40,Zea mays,Zea Mays,NA,-12.3,AMS,p3k14c
+Beta-32290,Lisbon Valley Site,42Sa09999,USA,Utah,2110,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+UGAMS-44807,NA,PY0810-1-1,USA,Utah,990,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-117940,Arroyo Site,42Ka3976,USA,Utah,800,30,Zea mays,Zea Mays,NA,-10,AMS,p3k14c
+Beta-117941,Arroyo Site,42Ka3976,USA,Utah,850,30,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-202621,NA,42Ka6043,USA,Utah,1960,50,Zea mays,Maize,NA,-9.1,NA,p3k14c
+Beta-36605,Juniper Ledge Shelter,42Un1724,USA,Utah,1650,80,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+SI-3012R,Cowboy Cave,42Wn0420,USA,Utah,1670,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+UGa-1548,Cowboy Cave,42Wn0420,USA,Utah,1775,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+SI-3172,Cowboy Cave,42Wn0420,USA,Utah,1855,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+SI-2422,Cowboy Cave,42Wn0420,USA,Utah,1985,70,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-161582,NA,42Wn0007,USA,Utah,1100,40,Zea mays,Zea Mays,NA,-10.4,AMS,p3k14c
+Beta-140954,NA,42Ga4655,USA,Utah,1580,40,Zea mays,Zea Mays,NA,-9.6,NA,p3k14c
+Beta-165413,Rich's Shelter,42Ga0882,USA,Utah,950,60,Zea mays,Zea Mays,NA,-10.1,NA,p3k14c
+Beta-165414,Rich's Shelter,42Ga0882,USA,Utah,1080,80,Zea mays,Zea Mays,NA,-9.9,NA,p3k14c
+Beta-107649,NA,42Ka1502,USA,Utah,950,60,Zea mays,Zea Mays,NA,-10.7,NA,p3k14c
+UGAMS-44805,NA,42Cb0876,USA,Utah,1300,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-331684,Kays Cabin,42Ut0813,USA,Utah,1130,30,Zea mays,Maize,NA,-11.8,NA,p3k14c
+Beta-331685,Kays Cabin,42Ut0813,USA,Utah,920,30,Zea mays,Maize,NA,-9.9,NA,p3k14c
+Beta-331687,Kays Cabin,42Ut0813,USA,Utah,930,30,Zea mays,Maize,NA,-9.6,NA,p3k14c
+Beta-331686,Kays Cabin,42Ut0813,USA,Utah,820,30,Zea mays,Maize,NA,-9.1,NA,p3k14c
+Beta-55077,Pottery Knoll,42Ka1568,USA,Utah,770,50,Zea mays,Zea Mays,NA,-9.6,NA,p3k14c
+Beta-55076,Pottery Knoll,42Ka1568,USA,Utah,810,50,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+Beta-95276,Boomerang Shelter,,USA,Utah,1810,60,Zea mays,cob,NA,-10.8,NA,p3k14c
+Beta-95273,Boomerang Shelter,,USA,Utah,1610,60,Zea mays,cob,NA,-10.4,NA,p3k14c
+Beta-95274,Boomerang Shelter,,USA,Utah,1750,60,Zea mays,cob,NA,-9.8,NA,p3k14c
+Beta-95275,Boomerang Shelter,,USA,Utah,2090,70,Zea mays,cob,NA,-9.6,NA,p3k14c
+Beta-97796,Boomerang Shelter,,USA,Utah,1820,70,Zea mays,cob,NA,-9.4,NA,p3k14c
+Beta-131667,Park Wash Site,42Ka4280,USA,Utah,1240,40,Zea mays,Zea Mays,NA,-11.2,NA,p3k14c
+Beta-133285,Hayes Site,42Da0668,USA,Utah,930,60,Zea mays,Zea Mays,NA,NA,NA,CARD
+CAMS-74938,Deer Creek Shelter,42Ga3128,USA,Utah,860,40,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+CAMS-74939,Deer Creek Shelter,42Ga3128,USA,Utah,890,30,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-121577,NA,42Ka4535,USA,Utah,1390,60,Zea mays,Zea Mays,NA,-10.5,NA,p3k14c
+Beta-150669,NA,42Ka5628,USA,Utah,960,70,Zea mays,Zea Mays,NA,-10.8,NA,p3k14c
+Beta-503044,Maces Cave,42Ka5062,USA,Utah,1270,30,Zea mays,Zea Mays,NA,-9.3,NA,p3k14c
+Beta-350478,NA,42Dc3145,USA,Utah,1420,30,Zea mays,Zea Mays,NA,-9.5,NA,p3k14c
+Beta-140952,NA,42Ka3575,USA,Utah,1790,70,Zea mays,Zea Mays,NA,-9,NA,p3k14c
+Beta-134477,NA,42Ka2580,USA,Utah,920,60,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+Beta-109803,Nipple Alcove,42Ka1811,USA,Utah,1060,50,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-141726,Wood Canyon,LA 99631,USA,New Mexico,2000,60,Zea mays,maize cupule,NA,-11,AMS,p3k14c
+GX-1550,Evans Site,42In0040,USA,Utah,855,90,Zea mays,Zea Mays,NA,NA,NA,CARD
+PRI-07-58-509-3236,Summit Site,42In0040,USA,Utah,945,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-283-3101,Summit Site,42In0040,USA,Utah,965,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-395-4712,Summit Site,42In0040,USA,Utah,970,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-365-2814,Summit Site,42In0040,USA,Utah,990,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-124190,Morss Cave 27,42Ga0448,USA,Utah,1470,60,Zea mays,Zea Mays,NA,-11.4,NA,p3k14c
+Beta-128986,Indian Canyon Pictographs,42Ka1576,USA,Utah,1570,70,Zea mays,Zea Mays,NA,-9.3,AMS,p3k14c
+Beta-350465,NA,42Dc3053,USA,Utah,1170,30,Zea mays,Zea Mays,NA,-10.9,NA,p3k14c
+Beta-350463,NA,42Dc3053,USA,Utah,1400,30,Zea mays,Zea Mays,NA,-10.8,NA,p3k14c
+Beta-350462,NA,42Dc3053,USA,Utah,1480,30,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-330520,NA,42Dc3053,USA,Utah,1520,30,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-330519,NA,42Dc3053,USA,Utah,900,30,Zea mays,Zea Mays,NA,-10.1,NA,p3k14c
+Beta-168968,Backyard Alcove,42Ga5171,USA,Utah,1000,40,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-124184,NA,42Wn1926,USA,Utah,880,40,Zea mays,Zea Mays,NA,-9.9,AMS,p3k14c
+Beta-95166,"Trail Canyon, Cave 2",,USA,Utah,1990,90,Zea mays,kernel,NA,-11.6,NA,p3k14c
+Beta-95172,Tseahatso,,USA,Utah,1230,80,Zea mays,kernel,NA,-9.9,NA,p3k14c
+Beta-222192,Sandy Rise,NM-H-51-55,USA,New Mexico,2310,40,Zea mays,Maize,NA,-13.7,AMS,p3k14c
+Beta-222194,Sandy Rise,NM-H-51-55,USA,New Mexico,2280,40,Zea mays,Maize cob fragment,NA,-10.9,AMS,p3k14c
+Beta-222196,Sandy Rise,NM-H-51-55,USA,New Mexico,2220,40,Zea mays,Maize,NA,-10.7,AMS,p3k14c
+Beta-284780,Paragonah,42In0043,USA,Utah,940,40,Zea mays,Maize,NA,-10.1,NA,p3k14c
+Beta-284781,Paragonah,42In0043,USA,Utah,940,40,Zea mays,Maize,NA,-9.4,NA,p3k14c
+Beta-284779,Bradshaw Mounds,42Be0000,USA,Utah,960,40,Zea mays,Maize,NA,-9.6,NA,p3k14c
+UGAMS-3951,Perfect Granary,42Em3048,USA,Utah,932,24,Zea mays,Zea Mays,NA,-11.42,AMS,p3k14c
+Beta-161895,NA,42Ka1819,USA,Utah,980,60,Zea mays,Zea Mays,NA,-8.4,NA,p3k14c
+Beta-161896,Trail Canyon Alcove,42Ka1819,USA,Utah,1390,70,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+Beta-379129,Spillway Site,42Ga6264,USA,Utah,1070,30,Zea mays,Zea Mays,NA,-11.4,AMS,p3k14c
+Beta-194032,Arrowhead Hill,42Ga5169,USA,Utah,1100,40,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-255666,Arrowhead Hill,42Ga5169,USA,Utah,1290,40,Zea mays,Zea Mays,NA,-10.8,AMS,p3k14c
+Beta-189340,Arrowhead Hill,42Ga5169,USA,Utah,1160,60,Zea mays,Zea Mays,NA,-10.6,AMS,p3k14c
+Beta-194031,Arrowhead Hill,42Ga5169,USA,Utah,1420,40,Zea mays,Zea Mays,NA,-10.4,AMS,p3k14c
+Beta-202188,Granary Row,42Em3117,USA,Utah,980,40,Zea mays,Zea Mays,NA,-9.5,AMS,p3k14c
+PRI-07-58-433-7825,Parowan Site,42In0100,USA,Utah,985,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-433-9646,Parowan Site,42In0100,USA,Utah,990,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-433-9688,Parowan Site,42In0100,USA,Utah,1005,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+PRI-07-58-433-8266,Parowan Site,42In0100,USA,Utah,960,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-161600,NA,42Wn2381,USA,Utah,960,60,Zea mays,Zea Mays,NA,-8.5,AMS,p3k14c
+Beta-350484,NA,42Dc3367,USA,Utah,1400,30,Zea mays,Zea Mays,NA,-11.3,NA,p3k14c
+Beta-350483,NA,42Dc3367,USA,Utah,1460,30,Zea mays,Zea Mays,NA,-12.8,NA,p3k14c
+Beta-107656,Sleeping Rainbow Granary,42Wn2130,USA,Utah,1360,70,Zea mays,Zea Mays,NA,-9.3,NA,p3k14c
+Beta-210474,Barnson Site,42Ga5168,USA,Utah,1240,40,Zea mays,Zea Mays,NA,-11,AMS,p3k14c
+Beta-255665,Barnson Site,42Ga5168,USA,Utah,1200,40,Zea mays,Zea Mays,NA,-10.8,AMS,p3k14c
+RL-175,Clyde's Cavern,42Em0177,USA,Utah,1490,100,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-161592,NA,42Wn2234,USA,Utah,1770,50,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-329232,Montoya Site,LA 88891,USA,New Mexico,3610,30,Zea mays,maize cob,NA,NA,AMS,CARD
+Beta-330166,Montoya Site,LA 88891,USA,New Mexico,3640,30,Zea mays,maize cob,NA,NA,AMS,CARD
+Beta-128678,NA,42Wn2280,USA,Utah,890,60,Zea mays,Zea Mays,NA,-8.8,NA,p3k14c
+MAMS-23686,Turkey Pen Ruin,42Sa03714,USA,Utah,1851,22,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23674,Turkey Pen Ruin,42Sa03714,USA,Utah,1852,19,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23682,Turkey Pen Ruin,42Sa03714,USA,Utah,1858,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23675,Turkey Pen Ruin,42Sa03714,USA,Utah,1863,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23676,Turkey Pen Ruin,42Sa03714,USA,Utah,1865,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23679,Turkey Pen Ruin,42Sa03714,USA,Utah,1869,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23673,Turkey Pen Ruin,42Sa03714,USA,Utah,1876,19,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23685,Turkey Pen Ruin,42Sa03714,USA,Utah,1881,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23684,Turkey Pen Ruin,42Sa03714,USA,Utah,1888,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23678,Turkey Pen Ruin,42Sa03714,USA,Utah,1900,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23681,Turkey Pen Ruin,42Sa03714,USA,Utah,1903,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23683,Turkey Pen Ruin,42Sa03714,USA,Utah,1907,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23677,Turkey Pen Ruin,42Sa03714,USA,Utah,1910,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+MAMS-23680,Turkey Pen Ruin,42Sa03714,USA,Utah,2026,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-128677,NA,42Ga4445,USA,Utah,940,30,Zea mays,Zea Mays,NA,-10,NA,p3k14c
+AA-60695,Franktown Cave,5DA272,USA,Colorado,293,38,Zea mays,SEEDS,NA,-17.9,AMS,p3k14c
+AA-60691,Franktown Cave,5DA272,USA,Colorado,839,33,Zea mays,SEEDS,NA,-11.7,AMS,p3k14c
+AA-60693,Franktown Cave,5DA272,USA,Colorado,787,34,Zea mays,SEEDS,NA,-11.3,AMS,p3k14c
+AA-60692,Franktown Cave,5DA272,USA,Colorado,892,36,Zea mays,SEEDS,NA,-11.3,AMS,p3k14c
+AA-60696,Franktown Cave,5DA272,USA,Colorado,804,36,Zea mays,SEEDS,NA,-10.5,AMS,p3k14c
+AA-56832,Franktown Cave,5DA272,USA,Colorado,170,38,Zea mays,SEEDS,NA,-9.8,AMS,p3k14c
+AA-60694,Franktown Cave,5DA272,USA,Colorado,380,34,Zea mays,SEEDS,NA,-9.7,AMS,p3k14c
+Beta-197358,North Creek Shelter,42Ga5863,USA,Utah,940,40,Zea mays,Zea Mays,NA,-15,AMS,p3k14c
+Beta-221411,North Creek Shelter,42Ga5863,USA,Utah,1050,40,Zea mays,Zea Mays,NA,-11.6,AMS,p3k14c
+Beta-261678,North Creek Shelter,42Ga5863,USA,Utah,1030,40,Zea mays,Zea Mays,NA,-10.5,AMS,p3k14c
+Beta-261676,North Creek Shelter,42Ga5863,USA,Utah,1130,40,Zea mays,Zea Mays,NA,-10.3,AMS,p3k14c
+Beta-261677,North Creek Shelter,42Ga5863,USA,Utah,1130,40,Zea mays,Zea Mays,NA,-10.2,AMS,p3k14c
+Beta-143631,Sonders Basket,42Da0722,USA,Utah,1210,70,Zea mays,Zea Mays,NA,NA,NA,CARD
+Beta-141721,Forest Home,LA 78089,USA,New Mexico,2270,40,Zea mays,maize cupule,NA,-12,AMS,p3k14c
+Beta-141725,Forest Home,LA 78089,USA,New Mexico,2240,50,Zea mays,maize cupule,NA,-10.8,AMS,p3k14c
+Beta-141724,Forest Home,LA 78089,USA,New Mexico,2240,40,Zea mays,maize cupule,NA,-10.7,AMS,p3k14c
+Beta-161586,NA,42Wn1901,USA,Utah,1160,50,Zea mays,Zea Mays,NA,-9.2,AMS,p3k14c
+Beta-125910,Neaf Spring Alcove,42Ka0110,USA,Utah,1220,70,Zea mays,Zea Mays,NA,-8.5,NA,p3k14c
+Beta-150671,Hell Dive Alcove,42Ka1695,USA,Utah,1290,60,Zea mays,Zea Mays,NA,-10.4,NA,p3k14c
+Beta-408368,NA,5MT10736,USA,Colorado,1320,30,Zea mays cupule charred,SEEDS,NA,-11.8,AMS,p3k14c
+Beta-408404,NA,5MT10736,USA,Colorado,1470,30,Zea mays cupule charred,SEEDS,NA,-11.4,AMS,p3k14c
+Beta-365061,TJ Smith Site,5MT10736,USA,Colorado,1200,30,Zea mays,SEEDS,NA,-10.5,AMS,p3k14c
+Beta-190227,NA,42Ga4431,USA,Utah,960,40,Zea mays,Zea Mays,NA,-10.9,AMS,p3k14c
+Beta-226298,Finch Draw Shelter,42Da1269,USA,Utah,1110,40,Zea mays,Zea Mays,NA,-11.4,NA,CARD
+Beta-125909,NA,42Ga4507,USA,Utah,1070,70,Zea mays,Zea Mays,NA,-8.4,NA,p3k14c
+Beta-350473,NA,42Cb3105,USA,Utah,910,30,Zea mays,Zea Mays,NA,-9.9,NA,p3k14c
+Beta-94768,Ko' Lanhi,AZ J:14:35,USA,Arizona,2080,60,Zea mays,Maize,NA,-12.9,AMS,p3k14c
+Beta-54287,NA,42Cb0667,USA,Utah,1710,80,Zea mays,Zea Mays,NA,NA,NA,CARD
+Beta-124185,Basket Alcove,42Wn2258,USA,Utah,1500,60,Zea mays,Zea Mays,NA,-10.3,NA,p3k14c
+Beta-408360,Dillard Site,5MT10647,USA,Colorado,1260,30,Zea mays charred,SEEDS,NA,-11.8,AMS,p3k14c
+AA-100806,Dillard Site,5MT10647,USA,Colorado,1514,51,Zea mays,SEEDS,NA,-11.7,AMS,p3k14c
+AA-100809,Dillard Site,5MT10647,USA,Colorado,1436,31,Zea mays,SEEDS,NA,-11.5,AMS,p3k14c
+Beta-408357,Dillard Site,5MT10647,USA,Colorado,1460,30,Zea mays cupule charred,SEEDS,NA,-11.5,AMS,p3k14c
+Beta-408359,Dillard Site,5MT10647,USA,Colorado,1440,30,Zea mays kernel charred,SEEDS,NA,-11.4,AMS,p3k14c
+Beta-416909,Dillard Site,5MT10647,USA,Colorado,1450,30,Zea mays cupule charred,SEEDS,NA,-11.3,AMS,p3k14c
+Beta-408367,Dillard Site,5MT10647,USA,Colorado,1390,30,Zea mays cupule charred,SEEDS,NA,-11.2,AMS,p3k14c
+Beta-408364,Dillard Site,5MT10647,USA,Colorado,1450,30,Zea mays cupule charred,SEEDS,NA,-11.2,AMS,p3k14c
+Beta-471919,Dillard Site,5MT10647,USA,Colorado,1410,30,Zea mays,SEEDS,NA,-11.1,AMS,p3k14c
+AA-100807,Dillard Site,5MT10647,USA,Colorado,1451,38,Zea mays,SEEDS,NA,-11.1,AMS,p3k14c
+Beta-408358,Dillard Site,5MT10647,USA,Colorado,1470,30,Zea mays cupule charred,SEEDS,NA,-11.1,AMS,p3k14c
+AA-100808,Dillard Site,5MT10647,USA,Colorado,1422,32,Zea mays,SEEDS,NA,-11,AMS,p3k14c
+Beta-365060,Dillard Site,5MT10647,USA,Colorado,1260,30,Zea mays,SEEDS,NA,-10.8,AMS,p3k14c
+AA-100813,Dillard Site,5MT10647,USA,Colorado,1417,33,Zea mays,SEEDS,NA,-10.8,AMS,p3k14c
+AA-100810,Dillard Site,5MT10647,USA,Colorado,1424,37,Zea mays,SEEDS,NA,-10.7,AMS,p3k14c
+AA-100811,Dillard Site,5MT10647,USA,Colorado,1437,39,Zea mays,SEEDS,NA,-10.7,AMS,p3k14c
+Beta-408354,Dillard Site,5MT10647,USA,Colorado,1400,30,Zea mays cupule charred,SEEDS,NA,-10.7,AMS,p3k14c
+Beta-408362,Dillard Site,5MT10647,USA,Colorado,1470,30,Zea mays cupule charred,SEEDS,NA,-10.7,AMS,p3k14c
+Beta-408366,Dillard Site,5MT10647,USA,Colorado,1490,30,Zea mays cupule charred,SEEDS,NA,-10.7,AMS,p3k14c
+Beta-471920,Dillard Site,5MT10647,USA,Colorado,1260,30,Zea mays,SEEDS,NA,-10.6,AMS,p3k14c
+AA-100805,Dillard Site,5MT10647,USA,Colorado,1489,37,Zea mays,SEEDS,NA,-10.6,AMS,p3k14c
+Beta-471917,Dillard Site,5MT10647,USA,Colorado,1420,30,Zea mays cupules,SEEDS,NA,-10.4,AMS,p3k14c
+Beta-471918,Dillard Site,5MT10647,USA,Colorado,1450,30,Zea mays,SEEDS,NA,-10.1,AMS,p3k14c
+Beta-471921,Dillard Site,5MT10647,USA,Colorado,1460,30,Zea mays,SEEDS,NA,-9.9,AMS,p3k14c
+Beta-408365,Dillard Site,5MT10647,USA,Colorado,1380,30,Zea mays kernel charred,SEEDS,NA,-9.2,AMS,p3k14c
+Beta-408356,Dillard Site,5MT10647,USA,Colorado,1470,30,Zea mays kernel charred,SEEDS,NA,-8.2,AMS,p3k14c
+Beta-416907,Dillard Site,5MT10647,USA,Colorado,1550,30,Zea mays cupule charred,SEEDS,NA,NA,AMS,p3k14c
+Beta-408361,Dillard Site,5MT10647,USA,Colorado,1490,30,Zea mays embryo,SEEDS,NA,NA,AMS,p3k14c
+Beta-201370,Albert Porter pueblo,5MT123,USA,Colorado,880,40,Zea mays charred,SEEDS,NA,-24.5,AMS,p3k14c
+Beta-201368,Albert Porter pueblo,5MT123,USA,Colorado,800,60,Zea mays charred,SEEDS,NA,-11,RADIOMETRIC,p3k14c
+Beta-187387,Hunchback Shelter,42Be0751,USA,Utah,1010,40,Zea mays,Zea Mays,NA,-9.4,AMS,p3k14c
+Beta-187386,Hunchback Shelter,42Be0751,USA,Utah,1060,40,Zea mays,Zea Mays,NA,-8.5,AMS,p3k14c
+Beta-350468,NA,42Cb3062,USA,Utah,1070,30,Zea mays,Zea Mays,NA,-9.4,NA,p3k14c
+UGAMS-44803,NA,42Cb2198,USA,Utah,850,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-172105,High Rolls Cave,LA 114109,USA,New Mexico,1810,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-158045,High Rolls Cave,LA 114109,USA,New Mexico,1820,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-149374,High Rolls Cave,LA 114109,USA,New Mexico,2030,80,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-172103,High Rolls Cave,LA 114109,USA,New Mexico,2320,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-172110,High Rolls Cave,LA 114109,USA,New Mexico,2900,40,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-164069,High Rolls Cave,LA 114109,USA,New Mexico,3000,60,Zea mays,Maize,NA,NA,AMS,p3k14c
+Beta-164063,High Rolls Cave,LA 114109,USA,New Mexico,3050,40,Zea mays,"Maize husk, cupules and kernels",NA,NA,AMS,p3k14c
+Beta-94763,Kin Kahuna,AZ J:3-8,USA,Arizona,2080,50,Zea mays,Maize,NA,-15.3,AMS,p3k14c
+Beta-94764,Kin Kahuna,AZ J:3-8,USA,Arizona,2090,80,Zea mays,Maize,NA,-14.7,AMS,p3k14c
+Beta-156067/ETH,Kin Kahuna,AZ J:3-8,USA,Arizona,2180,50,Zea mays,Maize,NA,-12.8,AMS,p3k14c
+Beta-87901,Kin Kahuna,AZ J:3-8,USA,Arizona,1960,60,Zea mays,Maize,NA,-12.4,AMS,p3k14c
+Beta-87902,Kin Kahuna,AZ J:3-8,USA,Arizona,1840,50,Zea mays,Maize,NA,-11.7,AMS,p3k14c
+Beta-87903,Kin Kahuna,AZ J:3-8,USA,Arizona,2190,60,Zea mays,Maize,NA,-11.6,AMS,p3k14c
+Beta-94761,Kin Kahuna,AZ J:3-8,USA,Arizona,1990,50,Zea mays,Maize,NA,-11.4,AMS,p3k14c
+Beta-156067/CAMS,Kin Kahuna,AZ J:3-8,USA,Arizona,2090,40,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-87898,Kin Kahuna,AZ J:3-8,USA,Arizona,2140,50,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-87904,Kin Kahuna,AZ J:3-8,USA,Arizona,2210,50,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-87905,Kin Kahuna,AZ J:3-8,USA,Arizona,2210,50,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-156067/VERA,Kin Kahuna,AZ J:3-8,USA,Arizona,2110,40,Zea mays,Maize,NA,-10.1,AMS,p3k14c
+Beta-117938,Lampstand Granaries,42Ga3750,USA,Utah,1200,80,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+Beta-159900,The Outpost,42Ga3891,USA,Utah,1030,40,Zea mays,Zea Mays,NA,-9.6,AMS,p3k14c
+Beta-377210,Snake Rock,42Sv0005,USA,Utah,820,30,Zea mays,Maize,NA,-11.4,NA,p3k14c
+Beta-379248,Snake Rock,42Sv0005,USA,Utah,930,30,Zea mays,Maize,NA,-11.2,NA,p3k14c
+Beta-377209,Snake Rock,42Sv0005,USA,Utah,1020,30,Zea mays,Maize,NA,-10.6,NA,p3k14c
+Beta-377207,Snake Rock,42Sv0005,USA,Utah,910,30,Zea mays,Maize,NA,-10.3,NA,p3k14c
+Beta-377208,Snake Rock,42Sv0005,USA,Utah,940,30,Zea mays,Maize,NA,-10.2,NA,p3k14c
+Beta-377212,Snake Rock,42Sv0005,USA,Utah,1010,30,Zea mays,Maize,NA,-10.2,NA,p3k14c
+Beta-377211,Snake Rock,42Sv0005,USA,Utah,890,30,Zea mays,Maize,NA,-9.8,NA,p3k14c
+Beta-377205,Snake Rock,42Sv0005,USA,Utah,860,30,Zea mays,Maize,NA,-9.7,NA,p3k14c
+Beta-117939,Lampstand Ruins,42Ga2672,USA,Utah,960,60,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+UCIAMS-131986,Darkmold,5LP4991,USA,Colorado,1835,20,Zea mays,SEEDS,NA,-17.4,AMS,p3k14c
+UGAMS-6181,Darkmold,5LP4991,USA,Colorado,1800,25,Zea mays charred,SEEDS,NA,-12.6,AMS,p3k14c
+UGAMS-6180,Darkmold,5LP4991,USA,Colorado,1580,25,Zea mays charred,SEEDS,NA,-11.6,AMS,p3k14c
+UCIAMS-131990,Darkmold,5LP4991,USA,Colorado,1770,20,Zea mays,SEEDS,NA,-11.1,AMS,p3k14c
+UGAMS-6177,Darkmold,5LP4991,USA,Colorado,1850,25,Zea mays charred,SEEDS,NA,-10.9,AMS,p3k14c
+UCIAMS-131984,Darkmold,5LP4991,USA,Colorado,1760,15,Zea mays,SEEDS,NA,-10.8,AMS,p3k14c
+UCIAMS-131983,Darkmold,5LP4991,USA,Colorado,1805,20,Zea mays,SEEDS,NA,-10.7,AMS,p3k14c
+UCIAMS-131997,Darkmold,5LP4991,USA,Colorado,1840,15,Zea mays,SEEDS,NA,-10.7,AMS,p3k14c
+UCIAMS-131991,Darkmold,5LP4991,USA,Colorado,1875,20,Zea mays,SEEDS,NA,-10.6,AMS,p3k14c
+UCIAMS-131994,Darkmold,5LP4991,USA,Colorado,1895,15,Zea mays,SEEDS,NA,-10.5,AMS,p3k14c
+UCIAMS-131996,Darkmold,5LP4991,USA,Colorado,1880,15,Zea mays,SEEDS,NA,-10.4,AMS,p3k14c
+UGAMS-6184,Darkmold,5LP4991,USA,Colorado,1580,30,Zea mays charred,SEEDS,NA,-10.4,AMS,p3k14c
+UGAMS-6175,Darkmold,5LP4991,USA,Colorado,1620,25,Zea mays charred,SEEDS,NA,-10.4,AMS,p3k14c
+UCIAMS-131988,Darkmold,5LP4991,USA,Colorado,1295,15,Zea mays,SEEDS,NA,-10.3,AMS,p3k14c
+UGAMS-6185,Darkmold,5LP4991,USA,Colorado,1820,30,Zea mays charred,SEEDS,NA,-10.3,AMS,p3k14c
+UGAMS-5242,Darkmold,5LP4991,USA,Colorado,1825,25,Zea mays charred,SEEDS,NA,-10.3,AMS,p3k14c
+UCIAMS-131989,Darkmold,5LP4991,USA,Colorado,1880,20,Zea mays,SEEDS,NA,-10.2,AMS,p3k14c
+UGAMS-5248,Darkmold,5LP4991,USA,Colorado,1780,25,Zea mays charred,SEEDS,NA,-10.2,AMS,p3k14c
+Beta-170573,Darkmold,5LP4991,USA,Colorado,1850,40,Zea mays,SEEDS,NA,-10,AMS,p3k14c
+UGAMS-5245,Darkmold,5LP4991,USA,Colorado,1890,25,Zea mays charred,SEEDS,NA,-9.9,AMS,p3k14c
+UCIAMS-131995,Darkmold,5LP4991,USA,Colorado,1830,15,Zea mays,SEEDS,NA,-9.6,AMS,p3k14c
+UCIAMS-131985,Darkmold,5LP4991,USA,Colorado,1595,20,Zea mays,SEEDS,NA,-9.5,AMS,p3k14c
+UGAMS-5243,Darkmold,5LP4991,USA,Colorado,1595,25,Zea mays charred,SEEDS,NA,-9.4,AMS,p3k14c
+UGAMS-5244,Darkmold,5LP4991,USA,Colorado,1560,25,Zea mays charred,SEEDS,NA,-9.3,AMS,p3k14c
+UGAMS-5246,Darkmold,5LP4991,USA,Colorado,1875,25,Zea mays charred,SEEDS,NA,-9.3,AMS,p3k14c
+UGAMS-4220,Darkmold,5LP4991,USA,Colorado,1590,30,Zea mays charred,SEEDS,NA,-9.2,AMS,p3k14c
+UGAMS-4224,Darkmold,5LP4991,USA,Colorado,1590,25,Zea mays charred,SEEDS,NA,-9.2,AMS,p3k14c
+UGAMS-6178,Darkmold,5LP4991,USA,Colorado,1610,25,Zea mays charred,SEEDS,NA,-9.2,AMS,p3k14c
+UCIAMS-131993,Darkmold,5LP4991,USA,Colorado,1770,20,Zea mays,SEEDS,NA,-9.1,AMS,p3k14c
+UGAMS-5247,Darkmold,5LP4991,USA,Colorado,1775,30,Zea mays charred,SEEDS,NA,-9.1,AMS,p3k14c
+UCIAMS-131987,Darkmold,5LP4991,USA,Colorado,1775,15,Zea mays,SEEDS,NA,-9,AMS,p3k14c
+UGAMS-4226,Darkmold,5LP4991,USA,Colorado,1800,30,Zea mays charred,SEEDS,NA,-8.6,AMS,p3k14c
+UGAMS-6179,Darkmold,5LP4991,USA,Colorado,1820,30,Zea mays charred,SEEDS,NA,-8.5,AMS,p3k14c
+UGAMS-4229,Darkmold,5LP4991,USA,Colorado,1860,25,Zea mays charred,SEEDS,NA,-8.4,AMS,p3k14c
+UGAMS-4227,Darkmold,5LP4991,USA,Colorado,1890,25,Zea mays charred,SEEDS,NA,-8.4,AMS,p3k14c
+UGAMS-4221,Darkmold,5LP4991,USA,Colorado,1580,25,Zea mays charred,SEEDS,NA,-8.2,AMS,p3k14c
+UGAMS-4231,Darkmold,5LP4991,USA,Colorado,1660,25,Zea mays charred,SEEDS,NA,-8.1,AMS,p3k14c
+UGAMS-4225,Darkmold,5LP4991,USA,Colorado,1620,25,Zea mays charred,SEEDS,NA,-8,AMS,p3k14c
+UGAMS-4222,Darkmold,5LP4991,USA,Colorado,1610,25,Zea mays charred,SEEDS,NA,-7.8,AMS,p3k14c
+Beta-140330,Darkmold,5LP4991,USA,Colorado,1450,60,Zea mays,SEEDS,NA,-9.7,RADIOMETRIC,p3k14c
+Beta-140332,Darkmold,5LP4991,USA,Colorado,1590,70,Zea mays,SEEDS,NA,-9.5,RADIOMETRIC,p3k14c
+Beta-54286,NA,42Cb0615,USA,Utah,990,70,Zea mays,Zea Mays,NA,NA,NA,CARD
+Beta-190934,NA,42Ka5902,USA,Utah,1230,50,Zea mays,Zea Mays,NA,-9.3,NA,p3k14c
+Beta-190933,NA,42Ka5902,USA,Utah,1440,50,Zea mays,Zea Mays,NA,-9.2,NA,p3k14c
+Beta-107648,Birch Creek Shelter,42Ga4158,USA,Utah,1240,80,Zea mays,Zea Mays,NA,-8.7,NA,p3k14c
+AA-9321,Lukachukai,,USA,Arizona,3050,50,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-9319,Lukachukai,,USA,Arizona,3135,45,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-9317,Lukachukai,,USA,Arizona,3445,45,Zea mays,Maize,NA,NA,AMS,p3k14c
+AA-9318,Salina Springs,,USA,Arizona,2630,45,Zea mays,2 maize kernels,NA,NA,AMS,p3k14c
+AA-9322,Salina Springs,,USA,Arizona,2140,45,Zea mays,maize kernels,NA,NA,AMS,p3k14c
+AA-9320,Salina Springs,,USA,Arizona,2315,45,Zea mays,maize kernels,NA,NA,AMS,p3k14c
+Beta-158094,Mountainview,AZ J:14:38,USA,Arizona,1830,40,Zea mays,Maize,NA,-11,AMS,p3k14c
+Beta-87912,Mountainview,AZ J:14:38,USA,Arizona,1810,50,Zea mays,Maize,NA,-10.8,AMS,p3k14c
+Beta-189057,Tularosa Cave,,USA,New Mexico,1830,40,Zea mays,uncharred maize cob,NA,NA,AMS,da Fonseca et al. 2015
+Beta-189054,Tularosa Cave,,USA,New Mexico,1880,40,Zea mays,Uncharred maize cob,NA,NA,AMS,da Fonseca et al. 2015
+Beta-189056,Tularosa Cave,,USA,New Mexico,1890,40,Zea mays,uncharred maize cob,NA,NA,AMS,da Fonseca et al. 2015
+A-4180,Tularosa Cave,,USA,New Mexico,1930,140,Zea mays,maize cupule,NA,NA,NA,p3k14c
+A-4181,Tularosa Cave,,USA,New Mexico,1940,90,Zea mays,maize cupule,NA,NA,NA,p3k14c
+Beta-190587,Bootleg No. 2,42Da1382,USA,Utah,820,40,Zea mays,Zea Mays,NA,NA,AMS,CARD
+Beta-175753,NA,42Em2837,USA,Utah,950,40,Zea mays,Zea Mays,NA,-8.7,AMS,p3k14c
+Beta-95306,Talus Village,5LP4223,USA,Colorado,1740,70,Zea mays kernels,SEEDS,NA,-10.2,NA,p3k14c
+Beta-134479,NA,42Ka4876,USA,Utah,880,40,Zea mays,Zea Mays,NA,-13.6,NA,p3k14c
+Beta-202522,NA,5LP239,USA,Colorado,1270,40,Zea mays,SEEDS,NA,-10.9,AMS,p3k14c
+Beta-226303,NA,5LP239,USA,Colorado,1220,40,Zea mays,SEEDS,NA,-10.2,AMS,p3k14c
+Beta-202521,NA,5LP239,USA,Colorado,1230,40,Zea mays,SEEDS,NA,-10.2,AMS,p3k14c
+Beta-226304,NA,5LP240,USA,Colorado,1270,40,Zea mays,SEEDS,NA,-10.8,AMS,p3k14c
+Beta-202523,NA,5LP240,USA,Colorado,1300,50,Zea mays,SEEDS,NA,-10.6,AMS,p3k14c
+Beta-132382,NA,42Ka3383,USA,Utah,960,50,Zea mays,Zea Mays,NA,-10.3,NA,p3k14c
+Beta-132381,NA,42Ka3383,USA,Utah,900,70,Zea mays,Zea Mays,NA,-9.4,NA,p3k14c
+Beta-202517,NA,5LP185,USA,Colorado,1400,40,Zea mays,SEEDS,NA,-11.9,AMS,p3k14c
+Beta-202520,NA,5LP185,USA,Colorado,1300,40,Zea mays,SEEDS,NA,-11.1,AMS,p3k14c
+Beta-202518,NA,5LP185,USA,Colorado,1310,40,Zea mays,SEEDS,NA,-11.1,AMS,p3k14c
+Beta-202519,NA,5LP185,USA,Colorado,1270,40,Zea mays,SEEDS,NA,-11,AMS,p3k14c
+Beta-210168,Skull Creek Shelter,42Da1417,USA,Utah,1160,40,Zea mays,Zea Mays,NA,-11.4,AMS,CARD
+Beta-203630,Deluxe Apartment,42Em2849,USA,Utah,1000,40,Zea mays,Zea Mays,NA,-8.9,NA,p3k14c
+Beta-132380,NA,42Ka2683,USA,Utah,1060,60,Zea mays,Zea Mays,NA,-9.8,NA,p3k14c
+Beta-107650,NA,42Ka4416,USA,Utah,890,60,Zea mays,Zea Mays,NA,-10.5,NA,p3k14c
+AA-19519,The Pits,AZ J:14:17,USA,Arizona,2035,65,Zea mays,Maize,NA,-11.1,AMS,p3k14c
+Beta-79148,The Pits,,USA,Arizona,1920,50,Zea mays,Maize,NA,-16.4,AMS,p3k14c
+Beta-79145,The Pits,,USA,Arizona,1990,60,Zea mays,Maize,NA,-15.3,AMS,p3k14c
+AA-19520,The Pits,,USA,Arizona,1940,65,Zea mays,Maize,NA,-12.2,AMS,p3k14c
+Beta-156068/ETH,The Pits,,USA,Arizona,2100,50,Zea mays,Maize,NA,-12.2,AMS,p3k14c
+Beta-156068/VERA,The Pits,,USA,Arizona,2100,40,Zea mays,Maize,NA,-12.1,AMS,p3k14c
+Beta-73982,The Pits,,USA,Arizona,2180,60,Zea mays,Maize,NA,-11.5,AMS,p3k14c
+Beta-156068/CAMS,The Pits,,USA,Arizona,2120,40,Zea mays,Maize,NA,-11.4,AMS,p3k14c
+Beta-73984,The Pits,,USA,Arizona,2190,60,Zea mays,Maize,NA,-11.2,AMS,p3k14c
+AA-19521,The Pits,,USA,Arizona,1995,65,Zea mays,Maize,NA,-10.9,AMS,p3k14c
+Beta-73979,The Pits,,USA,Arizona,2230,60,Zea mays,Maize,NA,-10.9,AMS,p3k14c
+AA-19522,The Pits,,USA,Arizona,2005,65,Zea mays,Maize,NA,-10.4,AMS,p3k14c
+Beta-181512,Grumpy George,42Wn2151,USA,Utah,990,40,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+PRI-5796,NA,42Da2026,USA,Utah,1129,20,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-154658,NA,42Wn2400,USA,Utah,1500,40,Zea mays,Zea Mays,NA,-11.7,NA,p3k14c
+Beta-275711,Fish Creek Cove,42Wn503,USA,Utah,970,40,Zea mays,Zea Mays,NA,-10.3,AMS,p3k14c
+UGAMS-6486,Fish Creek Cove,42Wn503,USA,Utah,950,25,Zea mays,Zea Mays,NA,NA,AMS,p3k14c
+Beta-94765,Ditch House,AZ J-14-21 ,USA,Arizona,2080,40,Zea mays,Maize,NA,-14.6,AMS,p3k14c
+Beta-198927,Bat Cave,,USA,New Mexico,3180,40,Zea mays,uncharred maize cob,NA,NA,AMS,da Fonseca et al. 2015
+A-4185,Bat Cave,,USA,New Mexico,2690,90,Zea mays,maize cupule,NA,NA,NA,p3k14c
+A-4166,Bat Cave,,USA,New Mexico,2780,90,Zea mays,maize cupule,NA,NA,NA,p3k14c
+A-4189,Bat Cave,,USA,New Mexico,3060,110,Zea mays,maize cupule,NA,NA,NA,p3k14c
+Beta-76546,Tabeguache Cave,5MN868,USA,Colorado,2060,60,Zea mays,SEEDS,NA,NA,NA,p3k14c
+UGa-12532,Tabeguache Cave,5MN868,USA,Colorado,2020,20,Zea mays,SEEDS,NA,-13.4,RADIOMETRIC,p3k14c
+Beta-190931,NA,42Ka0878,USA,Utah,1160,50,Zea mays,Zea Mays,NA,-9,NA,p3k14c
+Beta-210166,NA,42Da0844,USA,Utah,910,40,Zea mays,Zea Mays,NA,-11.4,AMS,CARD
+Beta-190930,NA,42Ka0877,USA,Utah,1280,90,Zea mays,Zea Mays,NA,-8.6,NA,p3k14c
+Beta-292892,Aspen Shelter,42Sv1365,USA,Utah,950,30,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+UGAMS-12487,Cottonwood Cave,5MN519,USA,Colorado,1960,20,Zea mays,SEEDS,NA,-13.3,AMS,p3k14c
+UGAMS-12488,Cottonwood Cave,5MN519,USA,Colorado,1280,20,Zea mays,SEEDS,NA,-11.5,AMS,p3k14c
+Beta-36438,Cottonwood Cave,5MN519,USA,Colorado,2220,80,Zea mays,SEEDS,NA,NA,NA,p3k14c
+Beta-205835,Cottonwood Pueblo,5MN654,USA,Colorado,1050,40,Zea mays,SEEDS,NA,-9.9,NA,p3k14c
+LUNK-1154,Eagle Point Rockshelter,5RB4662,USA,Utah,1240,15,Zea mays,corn cob on stick,NA,NA,NA,CARD
+M-285,Site A:10:1,5MF373,USA,Utah,650,150,Zea mays,maize,NA,NA,NA,CARD
+M-286,Blue Mountain Site A:10:7,5MF379,USA,Utah,800,100,Zea mays,maize,NA,NA,NA,CARD
+Beta-60056,Mud Loaf Granary,5RB3290,USA,Utah,1260,90,Zea mays,maize,NA,NA,NA,CARD
+Beta-173901,White Basketmaker,42GR2929,USA,Utah,1140,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-173898,White Basketmaker,42GR2929,USA,Utah,1790,40,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-122597,Mountain Boomer Site,42GR2945,USA,Utah,1130,50,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-122596,Mountain Boomer Site,42GR2945,USA,Utah,1880,60,Zea mays,maize,NA,NA,NA,p3k14c
+Beta-217471,Range Creek,42EM3355,USA,Utah,970,40,Zea mays,maize,NA,-10.6,NA,p3k14c
+Beta-217472,Range Creek,42EM3446,USA,Utah,1360,40,Zea mays,maize,NA,-9.3,NA,p3k14c
+D-AMS-27307,Martinez Pithouse,42Cb000,USA,Utah,873,45,Zea mays,Zea Mays,NA,NA,NA,p3k14c
+LUNK-1910,East Fork Village,42MD974,USA,Utah,925,55,Zea mays,maize,NA,NA,NA,CARD
+Beta-171930,Paragonah,42IN43,USA,Utah,990,60,Zea mays,maize,NA,-11.4,NA,p3k14c
+Beta-171928,Paragonah,42IN43,USA,Utah,1030,40,Zea mays,maize,NA,-11.3,NA,p3k14c
+Beta-171935,Paragonah,42IN43,USA,Utah,940,40,Zea mays,maize,NA,-11.2,NA,p3k14c
+Beta-171926,Paragonah,42IN43,USA,Utah,900,90,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-171933,Paragonah,42IN43,USA,Utah,920,40,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-171934,Paragonah,42IN43,USA,Utah,970,40,Zea mays,maize,NA,-11.1,NA,p3k14c
+Beta-171929,Paragonah,42IN43,USA,Utah,920,90,Zea mays,maize,NA,-11,NA,p3k14c
+Beta-171931,Paragonah,42IN43,USA,Utah,910,40,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-171936,Paragonah,42IN43,USA,Utah,1120,40,Zea mays,maize,NA,-10.9,NA,p3k14c
+Beta-171925,Paragonah,42IN43,USA,Utah,960,40,Zea mays,maize,NA,-10.2,NA,p3k14c
+Beta-171932,Paragonah,42IN43,USA,Utah,1040,40,Zea mays,maize,NA,-9.7,NA,p3k14c
+Beta-171927,Paragonah,42IN43,USA,Utah,960,40,Zea mays,maize,NA,-9.6,NA,p3k14c
+TX-1424A,Kachina Cave,26WP69,USA,Utah,810,70,Zea mays,maize,NA,NA,NA,CARD
+PRI-8-24-5221,Pigg site,5MT4802,USA,Colorado,870,15,Zea Mays cob- charred,SEEDS,NA,-11.4,AMS,p3k14c
+PRI-8-24-5225,Pigg site,5MT4802,USA,Colorado,860,15,Charred Zea Mays cob,SEEDS,NA,-11,AMS,p3k14c
+PRI-8-24-5253,Pigg site,5MT4802,USA,Colorado,800,15,Charred Zea Mays kernal,SEEDS,NA,-11,AMS,p3k14c
+PRI-10-77-5376,Pigg site,5MT4802,USA,Colorado,1105,15,Charred Zea Mays kernal,SEEDS,NA,-10.9,AMS,p3k14c
+PRI-10-77-5377,Pigg site,5MT4802,USA,Colorado,800,15,Charred Zea Mays kernal,SEEDS,NA,-10.8,AMS,p3k14c
+PRI-10-77-5866,Pigg site,5MT4802,USA,Colorado,800,15,Charred Zea Mays kernal,SEEDS,NA,-10.3,AMS,p3k14c
+PRI-8-24-5226,Pigg site,5MT4802,USA,Colorado,825,15,Charred Zea Mays cob,SEEDS,NA,-10.2,AMS,p3k14c
+PRI-10-77-5861,Pigg site,5MT4802,USA,Colorado,795,15,Charred Zea Mays kernal,SEEDS,NA,-9.5,AMS,p3k14c
+PRI-10-77-5895,Pigg site,5MT4802,USA,Colorado,800,15,Charred Zea Mays kernal,SEEDS,NA,-9,AMS,p3k14c
+Beta-95272,Six Toe Shelter,,USA,Utah,2360,80,Zea mays,Maize cob fragment,charred,-9.5,NA,p3k14c
