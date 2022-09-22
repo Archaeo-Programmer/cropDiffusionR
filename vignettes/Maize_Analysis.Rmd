@@ -1,5 +1,5 @@
 ---
-  title: "ENSO Impacts on Maize Agriculture in the Southwestern United States"
+  title: "Diffusion of Maize Agriculture to the Southwestern United States"
 author: "Andrew Gillreath-Brown"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 html_document:
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # devtools::install()
 # devtools::load_all()
 #devtools::install_github("zeehio/facetscales")
-library(ENSOMaizeImpacts)
+library(cropDiffusionR)
 require(ggh4x)
 
 ```
@@ -45,12 +45,12 @@ temp_anom <-
     se = 4
   )
 
-write.csv(ENSOMaizeImpacts::maizeDB,
+write.csv(cropDiffusionR::maizeDB,
           here::here("vignettes/tables/tableS1.csv"),
           row.names = FALSE)
 
 # Load location data for each sample. We do not present site locations in order to protect site locations.
-MDB <- ENSOMaizeImpacts::maizeDB %>%
+MDB <- cropDiffusionR::maizeDB %>%
   dplyr::left_join(
     .,
     readr::read_csv(
@@ -64,7 +64,7 @@ MDB <- ENSOMaizeImpacts::maizeDB %>%
 MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
-  ENSOMaizeImpacts::extract_GDD() %>%
+  cropDiffusionR::extract_GDD() %>%
   dplyr::select(-geometry)
 
 ```
@@ -377,7 +377,7 @@ NASW_sites <- dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
 
 # raster::crs(temp.raster) <-
 #   "+proj=lcc +lat_1=49 +lat_2=77 +lat_0=0 +lon_0=-95 +x_0=0 +y_0=0 +ellps=GRS80 +datum=WGS84 +units=m +no_defs"
-NASW_gdd_data <- raster::as.data.frame(ENSOMaizeImpacts::NASW_gdd, xy = TRUE)
+NASW_gdd_data <- raster::as.data.frame(cropDiffusionR::NASW_gdd, xy = TRUE)
 names(NASW_gdd_data) <- c("long", "lat", "GDD")
 NASW_gdd_data_transformed <-
   usmap::usmap_transform(
@@ -448,7 +448,7 @@ figure3 <-
   coord_equal() +
   theme_bw() +
   geom_sf(
-    data = ENSOMaizeImpacts::usa_mexico_states,
+    data = cropDiffusionR::usa_mexico_states,
     color = "#2b2b2b",
     fill = "transparent",
     size = 0.4,
@@ -535,7 +535,7 @@ maize_through_time_gdd <- purrr::map2(NASW_sites2, NASW_sites2_names, function(x
     coord_equal() +
     theme_bw() +
     geom_sf(
-      data = ENSOMaizeImpacts::usa_mexico_states,
+      data = cropDiffusionR::usa_mexico_states,
       color = "#2b2b2b",
       fill = "transparent",
       size = 0.4,

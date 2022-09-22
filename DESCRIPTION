@@ -1,8 +1,8 @@
-Package: ENSOMaizeImpacts
+Package: cropDiffusionR
 Type: Package
-Title: The Impact of ENSO on Maize Agriculture
+Title: Exploring the Diffusion of Agricultural Crops
 Version: 1.0.0
-Date: 2022-09-05
+Date: 2022-09-23
 Authors@R: 
     c(
     person(given = "Andrew",
@@ -17,7 +17,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-3414-6660"))
            )
 Maintainer: Andrew Gillreath-Brown <andrew.d.brown@wsu.edu>
-Description: This R package repository is to accompany the submission for Gillreath-Brown and Kohler 2022, which examines the effects on ENSO on maize agriculture in the southwestern United States.
+Description: This R package repository is to accompany the submission for Gillreath-Brown and Kohler 2022, which examines the effects temperature on the spread of maize agriculture to the southwestern United States.
 License: MIT + file LICENSE
 Depends: 
     magrittr,
@@ -60,7 +60,7 @@ Imports:
 LazyData: TRUE
 Suggests: testthat
 Encoding: UTF-8
-URL: https://github.com/Archaeo-Programmer/ENSO_Maize_Impacts
-BugReports: https://github.com/Archaeo-Programmer/ENSO_Maize_Impacts/issues
+URL: https://github.com/Archaeo-Programmer/cropDiffusionR
+BugReports: https://github.com/Archaeo-Programmer/cropDiffusionR/issues
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
