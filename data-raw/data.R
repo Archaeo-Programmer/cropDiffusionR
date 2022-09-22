@@ -63,10 +63,11 @@ rcarbon_output <-
 
 # Merge the calibration data to the maize database.
 maizeDB <- dplyr::left_join(maize_DB, rcarbon_output, by = c("LabID" = "DateID")) %>% 
-  dplyr::relocate(MedianBP, .after = Province) %>% 
+  dplyr::relocate(MedianBP, .after = Error) %>% 
   dplyr::relocate(Source, .after = last_col()) %>% 
-  dplyr::mutate(MedianBP = as.numeric(MedianBP)) %>% 
-  dplyr::mutate(Date = rcarbon::BPtoBCAD(MedianBP))
+  dplyr::mutate(MedianBP = as.numeric(MedianBP), 
+                Date = rcarbon::BPtoBCAD(MedianBP)) %>% 
+  dplyr::relocate(Date, .after = MedianBP)
 
 usethis::use_data(maizeDB,
                   overwrite = TRUE)
