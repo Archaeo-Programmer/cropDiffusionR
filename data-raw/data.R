@@ -50,10 +50,10 @@ maize_DB <-
 rcarbon_output <-
   rcarbon::calibrate(
     # normalized age
-    x = maizeDB$Age,
+    x = maize_DB$Age,
     # one sigma error
-    errors = maizeDB$Error,
-    ids = maizeDB$LabID,
+    errors = maize_DB$Error,
+    ids = maize_DB$LabID,
     # unique ID for each
     calCurves = "intcal20"
   ) %>%
@@ -64,7 +64,8 @@ rcarbon_output <-
 maizeDB <- dplyr::left_join(maize_DB, rcarbon_output, by = c("LabID" = "DateID")) %>% 
   dplyr::relocate(MedianBP, .after = Province) %>% 
   dplyr::relocate(Source, .after = last_col()) %>% 
-  dplyr::mutate(MedianBP = as.numeric(MedianBP))
+  dplyr::mutate(MedianBP = as.numeric(MedianBP)) %>% 
+  dplyr::mutate(Date = rcarbon::BPtoBCAD(MedianBP))
 
 usethis::use_data(maizeDB,
                   overwrite = TRUE)

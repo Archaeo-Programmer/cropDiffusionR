@@ -54,9 +54,7 @@ MDB <- ENSOMaizeImpacts::maizeDB %>%
       col_types = readr::cols()
     ),
     by = "LabID"
-  ) %>% 
-    dplyr::mutate(Date = rcarbon::BPtoBCAD(MedianBP))
-
+  )
 
 # Get the annual accumulated growing degree days for each sample.
 MDB_gdd <- MDB %>%
