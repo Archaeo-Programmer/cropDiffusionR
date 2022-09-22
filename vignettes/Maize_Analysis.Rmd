@@ -842,10 +842,8 @@ NASW_gdd_data_transformed <-
   )
 
 # Get data to do the alpha hack for additional relief in the GDD map plot.
-# america_dem <- elevatr::get_elev_raster(locations = cropDiffusionR::usa_mexico_states, z = 10)
-#
 # # Put elevation and temperature rasters in the same resolution.
-# ned_SW <- raster::projectRaster(america_dem, NASW_gdd, method = 'ngb')
+# ned_SW <- raster::projectRaster(cropDiffusionR::NASW_elevation, cropDiffusionR::NASW_gdd, method = 'ngb')
 #
 # ned_SW_crop <- raster::crop(ned_SW, usa_mexico_states)
 # #then mask out (i.e. assign NA) the values outside the polygon
