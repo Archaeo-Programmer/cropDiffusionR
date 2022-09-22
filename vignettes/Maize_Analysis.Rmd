@@ -919,7 +919,6 @@ ggplot2::ggsave(
 
 ```
 
-
 # Supplemental Figures
 
 ```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
@@ -929,7 +928,7 @@ MDB_min_rayshader <- MDB %>%
   dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
   dplyr::ungroup() %>%
   dplyr::filter(
-    Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% first()
+    Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first()
   ) %>% 
   dplyr::left_join(., MDB_gdd, by = "LabID")
 
@@ -1007,7 +1006,6 @@ mtplot <-
       l = 5
     )
   )
-
 
 rayshader::plot_gg(
   mtplot,
