@@ -10,29 +10,9 @@
 #' @export
 extract_GDD <-
   function(sites) {
-    # Processing WorldClim data.
-    # Calculate average days per month during 1970-2000.
-    month_days <-
-      tibble::tibble(date = seq(
-        lubridate::as_date("1970-01-01"),
-        lubridate::as_date("2000-12-31"),
-        "1 day"
-      )) %>%
-      dplyr::mutate(year = lubridate::year(date),
-                    month = strftime(date, '%B')) %>%
-      dplyr::group_by(year, month) %>%
-      dplyr::count() %>%
-      dplyr::group_by(month) %>%
-      dplyr::summarise(`days` = mean(n))
-    
-    current.list <-
-      list.files(path = "/Users/andrew/Downloads/wc2.1_30s_tavg",
-                 pattern = ".tif",
-                 full.names = TRUE)
-    c.stack <- raster::stack(current.list)
-    
+
     # Get annual accumulated growing degree days.
-    raster::extract(x = c.stack,
+    raster::extract(x = cropDiffusionR::NASW_gdd,
                     y = sites) %>%
       `colnames<-`(month.name) %>%
       dplyr::bind_cols(LabID = sites$LabID, .) %>%
