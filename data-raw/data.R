@@ -42,7 +42,7 @@ maize_DB <-
   dplyr::bind_rows(maizeDB_orig %>% dplyr::filter(LabID %in% correct_data)) %>% 
   dplyr::arrange(LabID)
   
-# We can check which rows have different ages. In a few cases, p3k14c had the incorrect data.
+# We can check which rows have different ages. In a few cases, p3k14c had incorrect data.
 # View(maize_DB[maizeDB_orig$Age != maize_DB$Age,])
 # View(maizeDB_orig[maizeDB_orig$Age != maize_DB$Age,])
 
@@ -53,8 +53,9 @@ rcarbon_output <-
     x = maize_DB$Age,
     # one sigma error
     errors = maize_DB$Error,
-    ids = maize_DB$LabID,
     # unique ID for each
+    ids = maize_DB$LabID,
+    # specify the calibration curve
     calCurves = "intcal20"
   ) %>%
   summary() %>% 

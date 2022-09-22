@@ -45,6 +45,10 @@ temp_anom <-
     se = 4
   )
 
+write.csv(ENSOMaizeImpacts::maizeDB,
+          here::here("vignettes/tables/tableS1.csv"),
+          row.names = FALSE)
+
 # Load location data for each sample. We do not present site locations in order to protect site locations.
 MDB <- ENSOMaizeImpacts::maizeDB %>%
   dplyr::left_join(
@@ -486,6 +490,117 @@ figure3 <-
 ggplot2::ggsave(figure3, 
                 filename = "vignettes/figures/Figure_3.png", 
        width = 15.43, height = 13.15, dpi = 600)
+
+
+
+
+
+
+
+# Animation to show location of maize sites in 100 year bins.
+NASW_sites2 <- MDB %>% 
+  dplyr::select(LabID, SiteName, SiteID, Long, Lat, Date) %>% 
+  dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>% 
+  sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>% 
+  dplyr::group_by(period = cut(Date, breaks = seq(-4300, 1900, 100),
+                               labels = seq(-4300, 1800, 100))) %>% 
+  dplyr::mutate(period = as.numeric(as.character(period)),
+                label = ifelse(SiteName %in% NASW_sites$SiteName, SiteName, NA_character_)) %>% 
+  dplyr::arrange(period) %>% 
+  dplyr::distinct(geometry, .keep_all = TRUE) %>% 
+  split(.$period)
+
+NASW_sites2_names <-
+  data.frame(century = as.numeric(names(NASW_sites2))) %>%
+  dplyr::mutate(
+    century = ifelse(century == 0, 1, century),
+    century = ifelse(
+      century < 0,
+      paste(century, "to", century + 100, "BC"),
+      paste("AD", century, "to", century + 100)
+    ),
+    century = str_replace_all(century, "[-]", "")
+  ) %>%
+  dplyr::pull(century)
+
+maize_through_time_gdd <- purrr::map2(NASW_sites2, NASW_sites2_names, function(x, y)
+  ggplot2::ggplot(data = NASW_gdd_data_transformed) +
+    geom_raster(aes(x = long, y = lat, fill = GDD),
+      alpha = 0.8,
+      na.rm = TRUE
+    ) +
+    scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                         na.value = "transparent",
+                         name = "Annual GDDs") +
+    coord_equal() +
+    theme_bw() +
+    geom_sf(
+      data = ENSOMaizeImpacts::usa_mexico_states,
+      color = "#2b2b2b",
+      fill = "transparent",
+      size = 0.4,
+      inherit.aes = FALSE
+    ) +
+    geom_sf(
+      data = x,
+      aes(geometry = geometry),
+      size = 4,
+      inherit.aes = FALSE
+    ) +
+    ggrepel::geom_label_repel(
+      data = x,
+      aes(label = label, geometry = geometry),
+      stat = "sf_coordinates",
+      min.segment.length = 0.4,
+      force = 47,
+      label.size = 0,
+      size = 4.5,
+      inherit.aes = FALSE,
+      max.overlaps = 20
+    ) +
+    ggtitle(y) +
+    theme(
+      #legend.key.width = unit(1.25, 'cm'),
+      plot.title = element_text(hjust = 0.5, size = 20, family = "Helvetica", face = "bold"),
+      legend.position = c(.15, .2),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      axis.text = element_blank(),
+      axis.text.x = element_blank(),
+      axis.title = element_blank(),
+      axis.line = element_blank(),
+      axis.ticks = element_blank(),
+      legend.text = element_text(size = 15, family = "Helvetica"),
+      legend.title = element_text(
+        size = 16,
+        family = "Helvetica",
+        face = "bold"
+      )
+    ))
+
+invisible(mapply(ggsave, file=paste0("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/Figures/animation", names(maize_through_time_gdd), ".png"), width = 15.43, height = 13.15, dpi = 300, plot=maize_through_time_gdd))
+
+
+#Gif animation
+## list file names and read in
+imgs <- list.files("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
+# index = c(15, 14, 13, 12, 11, 9, 8, 7, 6, 10, 5, 1, 2, 3, 4)
+# index = c(4, 3, 2, 1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+# imgs = imgs[order(index)]
+img_list <- lapply(imgs, magick::image_read)
+
+## join the images together
+img_joined <- image_join(maize_through_time_gdd)
+
+## animate at 2 frames per second
+img_animated <- image_animate(img_joined, fps = 2)
+
+## view animated image
+img_animated
+
+## save to disk
+image_write(image = img_animated,
+            path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/Figures/animation/maize_anomaly_plots_arranged.gif")
 
 ```
 
