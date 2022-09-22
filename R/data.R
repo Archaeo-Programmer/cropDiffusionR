@@ -1,6 +1,6 @@
-#' Accumulated Growing Degree Days.
+#' Annual Accumulated Growing Degree Days from SAGE.
 #'
-#' A `raster` containing global accumulated growing degree days for the year with a base temperature of 5°C.
+#' A `raster` containing annual global accumulated growing degree days for the year with a base temperature of 5°C.
 #'
 #' @format An object of class `RasterLayer`.
 #' @source \url{https://sage.nelson.wisc.edu/data-and-models/atlas-of-the-biosphere/mapping-the-biosphere/ecosystems/growing-degree-days/}
@@ -24,3 +24,28 @@
 #' 
 #' Martindale, Andrew, Richard Morlan, Matthew Betts, Michael Blake, Konrad Gajewski, Michelle Chaput, Andrew Mason, and Pierre Vermeersch (2016) Canadian Archaeological Radiocarbon Database (CARD 2.1), accessed September 10, 2022.
 "maizeDB"
+
+#' Annual Accumulated Growing Degree Days from WorldClim.
+#'
+#' A `raster` containing annual accumulated growing degree days for the year with a base temperature of 10°C and maximum temperature of 30°C. GDD was calculated from the tavg 30 seconds (~1 km^2).
+#'
+#' @format An object of class `RasterLayer`.
+#' @source \url{https://www.worldclim.org/data/worldclim21.html}
+"NASW_gdd"
+
+#' Southwestern United States and Mexico States Polygon.
+#'
+#' A `MULTIPOLYGON` containing the state boundaries for the southwestern United States (i.e., Arizona, Colorado, New Mexico, and Utah) and Mexico.
+#'
+#' @format An object of class `sfc_MULTIPOLYGON`.
+#' @source \url{https://www.arcgis.com/home/item.html?id=ac9041c51b5c49c683fbfec61dc03ba8}
+"usa_mexico_states"
+
+#' Digital Elevation Model for the Southwestern United States and Mexico States.
+#'
+#' A `raster` containing elevation for the southwestern United States (i.e., Arizona, Colorado, New Mexico, and Utah) and Mexico.
+#'
+#' @format An object of class `RasterLayer`.
+#' @source \url{https://github.com/jhollist/elevatr}
+"NASW_elevation"
+

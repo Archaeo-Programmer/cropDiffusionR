@@ -130,7 +130,7 @@ NASW_gdd <- accum_GDD_annual
 usethis::use_data(NASW_gdd,
                   overwrite = TRUE)
 
-# Create USA and Mexico states polygon.
+# Create southwestern United States and Mexico states polygon.
 # Get Mexico states shapefile. Data was downloaded from https://www.arcgis.com/home/item.html?id=ac9041c51b5c49c683fbfec61dc03ba8.
 mexico_states <-
   sf::read_sf(here::here("data-raw/mexstates/mexstates.shp")) %>%
