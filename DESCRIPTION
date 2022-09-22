@@ -57,6 +57,9 @@ Imports:
     ggsci,
     paleomat,
     p3k14c
+Remotes: 
+    zeehio/facetscales,
+    Archaeo-Programmer/paleomat
 LazyData: TRUE
 Suggests: testthat
 Encoding: UTF-8

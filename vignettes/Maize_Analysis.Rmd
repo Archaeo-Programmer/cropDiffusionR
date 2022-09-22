@@ -22,7 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # devtools::install()
 # devtools::load_all()
-#devtools::install_github("zeehio/facetscales")
 library(cropDiffusionR)
 require(ggh4x)
 
@@ -69,8 +68,7 @@ MDB_gdd <- MDB %>%
 
 ```
 
-
-```{r Figure_1, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_1, fig.cap="Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Create a bounding box for limits of this study
 bb <-
@@ -93,8 +91,8 @@ usa <-
 paleomat_extent <-
   ggplot2::ggplot() +
   theme_bw() +
-  scale_x_continuous(breaks = seq(-115,-103, 2.0),
-                     limits = c(-115,-103.2)) +
+  scale_x_continuous(breaks = seq(-115, -103, 2.0),
+                     limits = c(-115, -103.2)) +
   scale_y_continuous(breaks = seq(31, 39, 2.0),
                      limits = c(31.25, 39)) +
   geom_sf(
@@ -178,7 +176,7 @@ paleomat_extent <-
     legend.background = element_rect(fill = "transparent", color = NA),
     legend.box.background = element_rect(fill = "transparent", color = NA),
     legend.key = element_rect(fill = "transparent", color = NA),
-    legend.box.margin = margin(-10, -10, -10, -20)
+    legend.box.margin = margin(-10,-10,-10,-20)
   )
 
 
@@ -196,7 +194,7 @@ anom_plot <- temp_anom %>%
     breaks = seq(-3000, 2000, 500),
     minor_breaks = seq(-2900, 2000, by = 100),
     guide = "axis_minor",
-    labels = c(seq(-3000,-500, 500), 1, seq(500, 2000, 500))
+    labels = c(seq(-3000, -500, 500), 1, seq(500, 2000, 500))
   ) +
   scale_y_continuous(
     limits = c(-2.5, 2.5),
@@ -259,14 +257,18 @@ plot.with.inset <-
     height = .34
   )
 
-ggplot2::ggsave(filename = "vignettes/figures/Figure_1.png",
-       plot = plot.with.inset,
-       width = 15.51, height = 10.32, dpi = 600)
+ggplot2::ggsave(
+  filename = "vignettes/figures/Figure_1.png",
+  plot = plot.with.inset,
+  width = 15.51,
+  height = 10.32,
+  dpi = 600
+)
 
 
 ```
 
-```{r Figure_2, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_2, fig.cap="Low-frequency July temperature anomaly for the SWUS (Gillreath-Brown, Bocinsky, and Kohler, n.d.) and the Northern Hemisphere low-frequency component (Moberg et al. 2005) from AD 133 to 1900. Both series have been standardized to a mean of 0 and an s of 1 for the period in the graph.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 temp_anom_standard <-
   readr::read_csv(
@@ -356,29 +358,482 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
     )
   )
 
-# ggplot2::ggsave(
-#   Moberg_paleomat_fig,
-#   filename = "vignettes/figures/Figure_2.png",
-#   width = 17.25,
-#   height = 11.5,
-#   dpi = 600
-# )
-  
+ggplot2::ggsave(
+  Moberg_paleomat_fig,
+  filename = "vignettes/figures/Figure_2.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
+
 ```
 
-```{r Figure_3, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_4, fig.cap="Earliest site with maize in each of the labeled political subdivisions, using data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.001 degrees/year for this sample (r2 = 0.01; p > F = 0.72).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
-NASW_sites <- dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::select(SiteName, SiteID, Long, Lat) %>% 
-  dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>% 
-  dplyr::distinct(SiteName, .keep_all = TRUE) %>% 
+# Subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_min_fig4 <- MDB %>%
+  dplyr::group_by(Province) %>%
+  dplyr::slice_max(MedianBP) %>%
+  dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(Lat >= Lat[SiteName == "Guila Naquitz"])
+
+# Linear Model and Stats
+lm1 <- lm(Lat ~ Date, data = MDB_min_fig4)
+setNames(c(
+  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
+  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
+  formatC(
+    summary(lm1)$coefficients[2, 4],
+    digits = 3,
+    format = "f"
+  ),
+  formatC(
+    summary(lm1)$fstatistic[[1]],
+    digits = 2,
+    format = "f"
+  )
+),
+c("slope", "r2", "pvalue", "Fstat"))
+
+# Plot using a linear model.
+figure4 <-
+  MDB_min_fig4 %>%
+  dplyr::mutate(Province = as.factor(Province)) %>%
+  dplyr::arrange(Date) %>%
+  dplyr::mutate(labels = paste0(
+    stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)", ""),
+    ", \n ",
+    Province
+  )) %>%
+  ggplot(aes(x = Date, y = Lat)) +
+  geom_point(size = 4, aes(shape = forcats::fct_rev(Country))) +
+  scale_shape_manual(values = c(19, 15), name = "Country") +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  ggrepel::geom_label_repel(
+    aes(label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
+  ) +
+  scale_y_continuous(
+    breaks = seq(10, 45, 5),
+    minor_breaks = seq(10, 45, 1),
+    limits = c(10, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  # ggpubr::color_palette(palette = "jco") +
+  theme_bw()  +
+  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
+  theme(
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.position = "bottom",
+    legend.direction = "horizontal",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(
+  figure4,
+  filename = "vignettes/figures/Figure_4.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
+
+```
+
+```{r Figure_5, fig.cap="Location of maize’s northern frontier through time. Shown is the earliest site with maize in each century, with the constraint that only sites further north than earlier sites appear in the plot. Data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.003 degrees/year for this sample (r2 = 0.76; p > F < 0.001). Between just Guilà Naquitz and Las Capas however the implied rate of spread is ~8.7 times more rapid (0.026 degrees/year).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# Subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_min_fig5 <- MDB %>%
+  # Create 100 year bins.
+  dplyr::mutate(bin = cut(
+    MedianBP,
+    breaks = seq(
+      plyr::round_any(min(MedianBP), 100, f = floor),
+      plyr::round_any(max(MedianBP), 100, f = ceiling),
+      by = 100
+    ),
+    include.lowest = TRUE
+  )) %>%
+  dplyr::group_by(bin) %>%
+  dplyr::slice_max(Lat) %>%
+  dplyr::slice_max(MedianBP) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(desc(MedianBP)) %>%
+  dplyr::filter(Lat == cummax(Lat)) %>%
+  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
+  dplyr::filter(Date <= 1500) %>%
+  dplyr::group_by(SiteName) %>%
+  dplyr::slice_min(Date, with_ties = FALSE) %>%
+  dplyr::ungroup()
+
+# Linear Model and Stats
+lm1 <- lm(Lat ~ Date, data = MDB_min_fig5)
+setNames(c(
+  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
+  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
+  formatC(
+    summary(lm1)$coefficients[2, 4],
+    digits = 3,
+    format = "f"
+  ),
+  formatC(
+    summary(lm1)$fstatistic[[1]],
+    digits = 2,
+    format = "f"
+  )
+),
+c("slope", "r2", "pvalue", "Fstat"))
+
+# Plot using a linear model.
+figure5 <-
+  MDB_min_fig5 %>%
+  dplyr::mutate(Province = forcats::fct_reorder(Province, Date, .fun = 'min')) %>%
+  dplyr::arrange(Date) %>%
+  dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName)) %>%
+  dplyr::mutate(labels = stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)", "")) %>%
+  ggplot(aes(x = Date, y = Lat)) +
+  geom_point(size = 4, aes(color = Province, shape = Province)) +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+  #                              after_stat(rr.label), sep = "*\", \"*"))) +
+  ggrepel::geom_label_repel(
+    aes(colour = Province, label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1,
+    max.overlaps = 16
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+  ) +
+  scale_y_continuous(
+    breaks = seq(15, 45, 5),
+    minor_breaks = seq(15, 45, 1),
+    limits = c(15, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  scale_shape_manual(
+    values = c(3, 19, 15, 17, 9),
+    name = "States",
+    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  scale_color_manual(
+    values = ggsci::pal_jco("default")(10)[c(1, 3, 2, 4, 6)],
+    name = "States",
+    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  theme_bw()  +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.direction = "horizontal",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(
+  figure5,
+  filename = "vignettes/figures/Figure_5.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
+
+```
+
+```{r Figure_6, fig.cap="Location of maize’s northern frontier through time within or near the SWUS as defined here. The slope of the regression line implies an average spread rate of 0.002 degrees/year for this sample (r2 = 0.95; p > F < 0.001).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_min_fig6 <- MDB %>%
+  dplyr::filter(Country == "USA") %>%
+  # Create 100 year bins.
+  dplyr::mutate(bin = cut(
+    MedianBP,
+    breaks = seq(
+      plyr::round_any(min(MedianBP), 100, f = floor),
+      plyr::round_any(max(MedianBP), 100, f = ceiling),
+      by = 100
+    ),
+    include.lowest = TRUE
+  )) %>%
+  dplyr::group_by(bin) %>%
+  dplyr::slice_max(Lat) %>%
+  dplyr::slice_max(MedianBP) %>%
+  dplyr::ungroup() %>%
+  dplyr::arrange(desc(MedianBP)) %>%
+  dplyr::filter(Lat == cummax(Lat)) %>%
+  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
+  dplyr::filter(Date <= 1500) %>%
+  dplyr::group_by(SiteName) %>%
+  dplyr::slice_min(Date, with_ties = FALSE) %>%
+  dplyr::ungroup()
+
+# Linear Model and Stats
+lm1 <- lm(Lat ~ Date, data = MDB_min_fig6)
+setNames(c(
+  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
+  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
+  formatC(
+    summary(lm1)$coefficients[2, 4],
+    digits = 3,
+    format = "f"
+  ),
+  formatC(
+    summary(lm1)$fstatistic[[1]],
+    digits = 2,
+    format = "f"
+  )
+),
+c("slope", "r2", "pvalue", "Fstat"))
+
+# Plot using a linear model.
+figure6 <-
+  MDB_min_fig6 %>%
+  dplyr::mutate(Province = forcats::fct_reorder(Province, Date, .fun = 'min')) %>%
+  dplyr::arrange(Date) %>%
+  dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName)) %>%
+  dplyr::mutate(labels = stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)+$", "")) %>%
+  ggplot(aes(x = Date, y = Lat)) +
+  geom_point(size = 4, aes(color = Province, shape = Province)) +
+  geom_smooth(
+    aes(group = 1),
+    method = 'lm',
+    se = FALSE,
+    linetype = 1,
+    color = "black"
+  ) +
+  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
+  #                              after_stat(rr.label), sep = "*\", \"*"))) +
+  ggrepel::geom_label_repel(
+    aes(colour = Province, label = labels),
+    max.iter = 4500,
+    cex = 6.7,
+    show.legend  = F,
+    min.segment.length = unit(0, 'lines'),
+    force = 25,
+    box.padding = 1,
+    max.overlaps = 15
+  ) +
+  scale_shape_manual(
+    values = c(19, 15, 17, 9),
+    name = "States",
+    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  scale_color_manual(
+    values = ggsci::pal_jco("default")(10)[c(3, 2, 4, 6)],
+    name = "States",
+    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
+  ) +
+  scale_x_continuous(
+    breaks = seq(-4500, 1500, 500),
+    minor_breaks = seq(-4500, 1500, 100),
+    limits = c(-4500, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+  ) +
+  scale_y_continuous(
+    breaks = seq(30, 42, 2),
+    minor_breaks = seq(30, 42, 1),
+    limits = c(30, 42),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  theme_bw()  +
+  theme(
+    legend.position = "bottom",
+    legend.title = element_text(
+      size = 19,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.direction = "horizontal",
+    legend.text = element_text(size = 18, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 26,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 28,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+ggplot2::ggsave(
+  figure6,
+  filename = "vignettes/figures/Figure_6.png",
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
+
+```
+
+```{r Figure_3, fig.cap="Annual accumulated growing degree days across the southwestern United States and Mexico, with locations of sites mentioned in the text or the following figures. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+
+# Placing Figure 3 after Figures 4-6 since we use the sites from those figures to plot on to the GDD map.
+NASW_sites <-
+  dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(SiteName, SiteID, Long, Lat) %>%
+  dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>%
+  dplyr::distinct(SiteName, .keep_all = TRUE) %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326)
 
-# raster::crs(temp.raster) <-
-#   "+proj=lcc +lat_1=49 +lat_2=77 +lat_0=0 +lon_0=-95 +x_0=0 +y_0=0 +ellps=GRS80 +datum=WGS84 +units=m +no_defs"
-NASW_gdd_data <- raster::as.data.frame(cropDiffusionR::NASW_gdd, xy = TRUE)
+# Get raster for the North American Southwest and convert to a dataframe.
+NASW_gdd_data <-
+  raster::as.data.frame(cropDiffusionR::NASW_gdd, xy = TRUE)
+# Assign names to the columns.
 names(NASW_gdd_data) <- c("long", "lat", "GDD")
+#Transform the data for plotting in ggplot.
 NASW_gdd_data_transformed <-
   usmap::usmap_transform(
     NASW_gdd_data,
@@ -386,19 +841,16 @@ NASW_gdd_data_transformed <-
     output_names = c("x", "y")
   )
 
-# usa_mexico_states2 <- usa_mexico_states %>% 
-#   # MDB_min is the data from Figure 3
-#   dplyr::mutate(state_abbr = ifelse(state_name %in% c(MDB_min$Province, "Mexico"), state_abbr, NA_character_))
-# 
-# america_dem <- elevatr::get_elev_raster(locations = usa_mexico_states, z = 10)
-# 
+# Get data to do the alpha hack for additional relief in the GDD map plot.
+# america_dem <- elevatr::get_elev_raster(locations = cropDiffusionR::usa_mexico_states, z = 10)
+#
 # # Put elevation and temperature rasters in the same resolution.
 # ned_SW <- raster::projectRaster(america_dem, NASW_gdd, method = 'ngb')
-# 
+#
 # ned_SW_crop <- raster::crop(ned_SW, usa_mexico_states)
 # #then mask out (i.e. assign NA) the values outside the polygon
 # ned_SW_mask <- raster::mask(ned_SW_crop, usa_mexico_states)
-# 
+#
 # # Create a hillshade file.
 # slope <- raster::terrain(ned_SW_mask, opt='slope')
 # aspect <- raster::terrain(ned_SW_mask, opt='aspect')
@@ -408,8 +860,8 @@ NASW_gdd_data_transformed <-
 # hill_spdf <- as(hill, "SpatialPixelsDataFrame")
 # hill_spdf <- raster::as.data.frame(hill_spdf)
 # colnames(hill_spdf) <- c("value", "x", "y")
-#    
-  
+#
+
 figure3 <-
   ggplot2::ggplot(data = NASW_gdd_data_transformed) +
   # ggplot2::geom_raster(
@@ -423,15 +875,15 @@ figure3 <-
   # # use the "alpha hack"
   # scale_alpha(
   #   name = "",
-  #   range = c(0.6, 0),
-  #   na.value = 0,
-  #   #limits = c(0,255),
-  #   guide = FALSE
-  # )  +
-  geom_raster(aes(x = long, y = lat, fill = GDD),
-    alpha = 0.8,
-    na.rm = TRUE
-  ) +
+#   range = c(0.6, 0),
+#   na.value = 0,
+#   #limits = c(0,255),
+#   guide = FALSE
+# )  +
+geom_raster(aes(x = long, y = lat, fill = GDD),
+            alpha = 0.8,
+            na.rm = TRUE) +
+  # For doing the raster in greyscale.
   scale_fill_gradientn(
     colors = grey.colors(
       10,
@@ -442,6 +894,7 @@ figure3 <-
     na.value = "transparent",
     name = "Annual GDDs"
   ) +
+  # For doing the raster in color.
   # scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
   #                      na.value = "transparent",
   #                      name = "Annual GDDs") +
@@ -455,9 +908,8 @@ figure3 <-
     inherit.aes = FALSE
   ) +
   geom_sf(data = NASW_sites,
-    aes(geometry = geometry),
-    inherit.aes = FALSE
-    ) +
+          aes(geometry = geometry),
+          inherit.aes = FALSE) +
   ggrepel::geom_label_repel(
     data = NASW_sites,
     aes(label = SiteName, geometry = geometry),
@@ -470,7 +922,6 @@ figure3 <-
     max.overlaps = 20
   ) +
   theme(
-    #legend.key.width = unit(1.25, 'cm'),
     legend.position = c(.15, .2),
     panel.border = element_blank(),
     panel.grid.major = element_blank(),
@@ -487,15 +938,19 @@ figure3 <-
     )
   )
 
-ggplot2::ggsave(figure3, 
-                filename = "vignettes/figures/Figure_3.png", 
-       width = 15.43, height = 13.15, dpi = 600)
+ggplot2::ggsave(
+  figure3,
+  filename = "vignettes/figures/Figure_3.png",
+  width = 15.43,
+  height = 13.15,
+  dpi = 600
+)
 
+```
 
+# Supplemental Figures
 
-
-
-
+```{r maize_frontier_animation, fig.cap="Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Animation to show location of maize sites in 100 year bins.
 NASW_sites2 <- MDB %>% 
@@ -604,437 +1059,7 @@ image_write(image = img_animated,
 
 ```
 
-```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
-
-# Subset the dataframe to only have the 2 sigma data and the unique lab code.
-MDB_min_fig4 <- MDB %>%
-  dplyr::group_by(Province) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::select(LabID, SiteName, Date, Lat, everything()) %>% 
-  dplyr::ungroup() %>% 
-  dplyr::filter(Lat >= Lat[SiteName == "Guila Naquitz"])
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig4)
-setNames(
-  c(
-    formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-    formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-    formatC(summary(lm1)$coefficients[2, 4], digits = 3, format = "f"),
-    formatC(summary(lm1)$fstatistic[[1]], digits = 2, format = "f")
-  ),
-  c("slope", "r2", "pvalue", "Fstat")
-)
-
-# Plot using a linear model.
-figure4 <-
-  MDB_min_fig4 %>%
-  dplyr::mutate(Province = as.factor(Province)) %>%
-  dplyr::arrange(Date) %>%
-  dplyr::mutate(labels = paste0(
-    stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)", ""),
-    ", \n ",
-    Province
-  )) %>%
-  ggplot(aes(x = Date, y = Lat)) +
-  geom_point(size = 4, aes(shape = forcats::fct_rev(Country))) +
-  scale_shape_manual(values = c(19, 15), name = "Country") +
-  geom_smooth(
-    aes(group = 1),
-    method = 'lm',
-    se = FALSE,
-    linetype = 1,
-    color = "black"
-  ) +
-  ggrepel::geom_label_repel(
-    aes(label = labels),
-    max.iter = 4500,
-    cex = 6.7,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    force = 25,
-    box.padding = 1
-  ) +
-  scale_x_continuous(
-    breaks = seq(-4500, 1500, 500),
-    minor_breaks = seq(-4500, 1500, 100),
-    limits = c(-4500, 1500),
-    guide = "axis_minor",
-    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
-  ) +
-  scale_y_continuous(
-    breaks = seq(10, 45, 5),
-    minor_breaks = seq(10, 45, 1),
-    limits = c(10, 45),
-    guide = "axis_minor"
-  ) +
-  xlab("Years BC/AD") +
-  ylab("Latitude") +
-  # ggpubr::color_palette(palette = "jco") +
-  theme_bw()  +
-  guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
-  theme(
-    legend.title = element_text(
-      size = 19,
-      family = "Helvetica",
-      face = "bold"
-    ),
-    legend.position = "bottom",
-    legend.direction = "horizontal",
-    legend.text = element_text(size = 18, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-ggplot2::ggsave(figure4, filename = "vignettes/figures/Figure_4.png", width = 17.25, height = 11.5, dpi = 600)
-
-
-```
-
-
-```{r Figure_5, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
-
-# Subset the dataframe to only have the 2 sigma data and the unique lab code.
-MDB_min_fig5 <- MDB %>%
-  # Create 100 year bins.
-  dplyr::mutate(bin = cut(
-    MedianBP,
-    breaks = seq(
-      plyr::round_any(min(MedianBP), 100, f = floor),
-      plyr::round_any(max(MedianBP), 100, f = ceiling),
-      by = 100
-    ),
-    include.lowest = TRUE
-  )) %>%
-  dplyr::group_by(bin) %>%
-  dplyr::slice_max(Lat) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(desc(MedianBP)) %>%
-  dplyr::filter(Lat == cummax(Lat)) %>%
-  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
-  dplyr::filter(Date <= 1500) %>%
-  dplyr::group_by(SiteName) %>%
-  dplyr::slice_min(Date, with_ties = FALSE) %>%
-  dplyr::ungroup()
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig5)
-setNames(
-  c(
-    formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-    formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-    formatC(summary(lm1)$coefficients[2, 4], digits = 3, format = "f"),
-    formatC(summary(lm1)$fstatistic[[1]], digits = 2, format = "f")
-  ),
-  c("slope", "r2", "pvalue", "Fstat")
-)
-
-# Plot using a linear model.
-figure5 <-
-  MDB_min_fig5 %>%
-  dplyr::mutate(Province = forcats::fct_reorder(Province, Date, .fun = 'min')) %>%
-  dplyr::arrange(Date) %>%
-  dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName)) %>% 
-  dplyr::mutate(labels = stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)", "")) %>%
-  ggplot(aes(x = Date, y = Lat)) +
-  geom_point(size = 4, aes(color = Province, shape = Province)) +
-  geom_smooth(
-    aes(group = 1),
-    method = 'lm',
-    se = FALSE,
-    linetype = 1,
-    color = "black"
-  ) +
-  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
-  #                              after_stat(rr.label), sep = "*\", \"*"))) +
-  ggrepel::geom_label_repel(
-    aes(colour = Province, label = labels),
-    max.iter = 4500,
-    cex = 6.7,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    force = 25,
-    box.padding = 1,
-    max.overlaps = 16
-  ) +
-  scale_x_continuous(
-    breaks = seq(-4500, 1500, 500),
-    minor_breaks = seq(-4500, 1500, 100),
-    limits = c(-4500, 1500),
-    guide = "axis_minor",
-    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
-  ) +
-  scale_y_continuous(
-    breaks = seq(15, 45, 5),
-    minor_breaks = seq(15, 45, 1),
-    limits = c(15, 45),
-    guide = "axis_minor"
-  ) +
-  xlab("Years BC/AD") +
-  ylab("Latitude") +
-  scale_shape_manual(
-    values = c(3, 19, 15, 17, 9),
-    name = "States",
-    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
-  ) +
-  scale_color_manual(
-    values = ggsci::pal_jco("default")(10)[c(1, 3, 2, 4, 6)],
-    name = "States",
-    labels = c("Oxaca", "Arizona", "New Mexico", "Utah", "Colorado")
-  ) +
-  theme_bw()  +
-  theme(
-    legend.position = "bottom",
-    legend.title = element_text(
-      size = 19,
-      family = "Helvetica",
-      face = "bold"
-    ),
-    legend.direction = "horizontal",
-    legend.text = element_text(size = 18, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-ggplot2::ggsave(
-  figure5,
-  filename = "vignettes/figures/Figure_5.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
-
-```
-
-
-```{r Figure_6, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
-
-# subset the dataframe to only have the 2 sigma data and the unique lab code.
-MDB_min_fig6 <- MDB %>%
-  dplyr::filter(Country == "USA") %>% 
-  # Create 100 year bins.
-  dplyr::mutate(bin = cut(
-    MedianBP,
-    breaks = seq(
-      plyr::round_any(min(MedianBP), 100, f = floor),
-      plyr::round_any(max(MedianBP), 100, f = ceiling),
-      by = 100
-    ),
-    include.lowest = TRUE
-  )) %>%
-  dplyr::group_by(bin) %>%
-  dplyr::slice_max(Lat) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(desc(MedianBP)) %>%
-  dplyr::filter(Lat == cummax(Lat)) %>%
-  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
-  dplyr::filter(Date <= 1500) %>%
-  dplyr::group_by(SiteName) %>%
-  dplyr::slice_min(Date, with_ties = FALSE) %>%
-  dplyr::ungroup()
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig6)
-setNames(
-  c(
-    formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-    formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-    formatC(summary(lm1)$coefficients[2, 4], digits = 3, format = "f"),
-    formatC(summary(lm1)$fstatistic[[1]], digits = 2, format = "f")
-  ),
-  c("slope", "r2", "pvalue", "Fstat")
-)
-
-# Plot using a linear model.
-figure6 <-
-  MDB_min_fig6 %>%
-  dplyr::mutate(Province = forcats::fct_reorder(Province, Date, .fun = 'min')) %>%
-  dplyr::arrange(Date) %>%
-  dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName)) %>% 
-  dplyr::mutate(labels = stringr::str_replace(SiteName, " \\s*\\([^\\)]+\\)+$", "")) %>%
-  ggplot(aes(x = Date, y = Lat)) +
-  geom_point(size = 4, aes(color = Province, shape = Province)) +
-  geom_smooth(
-    aes(group = 1),
-    method = 'lm',
-    se = FALSE,
-    linetype = 1,
-    color = "black"
-  ) +
-  # stat_poly_eq(aes(label = paste(after_stat(eq.label),
-  #                              after_stat(rr.label), sep = "*\", \"*"))) +
-  ggrepel::geom_label_repel(
-    aes(colour = Province, label = labels),
-    max.iter = 4500,
-    cex = 6.7,
-    show.legend  = F,
-    min.segment.length = unit(0, 'lines'),
-    force = 25,
-    box.padding = 1,
-    max.overlaps = 15
-  ) +
-  scale_shape_manual(
-    values = c(19, 15, 17, 9),
-    name = "States",
-    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
-  ) +
-  scale_color_manual(
-    values = ggsci::pal_jco("default")(10)[c(3, 2, 4, 6)],
-    name = "States",
-    labels = c("Arizona", "New Mexico", "Utah", "Colorado")
-  ) +
-  scale_x_continuous(
-    breaks = seq(-4500, 1500, 500),
-    minor_breaks = seq(-4500, 1500, 100),
-    limits = c(-4500, 1500),
-    guide = "axis_minor",
-    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
-  ) +
-  scale_y_continuous(
-    breaks = seq(30, 42, 2),
-    minor_breaks = seq(30, 42, 1),
-    limits = c(30, 42),
-    guide = "axis_minor"
-  ) +
-  xlab("Years BC/AD") +
-  ylab("Latitude") +
-  theme_bw()  +
-  theme(
-    legend.position = "bottom",
-    legend.title = element_text(
-      size = 19,
-      family = "Helvetica",
-      face = "bold"
-    ),
-    legend.direction = "horizontal",
-    legend.text = element_text(size = 18, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 26,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 28,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
-  )
-
-ggplot2::ggsave(
-  figure6,
-  filename = "vignettes/figures/Figure_6.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
-
-```
-
-# Supplemental Figures
-
-```{r Figure_4, fig.cap="Figure.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r maize_rayshader, fig.cap="Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_rayshader <- MDB %>%
@@ -1135,8 +1160,6 @@ rayshader::plot_gg(
   scale = 200
 )
 rayshader::render_snapshot(clear = TRUE, filename = "vignettes/figures/rayshader_gdd.png")
-
-
 
 ```
 
