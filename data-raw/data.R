@@ -168,3 +168,9 @@ usa_mexico_states <- dplyr::bind_rows(usa, mexico_states)
 usethis::use_data(usa_mexico_states,
                   overwrite = TRUE)
 
+
+# Digital elevation model for the four corner states and Mexico (i.e., the North American Southwest). 
+NASW_elevation <- elevatr::get_elev_raster(locations = cropDiffusionR::usa_mexico_states, z = 10)
+
+usethis::use_data(NASW_elevation,
+                  overwrite = TRUE)
