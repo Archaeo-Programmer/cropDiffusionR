@@ -1083,6 +1083,125 @@ img_animated
 magick::image_write(image = img_animated,
             path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/maize_anomaly_plots_arranged.gif")
 
+
+
+# Do another animation but accumulate the data over time.
+NASW_sites2_cumulative <- dplyr::bind_rows(NASW_sites2) %>% 
+  dplyr::complete(period = seq(-4300, 1900, 100)) %>% 
+  dplyr::fill(., c(LabID:Long), .direction = "down") %>% 
+  dplyr::arrange(period) %>% 
+  dplyr::group_by(period) %>% 
+  dplyr::distinct(geometry, .keep_all = TRUE) %>% 
+  split(.$period) %>% 
+  purrr::accumulate(NASW_sites2, function(a, b) {
+    bind_rows(a, b)
+  }) %>% 
+  purrr::map(., function(x) x %>% dplyr::distinct(geometry, .keep_all = TRUE))
+
+NASW_sites2_cumulative_names <-
+  data.frame(century = as.numeric(names(NASW_sites2_cumulative))) %>%
+  dplyr::mutate(
+    century = ifelse(century == 0, 1, century),
+    century = ifelse(
+      century < 0,
+      paste(century, "to", century + 100, "BC"),
+      paste("AD", century, "to", century + 100)
+    ),
+    century = stringr::str_replace_all(century, "[-]", "")
+  ) %>%
+  dplyr::pull(century)
+
+maize_through_time_gdd2 <- purrr::map2(NASW_sites2_cumulative, NASW_sites2_cumulative_names, function(x, y)
+  ggplot2::ggplot(data = NASW_gdd_data_transformed) +
+    geom_raster(aes(x = long, y = lat, fill = GDD),
+      alpha = 0.8,
+      na.rm = TRUE
+    ) +
+    scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                         na.value = "transparent",
+                         name = "Annual GDDs") +
+    coord_equal() +
+    theme_bw() +
+    geom_sf(
+      data = cropDiffusionR::usa_mexico_states,
+      color = "#2b2b2b",
+      fill = "transparent",
+      size = 0.4,
+      inherit.aes = FALSE
+    ) +
+    geom_sf(
+      data = x,
+      aes(geometry = geometry),
+      size = 4,
+      inherit.aes = FALSE
+    ) +
+    ggrepel::geom_label_repel(
+      data = x,
+      aes(label = label, geometry = geometry),
+      stat = "sf_coordinates",
+      min.segment.length = 0.4,
+      force = 47,
+      label.size = 0,
+      size = 4.5,
+      inherit.aes = FALSE,
+      max.overlaps = 20
+    ) +
+    ggtitle(y) +
+    theme(
+      #legend.key.width = unit(1.25, 'cm'),
+      plot.title = element_text(hjust = 0.5, size = 20, family = "Helvetica", face = "bold"),
+      legend.position = c(.15, .2),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      axis.text = element_blank(),
+      axis.text.x = element_blank(),
+      axis.title = element_blank(),
+      axis.line = element_blank(),
+      axis.ticks = element_blank(),
+      legend.text = element_text(size = 15, family = "Helvetica"),
+      legend.title = element_text(
+        size = 16,
+        family = "Helvetica",
+        face = "bold"
+      )
+    ))
+
+invisible(
+  mapply(
+    ggsave,
+    file = paste0(
+      "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation2/",
+      purrr::map_chr(
+        1:length(maize_through_time_gdd2),
+        ~ stringr::str_pad(., 4, pad = "0")
+      ),
+      ".png"
+    ),
+    width = 15.43,
+    height = 13.15,
+    dpi = 300,
+    plot = maize_through_time_gdd2
+  )
+)
+
+#Gif animation
+# list file names and read in
+imgs2 <- list.files("/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
+img_list2 <- lapply(imgs2, magick::image_read)
+
+# join the images together
+img_joined2 <- magick::image_join(img_list2)
+
+# animate at 4 frames per second
+img_animated2 <- magick::image_animate(img_joined2, fps = 4)
+
+# view animated image
+img_animated2
+
+# save to disk
+magick::image_write(image = img_animated2,
+            path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/maize_anomaly_plots_arranged_cumulative.gif")
+
 ```
 
 ```{r maize_rayshader, fig.cap="Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
