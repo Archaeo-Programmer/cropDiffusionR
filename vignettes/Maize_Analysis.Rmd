@@ -1,5 +1,5 @@
 ---
-  title: "Diffusion of Maize Agriculture to the Southwestern United States"
+title: "Diffusion of Maize Agriculture to the Southwestern United States"
 author: "Andrew Gillreath-Brown"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 html_document:
@@ -48,12 +48,12 @@ temp_anom <-
 #           here::here("vignettes/tables/tableS1.csv"),
 #           row.names = FALSE)
 
-# Load location data for each sample. Site location are not saved in this repository, as we want to ensure that archaeological site locations are protected.
+# Load location data for each sample. Site location are not saved in this repository, as we want to ensure that archaeological site locations are protected. %>% str_remove("project_root/")
 MDB <- cropDiffusionR::maizeDB %>%
   dplyr::left_join(
     .,
-    readr::read_csv(
-      "../Paper 2/Maize_Database_Locations_DONT_DISTRIBUTE.csv",
+    readr::read_csv(stringr::str_remove(here::here(
+      "Paper 2/Maize_Database_Locations_DONT_DISTRIBUTE.csv"), "cropDiffusionR/"),
       col_types = readr::cols()
     ),
     by = "LabID"
@@ -274,7 +274,7 @@ plot.with.inset <-
   )
 
 # ggplot2::ggsave(
-#   filename = "vignettes/figures/Figure_1.png",
+#   filename = here::here("vignettes/figures/Figure_1.png"),
 #   plot = plot.with.inset,
 #   width = 15.51,
 #   height = 10.32,
@@ -375,7 +375,7 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
 
 # ggplot2::ggsave(
 #   Moberg_paleomat_fig,
-#   filename = "vignettes/figures/Figure_2.png",
+#   filename = here::here("vignettes/figures/Figure_2.png"),
 #   width = 17.25,
 #   height = 11.5,
 #   dpi = 600
@@ -510,7 +510,7 @@ figure4 <-
 
 # ggplot2::ggsave(
 #   figure4,
-#   filename = "vignettes/figures/Figure_4.png",
+#   filename = here::here("vignettes/figures/Figure_4.png"),
 #   width = 17.25,
 #   height = 11.5,
 #   dpi = 600
@@ -667,7 +667,7 @@ figure5 <-
 
 # ggplot2::ggsave(
 #   figure5,
-#   filename = "vignettes/figures/Figure_5.png",
+#   filename = here::here("vignettes/figures/Figure_5.png"),
 #   width = 17.25,
 #   height = 11.5,
 #   dpi = 600
@@ -825,7 +825,7 @@ figure6 <-
 
 # ggplot2::ggsave(
 #   figure6,
-#   filename = "vignettes/figures/Figure_6.png",
+#   filename = here::here("vignettes/figures/Figure_6.png"),
 #   width = 17.25,
 #   height = 11.5,
 #   dpi = 600
@@ -919,7 +919,7 @@ figure3 <-
 
 # ggplot2::ggsave(
 #   figure3,
-#   filename = "vignettes/figures/Figure_3.png",
+#   filename = here::here("vignettes/figures/Figure_3.png"),
 #   width = 15.43,
 #   height = 13.15,
 #   dpi = 600
@@ -1014,9 +1014,9 @@ maize_through_time_gdd <- purrr::map2(NASW_sites2, NASW_sites2_names, function(x
 
 invisible(
   mapply(
-    ggsave,
+    ggsave, 
     file = paste0(
-      "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation/",
+      stringr::str_remove(here::here("Paper 2/animation/"), "cropDiffusionR/"),
       purrr::map_chr(
         1:length(maize_through_time_gdd),
         ~ stringr::str_pad(., 4, pad = "0")
@@ -1032,7 +1032,7 @@ invisible(
 
 #Gif animation
 # list file names and read in
-imgs <- list.files("/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
+imgs <- list.files(stringr::str_remove(here::here("Paper 2/animation/"), "cropDiffusionR/"), full.names = TRUE)
 img_list <- lapply(imgs, magick::image_read)
 
 # join the images together
@@ -1046,7 +1046,7 @@ img_animated
 
 # save to disk
 magick::image_write(image = img_animated,
-            path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/maize_anomaly_plots_arranged.gif")
+            path = stringr::str_remove(here::here("Paper 2/animation/maize_anomaly_plots_arranged.gif"), "cropDiffusionR/"))
 
 
 # Do another animation but accumulate the data over time.
@@ -1250,7 +1250,7 @@ invisible(
   mapply(
     ggsave,
     file = paste0(
-      "/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation2/",
+      stringr::str_remove(here::here("Paper 2/animation2/"), "cropDiffusionR/"),
       purrr::map_chr(
         1:length(maize_through_time_gdd2),
         ~ stringr::str_pad(., 4, pad = "0")
@@ -1266,7 +1266,7 @@ invisible(
 
 #Gif animation
 # list file names and read in
-imgs2 <- list.files("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation2/", full.names = TRUE)
+imgs2 <- list.files(stringr::str_remove(here::here("Paper 2/animation2/"), "cropDiffusionR/"), full.names = TRUE)
 img_list2 <- lapply(imgs2, magick::image_read)
 
 # join the images together
@@ -1276,8 +1276,8 @@ img_joined2 <- magick::image_join(img_list2)
 img_animated2 <- magick::image_animate(img_joined2, fps = 1)
 
 # save to disk
-magick::image_write(image = img_animated2,
-            path = "/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation2/maize_anomaly_plots_arranged_cumulative_1fps.gif")
+magick::image_write(image = img_animated2, 
+            path = stringr::str_remove(here::here("Paper 2/animation2/maize_anomaly_plots_arranged_cumulative_1fps.gif"), "cropDiffusionR/"))
 
 ```
 
@@ -1381,6 +1381,6 @@ rayshader::plot_gg(
   pointcontract = 0.7,
   scale = 200
 )
-rayshader::render_snapshot(clear = TRUE, filename = "vignettes/figures/rayshader_gdd.png")
+rayshader::render_snapshot(clear = TRUE, filename = here::here("vignettes/figures/rayshader_gdd.png"))
 
 ```
