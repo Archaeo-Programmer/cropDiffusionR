@@ -1032,12 +1032,10 @@ maize_through_time_gdd <- purrr::map2(NASW_sites2, NASW_sites2_names, function(x
 
 invisible(mapply(ggsave, file=paste0("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/Figures/animation", names(maize_through_time_gdd), ".png"), width = 15.43, height = 13.15, dpi = 300, plot=maize_through_time_gdd))
 
-
 #Gif animation
 ## list file names and read in
 imgs <- list.files("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
 # index = c(15, 14, 13, 12, 11, 9, 8, 7, 6, 10, 5, 1, 2, 3, 4)
-# index = c(4, 3, 2, 1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
 # imgs = imgs[order(index)]
 img_list <- lapply(imgs, magick::image_read)
 
