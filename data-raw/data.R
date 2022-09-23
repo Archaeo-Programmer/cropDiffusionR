@@ -14,7 +14,8 @@ usethis::use_data(global_gdd,
 maizeDB_orig <-
   readr::read_csv(here::here("data-raw/Maize_Database_NO_Locations.csv"),
                   col_types = readr::cols()) %>% 
-  dplyr::arrange(LabID)
+  dplyr::arrange(LabID) %>% 
+  dplyr::filter(Province %in% c("Arizona", "New Mexico", "Utah", "Colorado") | Country == "Mexico")
 
 # Currently, some known errors in p3k14c data, so adjusting specific rows here. Here is a vector with LabIDs that need to default to the csv file instead of p3k14c::p3k14c_data.
 correct_data <- c("AA-3308", "A-2791", "A-4183", "AA-6403", "Beta-402794", "Beta-76002", "RL-175")
@@ -46,7 +47,7 @@ maize_DB <-
 # View(maize_DB[maizeDB_orig$Age != maize_DB$Age,])
 # View(maizeDB_orig[maizeDB_orig$Age != maize_DB$Age,])
 
-# Here, we calibrate the data using the same calibration curve (i.e., IntCAL20).
+# Here, we calibrate the data using the same calibration curve (i.e., IntCal20).
 rcarbon_output <-
   rcarbon::calibrate(
     # normalized age
