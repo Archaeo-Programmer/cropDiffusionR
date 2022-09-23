@@ -48,7 +48,7 @@ temp_anom <-
 #           here::here("vignettes/tables/tableS1.csv"),
 #           row.names = FALSE)
 
-# Load location data for each sample. We do not present site locations in order to protect site locations.
+# Load location data for each sample. Site location are not saved in this repository, as we want to ensure that archaeological site locations are protected.
 MDB <- cropDiffusionR::maizeDB %>%
   dplyr::left_join(
     .,
@@ -59,7 +59,22 @@ MDB <- cropDiffusionR::maizeDB %>%
     by = "LabID"
   )
 
-# Get the annual accumulated growing degree days for each sample.
+# If you do not have your own locational information, then you can run the code below using the mostly coarse scale locational data provided by the p3k14c package. If so, then you can uncomment this code and run instead of lines 52-60 above. However, some of the samples may not be available in the p3k14c package, and locations could vary at least 10 km from the actual site. p3k14c_data has a column that details the locational accruacy. Please refer to Table 2 in https://doi.org/10.1038/s41597-022-01118-7 for more information on the locational accuracy codes.
+MDB <- cropDiffusionR::maizeDB %>%
+  dplyr::left_join(
+    .,
+    p3k14c::p3k14c_data %>% dplyr::select(LabID, Long, Lat),
+    by = "LabID"
+  ) %>%
+  # Remove any rows that do not have a location.
+  dplyr::filter(!is.na(Lat) & !is.na(Long)) %>% 
+  # Currently, there is an error with coordinates for AA-3308, so correcting them here.
+  dplyr::mutate(Long = dplyr::case_when(SiteName == "Coxcatlan" ~ -97, 
+                                 TRUE ~ Long),
+                Lat = dplyr::case_when(SiteName == "Coxcatlan" ~ 18, 
+                                 TRUE ~ Lat))
+
+# Get modern annual accumulated growing degree days at each sample location.
 MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
@@ -69,7 +84,7 @@ MDB_gdd <- MDB %>%
 
 ```{r Figure_1, fig.cap="Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
 
-# Create a bounding box for limits of this study
+# Create a bounding box for limits of the Gillreath-Brown et al. 2022 study.
 bb <-
   c(
     "xmin" = -112.81446,
@@ -82,11 +97,13 @@ bb <-
   sf::st_as_sf(crs = 4326) %>%
   sf::st_transform(crs = 4326)
 
+# Get state boundaries for the four corner states.
 usa <-
   sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
   sf::st_transform(., crs = 4326) %>%
   dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico"))
 
+# Plot study area for the low-frequency temperature reconstruction.
 paleomat_extent <-
   ggplot2::ggplot() +
   theme_bw() +
@@ -178,7 +195,7 @@ paleomat_extent <-
     legend.box.margin = margin(-10,-10,-10,-20)
   )
 
-
+# Plot the low-frequency temperature anomaly reconstruction.
 anom_plot <- temp_anom %>%
   ggplot2::ggplot(aes(x = year, y = anom)) +
   geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
@@ -244,7 +261,7 @@ anom_plot <- temp_anom %>%
     )
   )
 
-
+# Plot the two plots together.
 plot.with.inset <-
   cowplot::ggdraw() +
   cowplot::draw_plot(anom_plot) +
@@ -263,7 +280,6 @@ ggplot2::ggsave(
   height = 10.32,
   dpi = 600
 )
-
 
 ```
 
@@ -375,7 +391,8 @@ MDB_min_fig4 <- MDB %>%
   dplyr::slice_max(MedianBP) %>%
   dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
   dplyr::ungroup() %>%
-  dplyr::filter(Lat >= Lat[SiteName == "Guila Naquitz"])
+  # Remove any sites that are to the south of Guila Naquitz. You can also replace this with another site name if you have a different starting point for a crop. If the site is not present (e.g., Guila Naquitz is not in the p3k14C data), then this will not filter out any sites.
+dplyr::filter(if ("Guila Naquitz" %in% SiteName) Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first() else TRUE)
 
 # Linear Model and Stats
 lm1 <- lm(Lat ~ Date, data = MDB_min_fig4)
@@ -971,7 +988,7 @@ NASW_sites2_names <-
       paste(century, "to", century + 100, "BC"),
       paste("AD", century, "to", century + 100)
     ),
-    century = str_replace_all(century, "[-]", "")
+    century = stringr::str_replace_all(century, "[-]", "")
   ) %>%
   dplyr::pull(century)
 
@@ -1030,27 +1047,41 @@ maize_through_time_gdd <- purrr::map2(NASW_sites2, NASW_sites2_names, function(x
       )
     ))
 
-invisible(mapply(ggsave, file=paste0("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/Figures/animation", names(maize_through_time_gdd), ".png"), width = 15.43, height = 13.15, dpi = 300, plot=maize_through_time_gdd))
+invisible(
+  mapply(
+    ggsave,
+    file = paste0(
+      "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation/",
+      purrr::map_chr(
+        1:length(maize_through_time_gdd),
+        ~ stringr::str_pad(., 4, pad = "0")
+      ),
+      ".png"
+    ),
+    width = 15.43,
+    height = 13.15,
+    dpi = 300,
+    plot = maize_through_time_gdd
+  )
+)
 
 #Gif animation
-## list file names and read in
-imgs <- list.files("/Users/andrew/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
-# index = c(15, 14, 13, 12, 11, 9, 8, 7, 6, 10, 5, 1, 2, 3, 4)
-# imgs = imgs[order(index)]
+# list file names and read in
+imgs <- list.files("/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/animation/", full.names = TRUE)
 img_list <- lapply(imgs, magick::image_read)
 
-## join the images together
-img_joined <- image_join(maize_through_time_gdd)
+# join the images together
+img_joined <- magick::image_join(img_list)
 
-## animate at 2 frames per second
-img_animated <- image_animate(img_joined, fps = 2)
+# animate at 4 frames per second
+img_animated <- magick::image_animate(img_joined, fps = 4)
 
-## view animated image
+# view animated image
 img_animated
 
-## save to disk
-image_write(image = img_animated,
-            path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/Figures/animation/maize_anomaly_plots_arranged.gif")
+# save to disk
+magick::image_write(image = img_animated,
+            path = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/maize_anomaly_plots_arranged.gif")
 
 ```
 

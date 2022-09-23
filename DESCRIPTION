@@ -55,7 +55,6 @@ Imports:
     ggpubr,
     gganimate,
     ggsci,
-    paleomat,
     p3k14c
 Remotes: 
     zeehio/facetscales,
