@@ -44,9 +44,9 @@ temp_anom <-
     se = 4
   )
 
-write.csv(cropDiffusionR::maizeDB,
-          here::here("vignettes/tables/tableS1.csv"),
-          row.names = FALSE)
+# write.csv(cropDiffusionR::maizeDB,
+#           here::here("vignettes/tables/tableS1.csv"),
+#           row.names = FALSE)
 
 # Load location data for each sample. We do not present site locations in order to protect site locations.
 MDB <- cropDiffusionR::maizeDB %>%
@@ -63,8 +63,7 @@ MDB <- cropDiffusionR::maizeDB %>%
 MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
-  cropDiffusionR::extract_GDD() %>%
-  dplyr::select(-geometry)
+  cropDiffusionR::extract_GDD()
 
 ```
 
@@ -843,7 +842,7 @@ NASW_gdd_data_transformed <-
 
 # Get data to do the alpha hack for additional relief in the GDD map plot.
 # # Put elevation and temperature rasters in the same resolution.
-# ned_SW <- raster::projectRaster(cropDiffusionR::NASW_elevation, cropDiffusionR::NASW_gdd, method = 'ngb')
+# ned_SW <- raster::projectRaster(ok2, ok3, method = 'ngb')
 #
 # ned_SW_crop <- raster::crop(ned_SW, usa_mexico_states)
 # #then mask out (i.e. assign NA) the values outside the polygon
@@ -1073,7 +1072,7 @@ mtplot <-
   MDB_min_rayshader %>%
   dplyr::mutate(Province = as.factor(Province)) %>%
   dplyr::arrange(Date) %>%
-  ggplot(aes(x = Date, y = Lat, color = gdd)) +
+  ggplot(aes(x = Date, y = Lat, color = GDD)) +
   geom_point(size = 2) +
   scale_colour_gradientn(limits = c(0, 7000), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
   scale_x_continuous(
