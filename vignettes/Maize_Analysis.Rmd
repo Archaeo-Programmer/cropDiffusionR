@@ -273,13 +273,13 @@ plot.with.inset <-
     height = .34
   )
 
-ggplot2::ggsave(
-  filename = "vignettes/figures/Figure_1.png",
-  plot = plot.with.inset,
-  width = 15.51,
-  height = 10.32,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   filename = "vignettes/figures/Figure_1.png",
+#   plot = plot.with.inset,
+#   width = 15.51,
+#   height = 10.32,
+#   dpi = 600
+# )
 
 ```
 
@@ -373,13 +373,13 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
     )
   )
 
-ggplot2::ggsave(
-  Moberg_paleomat_fig,
-  filename = "vignettes/figures/Figure_2.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   Moberg_paleomat_fig,
+#   filename = "vignettes/figures/Figure_2.png",
+#   width = 17.25,
+#   height = 11.5,
+#   dpi = 600
+# )
 
 ```
 
@@ -508,13 +508,13 @@ figure4 <-
     )
   )
 
-ggplot2::ggsave(
-  figure4,
-  filename = "vignettes/figures/Figure_4.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   figure4,
+#   filename = "vignettes/figures/Figure_4.png",
+#   width = 17.25,
+#   height = 11.5,
+#   dpi = 600
+# )
 
 ```
 
@@ -665,13 +665,13 @@ figure5 <-
     )
   )
 
-ggplot2::ggsave(
-  figure5,
-  filename = "vignettes/figures/Figure_5.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   figure5,
+#   filename = "vignettes/figures/Figure_5.png",
+#   width = 17.25,
+#   height = 11.5,
+#   dpi = 600
+# )
 
 ```
 
@@ -823,13 +823,13 @@ figure6 <-
     )
   )
 
-ggplot2::ggsave(
-  figure6,
-  filename = "vignettes/figures/Figure_6.png",
-  width = 17.25,
-  height = 11.5,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   figure6,
+#   filename = "vignettes/figures/Figure_6.png",
+#   width = 17.25,
+#   height = 11.5,
+#   dpi = 600
+# )
 
 ```
 
@@ -857,46 +857,11 @@ NASW_gdd_data_transformed <-
     output_names = c("x", "y")
   )
 
-# Get data to do the alpha hack for additional relief in the GDD map plot.
-# # Put elevation and temperature rasters in the same resolution.
-# ned_SW <- raster::projectRaster(ok2, ok3, method = 'ngb')
-#
-# ned_SW_crop <- raster::crop(ned_SW, usa_mexico_states)
-# #then mask out (i.e. assign NA) the values outside the polygon
-# ned_SW_mask <- raster::mask(ned_SW_crop, usa_mexico_states)
-#
-# # Create a hillshade file.
-# slope <- raster::terrain(ned_SW_mask, opt='slope')
-# aspect <- raster::terrain(ned_SW_mask, opt='aspect')
-# hill <- raster::hillShade(slope, aspect,
-#                           angle = 40,
-#                           direction = 270)
-# hill_spdf <- as(hill, "SpatialPixelsDataFrame")
-# hill_spdf <- raster::as.data.frame(hill_spdf)
-# colnames(hill_spdf) <- c("value", "x", "y")
-#
-
 figure3 <-
   ggplot2::ggplot(data = NASW_gdd_data_transformed) +
-  # ggplot2::geom_raster(
-  #   data = hill_spdf,
-  #   mapping = aes(x = x,
-  #                 y = y,
-  #                 alpha = value),
-  #   na.rm = TRUE,
-  #   inherit.aes = FALSE
-  # ) +
-  # # use the "alpha hack"
-  # scale_alpha(
-  #   name = "",
-#   range = c(0.6, 0),
-#   na.value = 0,
-#   #limits = c(0,255),
-#   guide = FALSE
-# )  +
-geom_raster(aes(x = long, y = lat, fill = GDD),
-            alpha = 0.8,
-            na.rm = TRUE) +
+  geom_raster(aes(x = long, y = lat, fill = GDD),
+              alpha = 0.8,
+              na.rm = TRUE) +
   # For doing the raster in greyscale.
   scale_fill_gradientn(
     colors = grey.colors(
@@ -952,19 +917,19 @@ geom_raster(aes(x = long, y = lat, fill = GDD),
     )
   )
 
-ggplot2::ggsave(
-  figure3,
-  filename = "vignettes/figures/Figure_3.png",
-  width = 15.43,
-  height = 13.15,
-  dpi = 600
-)
+# ggplot2::ggsave(
+#   figure3,
+#   filename = "vignettes/figures/Figure_3.png",
+#   width = 15.43,
+#   height = 13.15,
+#   dpi = 600
+# )
 
 ```
 
 # Supplemental Figures
 
-```{r maize_frontier_animation, fig.cap="Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r maize_frontier_animation, fig.cap="Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
 # Animation to show location of maize sites in 100 year bins.
 NASW_sites2 <- MDB %>% 
@@ -1316,7 +1281,7 @@ magick::image_write(image = img_animated2,
 
 ```
 
-```{r maize_rayshader, fig.cap="Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r maize_rayshader, fig.cap="Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_rayshader <- MDB %>%
