@@ -55,7 +55,8 @@ Imports:
     ggpubr,
     gganimate,
     ggsci,
-    p3k14c
+    p3k14c,
+    terra
 Remotes: 
     zeehio/facetscales,
     Archaeo-Programmer/paleomat

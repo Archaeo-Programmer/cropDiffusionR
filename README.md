@@ -25,7 +25,7 @@ The [:file\_folder: vignettes](vignettes) directory contains:
 
   - [:page\_facing\_up: Maize_Analysis](vignettes/Maize_Analysis.Rmd): R
     Markdown document with all analysis and code to reproduce the figures and tables for the submitted paper (Gillreath-Brown and Kohler 2022).
-    It also has a rendered version, [Maize_Analysis.html](vignettes/Maize_Analysis.html).
+    It also has a rendered version, [Maize_Analysis.html](vignettes/Maize_Analysis.html), which shows figure and table output.
   - [:file\_folder: figures](vignettes/figures): Plots, figures, and illustrations in the paper, including supplementary materials.
   - [:file\_folder: tables](vignettes/tables): Tables in the paper, including supplementary materials.
   
