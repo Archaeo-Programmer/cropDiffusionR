@@ -392,25 +392,12 @@ MDB_min_fig4 <- MDB %>%
   dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
   dplyr::ungroup() %>%
   # Remove any sites that are to the south of Guila Naquitz. You can also replace this with another site name if you have a different starting point for a crop. If the site is not present (e.g., Guila Naquitz is not in the p3k14C data), then this will not filter out any sites.
-dplyr::filter(if ("Guila Naquitz" %in% SiteName) Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first() else TRUE)
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig4)
-setNames(c(
-  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-  formatC(
-    summary(lm1)$coefficients[2, 4],
-    digits = 3,
-    format = "f"
-  ),
-  formatC(
-    summary(lm1)$fstatistic[[1]],
-    digits = 2,
-    format = "f"
+  dplyr::filter(
+    if ("Guila Naquitz" %in% SiteName)
+      Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first()
+    else
+      TRUE
   )
-),
-c("slope", "r2", "pvalue", "Fstat"))
 
 # Plot using a linear model.
 figure4 <-
@@ -543,24 +530,6 @@ MDB_min_fig5 <- MDB %>%
   dplyr::group_by(SiteName) %>%
   dplyr::slice_min(Date, with_ties = FALSE) %>%
   dplyr::ungroup()
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig5)
-setNames(c(
-  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-  formatC(
-    summary(lm1)$coefficients[2, 4],
-    digits = 3,
-    format = "f"
-  ),
-  formatC(
-    summary(lm1)$fstatistic[[1]],
-    digits = 2,
-    format = "f"
-  )
-),
-c("slope", "r2", "pvalue", "Fstat"))
 
 # Plot using a linear model.
 figure5 <-
@@ -701,24 +670,6 @@ MDB_min_fig6 <- MDB %>%
   dplyr::group_by(SiteName) %>%
   dplyr::slice_min(Date, with_ties = FALSE) %>%
   dplyr::ungroup()
-
-# Linear Model and Stats
-lm1 <- lm(Lat ~ Date, data = MDB_min_fig6)
-setNames(c(
-  formatC(lm1$coefficients[["Date"]], digits = 3, format = "f"),
-  formatC(summary(lm1)$r.squared, digits = 2, format = "f"),
-  formatC(
-    summary(lm1)$coefficients[2, 4],
-    digits = 3,
-    format = "f"
-  ),
-  formatC(
-    summary(lm1)$fstatistic[[1]],
-    digits = 2,
-    format = "f"
-  )
-),
-c("slope", "r2", "pvalue", "Fstat"))
 
 # Plot using a linear model.
 figure6 <-
@@ -924,6 +875,34 @@ figure3 <-
 #   height = 13.15,
 #   dpi = 600
 # )
+
+```
+
+# Statistics for Figures 4–6
+
+```{r stats_table, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'asis'}
+
+stats_table <-
+  purrr::map2_dfr(list(.x = MDB_min_fig4, MDB_min_fig5, MDB_min_fig6), .y = list("Figure 4", "Figure 5", "Figure 6"), .f = function(x, y) {
+    lm(Lat ~ Date, data = x) %>%
+      summary() %>%
+      {
+        data.frame(
+          slope = formatC(.$coefficients[2, 1], digits = 3, format = "f"),
+          r2 = formatC(.$r.squared, digits = 2, format = "f"),
+          pvalue = formatC(.$coefficients[2, 4],
+                           digits = 3,
+                           format = "f"),
+          Fstatistic = formatC(.$fstatistic[[1]],
+                               digits = 2,
+                               format = "f")
+        )
+      } %>%
+      dplyr::mutate(Figure = as.character(y)) %>%
+      dplyr::relocate(Figure, .before = "slope")})
+
+knitr::kable(stats_table,
+             caption = "Statistics Table. Summary of statistics for the linear models in Figure 4 through 6.")
 
 ```
 
