@@ -1136,16 +1136,6 @@ maize_through_time_gdd2_1 <-
       )
   })
 
-
-p <- ggplot(d, aes(x=Min.Price, y=Price)) +
-        geom_text(aes(label=row_num)) +
-        geom_text(aes(label=legend_entry, x=Inf, y=y_values, hjust=0)) +
-        theme(plot.margin = unit(c(1,15,1,1), "lines"))
-
-gt <- ggplot_gtable(ggplot_build(p))
-gt$layout$clip[gt$layout$name == "panel"] <- "off"
-grid.draw(gt)
-
 # Plot ones that have segments (i.e., more than 2 sites). 
 maize_through_time_gdd2_2 <-
   purrr::map2(NASW_sites2_cumulative[7:59], NASW_sites2_cumulative_names[7:59], function(x, y) {
@@ -1162,8 +1152,8 @@ maize_through_time_gdd2_2 <-
         long2 = df_seg$Long[route[2:length(route)]]
       )
     
-    ok2 <- ggplot2::ggplot(data = x2, aes(x = Long, y = Lat)) +
-      # geom_raster(data = NASW_gdd_data_transformed, aes(x = long, y = lat, fill = GDD),
+    ggplot2::ggplot(data = NASW_gdd_data_transformed) +
+      # geom_raster(aes(x = long, y = lat, fill = GDD),
       #   alpha = 0.8,
       #   na.rm = TRUE
       # ) +
@@ -1180,15 +1170,12 @@ maize_through_time_gdd2_2 <-
         inherit.aes = FALSE
       ) +
       geom_sf(
-        #data = x,
+        data = x,
         aes(geometry = geometry),
-        size = 5
-        #inherit.aes = FALSE"
+        size = 4,
+        inherit.aes = FALSE
       ) +
-       geom_text(aes(label=counter)) +
-        geom_text(aes(label=SiteName, x=Inf, y=y_values, hjust=0)) +
-      #geom_text(data = x, aes(label = counter, x = Long, y = Lat, colour = x$SiteName), color = "white") +
-       geom_segment(
+            geom_segment(
         data = df_seg,
         aes(
           x = long1,
@@ -1198,20 +1185,20 @@ maize_through_time_gdd2_2 <-
         ),
         arrow = arrow(angle = 12, type = "closed"),
         linetype = 1,
-        size = 0.5
+        size = 1
       ) +
-      # ggrepel::geom_label_repel(
-      #   data = x,
-      #   aes(label = SiteName, geometry = geometry),
-      #   stat = "sf_coordinates",
-      #   min.segment.length = 0.4,
-      #   force = 47,
-      #   label.size = 0,
-      #   size = 4.5,
-      #   inherit.aes = FALSE,
-      #   max.overlaps = 20
-      # ) +
-      #ggtitle(y) +
+      ggrepel::geom_label_repel(
+        data = x,
+        aes(label = label, geometry = geometry),
+        stat = "sf_coordinates",
+        min.segment.length = 0.4,
+        force = 40,
+        label.size = 0,
+        size = 4.5,
+        inherit.aes = FALSE,
+        max.overlaps = 20
+      ) +
+      ggtitle(y) +
       theme(
         #legend.key.width = unit(1.25, 'cm'),
         plot.title = element_text(
