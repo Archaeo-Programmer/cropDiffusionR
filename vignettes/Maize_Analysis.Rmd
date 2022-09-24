@@ -17,19 +17,18 @@ editor_options:
 keep_md: yes
 ---
   
-```{r setup, include = FALSE, results = 'hide'}
+```{r setup, include = FALSE, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide'}
 knitr::opts_chunk$set(echo = TRUE)
 
 # devtools::install()
 # devtools::load_all()
 library(cropDiffusionR)
 require(ggh4x)
+library(raster)
 
 ```
 
-# Load the final reconstruction data.
-
-```{r load_data, message = FALSE, warning = FALSE, results = 'hide'}
+```{r load_data, include = FALSE, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide'} 
 
 # Load the temperature anomaly reconstruction from paleoMAT.
 temp_anom <-
@@ -82,7 +81,7 @@ MDB_gdd <- MDB %>%
 
 ```
 
-```{r Figure_1, fig.cap="Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_1, fig.cap="Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.51, fig.height = 10.32, fig.align = "left"}
 
 # Create a bounding box for limits of the Gillreath-Brown et al. 2022 study.
 bb <-
@@ -273,6 +272,8 @@ plot.with.inset <-
     height = .34
   )
 
+plot.with.inset
+
 # ggplot2::ggsave(
 #   filename = here::here("vignettes/figures/Figure_1.png"),
 #   plot = plot.with.inset,
@@ -283,7 +284,7 @@ plot.with.inset <-
 
 ```
 
-```{r Figure_2, fig.cap="Low-frequency July temperature anomaly for the SWUS (Gillreath-Brown, Bocinsky, and Kohler, n.d.) and the Northern Hemisphere low-frequency component (Moberg et al. 2005) from AD 133 to 1900. Both series have been standardized to a mean of 0 and an s of 1 for the period in the graph.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_2, fig.cap="Low-frequency July temperature anomaly for the SWUS (Gillreath-Brown, Bocinsky, and Kohler, n.d.) and the Northern Hemisphere low-frequency component (Moberg et al. 2005) from AD 133 to 1900. Both series have been standardized to a mean of 0 and an s of 1 for the period in the graph.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 temp_anom_standard <-
   readr::read_csv(
@@ -373,6 +374,8 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
     )
   )
 
+Moberg_paleomat_fig
+
 # ggplot2::ggsave(
 #   Moberg_paleomat_fig,
 #   filename = here::here("vignettes/figures/Figure_2.png"),
@@ -383,7 +386,7 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
 
 ```
 
-```{r Figure_4, fig.cap="Earliest site with maize in each of the labeled political subdivisions, using data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.001 degrees/year for this sample (r2 = 0.01; p > F = 0.72).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_4, fig.cap="Earliest site with maize in each of the labeled political subdivisions, using data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.001 degrees/year for this sample (r2 = 0.01; p > F = 0.72).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig4 <- MDB %>%
@@ -495,6 +498,8 @@ figure4 <-
     )
   )
 
+figure4
+
 # ggplot2::ggsave(
 #   figure4,
 #   filename = here::here("vignettes/figures/Figure_4.png"),
@@ -505,7 +510,7 @@ figure4 <-
 
 ```
 
-```{r Figure_5, fig.cap="Location of maize’s northern frontier through time. Shown is the earliest site with maize in each century, with the constraint that only sites further north than earlier sites appear in the plot. Data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.003 degrees/year for this sample (r2 = 0.76; p > F < 0.001). Between just Guilà Naquitz and Las Capas however the implied rate of spread is ~8.7 times more rapid (0.026 degrees/year).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_5, fig.cap="Location of maize’s northern frontier through time. Shown is the earliest site with maize in each century, with the constraint that only sites further north than earlier sites appear in the plot. Data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.003 degrees/year for this sample (r2 = 0.76; p > F < 0.001). Between just Guilà Naquitz and Las Capas however the implied rate of spread is ~8.7 times more rapid (0.026 degrees/year).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig5 <- MDB %>%
@@ -635,6 +640,8 @@ figure5 <-
     )
   )
 
+figure5
+
 # ggplot2::ggsave(
 #   figure5,
 #   filename = here::here("vignettes/figures/Figure_5.png"),
@@ -645,7 +652,7 @@ figure5 <-
 
 ```
 
-```{r Figure_6, fig.cap="Location of maize’s northern frontier through time within or near the SWUS as defined here. The slope of the regression line implies an average spread rate of 0.002 degrees/year for this sample (r2 = 0.95; p > F < 0.001).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_6, fig.cap="Location of maize’s northern frontier through time within or near the SWUS as defined here. The slope of the regression line implies an average spread rate of 0.002 degrees/year for this sample (r2 = 0.95; p > F < 0.001).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 # subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig6 <- MDB %>%
@@ -775,6 +782,8 @@ figure6 <-
     )
   )
 
+figure6
+
 # ggplot2::ggsave(
 #   figure6,
 #   filename = here::here("vignettes/figures/Figure_6.png"),
@@ -785,7 +794,7 @@ figure6 <-
 
 ```
 
-```{r Figure_3, fig.cap="Annual accumulated growing degree days across the southwestern United States and Mexico, with locations of sites mentioned in the text or the following figures. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left"}
+```{r Figure_3, fig.cap="Annual accumulated growing degree days across the southwestern United States and Mexico, with locations of sites mentioned in the text or the following figures. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.43, fig.height = 13.15, fig.align = "left"}
 
 # Placing Figure 3 after Figures 4-6 since we use the sites from those figures to plot on to the GDD map.
 NASW_sites <-
@@ -868,6 +877,8 @@ figure3 <-
       face = "bold"
     )
   )
+
+figure3
 
 # ggplot2::ggsave(
 #   figure3,
