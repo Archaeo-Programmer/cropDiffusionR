@@ -24,7 +24,6 @@ knitr::opts_chunk$set(echo = TRUE)
 # devtools::load_all()
 library(cropDiffusionR)
 require(ggh4x)
-library(raster)
 
 ```
 
@@ -43,6 +42,7 @@ temp_anom <-
     se = 4
   )
 
+# Create the Supplementary Table 1, which does not have site locations.
 # write.csv(cropDiffusionR::maizeDB,
 #           here::here("vignettes/tables/tableS1.csv"),
 #           row.names = FALSE)
@@ -82,7 +82,6 @@ MDB_gdd <- MDB %>%
 ```
 
 
-
 # Figures
 
 ```{r Figure_1, fig.cap="Figure 1. Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.51, fig.height = 10.32, fig.align = "left"}
@@ -110,8 +109,8 @@ usa <-
 paleomat_extent <-
   ggplot2::ggplot() +
   theme_bw() +
-  scale_x_continuous(breaks = seq(-115, -103, 2.0),
-                     limits = c(-115, -103.2)) +
+  scale_x_continuous(breaks = seq(-115,-103, 2.0),
+                     limits = c(-115,-103.2)) +
   scale_y_continuous(breaks = seq(31, 39, 2.0),
                      limits = c(31.25, 39)) +
   geom_sf(
@@ -195,7 +194,7 @@ paleomat_extent <-
     legend.background = element_rect(fill = "transparent", color = NA),
     legend.box.background = element_rect(fill = "transparent", color = NA),
     legend.key = element_rect(fill = "transparent", color = NA),
-    legend.box.margin = margin(-10,-10,-10,-20)
+    legend.box.margin = margin(-10, -10, -10, -20)
   )
 
 # Plot the low-frequency temperature anomaly reconstruction.
@@ -213,7 +212,7 @@ anom_plot <- temp_anom %>%
     breaks = seq(-3000, 2000, 500),
     minor_breaks = seq(-2900, 2000, by = 100),
     guide = "axis_minor",
-    labels = c(seq(-3000, -500, 500), 1, seq(500, 2000, 500))
+    labels = c(seq(-3000,-500, 500), 1, seq(500, 2000, 500))
   ) +
   scale_y_continuous(
     limits = c(-2.5, 2.5),
@@ -396,10 +395,7 @@ Moberg_paleomat_fig
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig4 <- MDB %>%
-  dplyr::group_by(Province) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
-  dplyr::ungroup() %>%
+  cropDiffusionR::extract_earliest_crop() %>% 
   # Remove any sites that are to the south of Guila Naquitz. You can also replace this with another site name if you have a different starting point for a crop. If the site is not present (e.g., Guila Naquitz is not in the p3k14C data), then this will not filter out any sites.
   dplyr::filter(
     if ("Guila Naquitz" %in% SiteName)
@@ -442,7 +438,7 @@ figure4 <-
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
+    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(10, 45, 5),
@@ -521,27 +517,8 @@ figure4
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig5 <- MDB %>%
-  # Create 100 year bins.
-  dplyr::mutate(bin = cut(
-    MedianBP,
-    breaks = seq(
-      plyr::round_any(min(MedianBP), 100, f = floor),
-      plyr::round_any(max(MedianBP), 100, f = ceiling),
-      by = 100
-    ),
-    include.lowest = TRUE
-  )) %>%
-  dplyr::group_by(bin) %>%
-  dplyr::slice_max(Lat) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(desc(MedianBP)) %>%
-  dplyr::filter(Lat == cummax(Lat)) %>%
-  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
+  cropDiffusionR::extract_diffusion(direction = "north") %>%
   dplyr::filter(Date <= 1500) %>%
-  dplyr::group_by(SiteName) %>%
-  dplyr::slice_min(Date, with_ties = FALSE) %>%
-  dplyr::ungroup() %>% 
   dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName))
 
 # Plot using a linear model.
@@ -577,7 +554,7 @@ figure5 <-
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(15, 45, 5),
@@ -665,27 +642,9 @@ figure5
 # subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig6 <- MDB %>%
   dplyr::filter(Country == "USA") %>%
-  # Create 100 year bins.
-  dplyr::mutate(bin = cut(
-    MedianBP,
-    breaks = seq(
-      plyr::round_any(min(MedianBP), 100, f = floor),
-      plyr::round_any(max(MedianBP), 100, f = ceiling),
-      by = 100
-    ),
-    include.lowest = TRUE
-  )) %>%
-  dplyr::group_by(bin) %>%
-  dplyr::slice_max(Lat) %>%
-  dplyr::slice_max(MedianBP) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(desc(MedianBP)) %>%
-  dplyr::filter(Lat == cummax(Lat)) %>%
-  dplyr::select(LabID, SiteName, Date, bin, everything()) %>%
+  cropDiffusionR::extract_diffusion(direction = "north") %>%
   dplyr::filter(Date <= 1500) %>%
-  dplyr::group_by(SiteName) %>%
-  dplyr::slice_min(Date, with_ties = FALSE) %>%
-  dplyr::ungroup()
+  dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName))
 
 # Plot using a linear model.
 figure6 <-
@@ -730,7 +689,7 @@ figure6 <-
     minor_breaks = seq(-4500, 1500, 100),
     limits = c(-4500, 1500),
     guide = "axis_minor",
-    labels = c(seq(-4500, -500, 500), 1, seq(500, 1500, 500))
+    labels = c(seq(-4500,-500, 500), 1, seq(500, 1500, 500))
   ) +
   scale_y_continuous(
     breaks = seq(30, 42, 2),
