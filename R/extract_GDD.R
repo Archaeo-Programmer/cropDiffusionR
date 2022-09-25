@@ -1,12 +1,11 @@
 #' @name extract_GDD
-#' @title Extract GDD from WorldClim 2.0
+#' @title Extract annual accumulated growing degree days
 #'
-#' @description Extract GDD from WorldClim 2.0 for 1970 to 2000 at Site Locations
+#' @description `extract_GDD()` extracts annual accumulated growing degree days from WorldClim 2.0 for 1970 to 2000 at site locations.
 #'
-#' @param sites A data.frame with an ID and sfc_Point geometry.
+#' @param sites A data.frame with an ID and sfc_Point geometry containing site locations.
 #' @return A tibble with growing degree days for each ID.
 #' @importFrom magrittr `%<>%` `%>%`
-#' @importFrom stats na.omit
 #' @export
 extract_GDD <-
   function(sites) {

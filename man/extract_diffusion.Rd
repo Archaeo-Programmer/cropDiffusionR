@@ -2,18 +2,18 @@
 % Please edit documentation in R/extract_diffusion.R
 \name{extract_diffusion}
 \alias{extract_diffusion}
-\title{Extract the Latitudinal Diffusion of a Crop}
+\title{Extract latitudinal diffusion of a crop}
 \usage{
-extract_diffusion(database, direction = c("north"))
+extract_diffusion(database, direction = "north")
 }
 \arguments{
-\item{database}{A data.frame containing the crop database.}
+\item{database}{A data.frame containing a crop database.}
 
-\item{direction}{A string stating the direction (i.e., north).}
+\item{direction}{A string stating the direction of diffusion (i.e., north).}
 }
 \value{
 A tibble that has the frontier of a crop through time using 100 year time bins.
 }
 \description{
-Extract the diffusion of a crop by northern latitude
+\code{extract_diffusion()} extracts the diffusion of a crop by latitude.
 }

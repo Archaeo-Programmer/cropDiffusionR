@@ -888,7 +888,7 @@ knitr::kable(stats_table,
 ```
 
 
-```{r maize_frontier_animation, fig.cap="Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
+```{r maize_frontier_animation, fig.cap="Supplemental Video S1. Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
 # Animation to show location of maize sites in 100 year bins.
 NASW_sites2 <- MDB %>%
@@ -1266,7 +1266,7 @@ magick::image_write(image = img_animated2,
 
 ```
 
-```{r maize_rayshader, fig.cap="Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
+```{r SuppFig1, fig.cap="Supplemental Figure S1. Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_rayshader <- MDB %>%

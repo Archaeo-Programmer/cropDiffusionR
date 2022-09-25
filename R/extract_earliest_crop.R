@@ -1,10 +1,10 @@
 #' @name extract_earliest_crop
-#' @title Extract Earliest Date for Crop by Province
+#' @title Extract earliest date for a crop by province
 #'
-#' @description Extract earliest date for a crop by province
+#' @description `extract_earliest_crop()` extracts the sample with the earliest date for a crop by province.
 #'
 #' @param database A data.frame containing the crop database.
-#' @return A tibble that has the earliest date for each province.
+#' @return A tibble that contains the earliest date for each province.
 #' @importFrom magrittr `%<>%` `%>%`
 #' @export
 extract_earliest_crop <-

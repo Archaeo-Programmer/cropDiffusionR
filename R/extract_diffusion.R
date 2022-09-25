@@ -1,15 +1,15 @@
 #' @name extract_diffusion
-#' @title Extract the Latitudinal Diffusion of a Crop
+#' @title Extract latitudinal diffusion of a crop
 #'
-#' @description Extract the diffusion of a crop by northern latitude
+#' @description `extract_diffusion()` extracts the diffusion of a crop by latitude.
 #'
-#' @param database A data.frame containing the crop database.
-#' @param direction A string stating the direction (i.e., north).
+#' @param database A data.frame containing a crop database.
+#' @param direction A string stating the direction of diffusion (i.e., north).
 #' @return A tibble that has the frontier of a crop through time using 100 year time bins.
 #' @importFrom magrittr `%<>%` `%>%`
 #' @export
 extract_diffusion <-
-  function(database, direction = c("north")) {
+  function(database, direction = "north") {
     database <- database %>%
       # Create 100 year bins.
       dplyr::mutate(bin = cut(

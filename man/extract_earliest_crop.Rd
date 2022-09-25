@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_earliest_crop.R
 \name{extract_earliest_crop}
 \alias{extract_earliest_crop}
-\title{Extract Earliest Date for Crop by Province}
+\title{Extract earliest date for a crop by province}
 \usage{
 extract_earliest_crop(database)
 }
@@ -10,8 +10,8 @@ extract_earliest_crop(database)
 \item{database}{A data.frame containing the crop database.}
 }
 \value{
-A tibble that has the earliest date for each province.
+A tibble that contains the earliest date for each province.
 }
 \description{
-Extract earliest date for a crop by province
+\code{extract_earliest_crop()} extracts the sample with the earliest date for a crop by province.
 }
