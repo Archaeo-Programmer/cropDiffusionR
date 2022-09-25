@@ -1277,7 +1277,7 @@ MDB_min_rayshader <- MDB %>%
   ) %>%
   dplyr::left_join(., MDB_gdd, by = "LabID")
 
-# Using rayshader package to show all maize samples and the modern GDD.
+# Using rayshader package to show all maize samples and the modern GDD at each sample location.
 mtplot <-
   MDB_min_rayshader %>%
   dplyr::mutate(Province = as.factor(Province)) %>%
