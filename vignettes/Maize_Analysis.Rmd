@@ -774,8 +774,7 @@ figure6
 
 # Placing Figure 3 after Figures 4-6 since we use the sites from those figures to plot on to the GDD map.
 NASW_sites <- 
-  MDB_min_fig5 %>% 
-  #dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
+  dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
   dplyr::ungroup() %>%
   dplyr::select(SiteName, SiteID, Long, Lat) %>%
   dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>%
@@ -801,20 +800,20 @@ figure3 <-
               alpha = 0.8,
               na.rm = TRUE) +
   # For GDD raster in greyscale.
-  # scale_fill_gradientn(
-  #   colors = grey.colors(
-  #     10,
-  #     start = 0.15,
-  #     end = 0.9,
-  #     rev = TRUE
-  #   ),
-  #   na.value = "transparent",
-  #   name = "Annual GDDs"
-  # ) +
+  scale_fill_gradientn(
+    colors = grey.colors(
+      10,
+      start = 0.15,
+      end = 0.9,
+      rev = TRUE
+    ),
+    na.value = "transparent",
+    name = "Annual GDDs"
+  ) +
   #For GDD raster in color.
-  scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
-                       na.value = "transparent",
-                       name = "Annual GDDs") +
+  # scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+  #                      na.value = "transparent",
+  #                      name = "Annual GDDs") +
   coord_equal() +
   theme_bw() +
   geom_sf(
@@ -828,17 +827,17 @@ figure3 <-
           aes(geometry = geometry),
           inherit.aes = FALSE,
            size = 4) +
-  # ggrepel::geom_label_repel(
-  #   data = NASW_sites,
-  #   aes(label = SiteName, geometry = geometry),
-  #   stat = "sf_coordinates",
-  #   min.segment.length = 0.4,
-  #   force = 47,
-  #   label.size = 0,
-  #   size = 4.5,
-  #   inherit.aes = FALSE,
-  #   max.overlaps = 20
-  # ) +
+  ggrepel::geom_label_repel(
+    data = NASW_sites,
+    aes(label = SiteName, geometry = geometry),
+    stat = "sf_coordinates",
+    min.segment.length = 0.4,
+    force = 47,
+    label.size = 0,
+    size = 4.5,
+    inherit.aes = FALSE,
+    max.overlaps = 20
+  ) +
   theme(
     legend.position = c(.15, .2),
     panel.border = element_blank(),
@@ -858,13 +857,13 @@ figure3 <-
 
 figure3
 
-ggplot2::ggsave(
-  figure3,
-  filename = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/blankmap.png",
-  width = 15.43,
-  height = 13.15,
-  dpi = 900
-)
+# ggplot2::ggsave(
+#   figure3,
+#   filename = here::here("vignettes/figures/Figure_3.png"),
+#   width = 15.43,
+#   height = 13.15,
+#   dpi = 900
+# )
 
 ```
 
