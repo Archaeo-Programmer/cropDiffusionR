@@ -1445,20 +1445,28 @@ invisible(
 imgs <-
   list.files(stringr::str_remove(here::here("Paper 2/animation"), "cropDiffusionR/"),
              full.names = TRUE)
-img_list <- lapply(imgs, magick::image_read)
 
-# join the images together
-img_joined <- magick::image_join(img_list)
-
-# animate at 4 frames per second
-img_animated <- magick::image_animate(img_joined, fps = 1)
-
-# save to disk
-magick::image_write(image = img_animated,
-                    path = stringr::str_remove(
+#Here, we use gifski, as it is a lot quicker than magick.
+gifski(imgs, gif_file = stringr::str_remove(
                       here::here("Paper 2/animation/maize_anomaly_plots_arranged.gif"),
                       "cropDiffusionR/"
-                    ))
+                    ), width = 1117, height = 952, delay = 1)
+
+# For using magick to create gif.
+# img_list <- lapply(imgs, magick::image_read)
+# 
+# # join the images together
+# img_joined <- magick::image_join(img_list)
+# 
+# # animate at 4 frames per second
+# img_animated <- magick::image_animate(img_joined, fps = 1)
+# 
+# # save to disk
+# magick::image_write(image = img_animated,
+#                     path = stringr::str_remove(
+#                       here::here("Paper 2/animation/maize_anomaly_plots_arranged.gif"),
+#                       "cropDiffusionR/"
+#                     ))
 
 ```
 
