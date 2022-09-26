@@ -312,15 +312,22 @@ Moberg_paleomat <-
 Moberg_paleomat_fig <- Moberg_paleomat %>%
   dplyr::group_by(Series) %>%
   dplyr::mutate(update = (anom - mean(anom)) / sd(anom)) %>%
-  ggplot2::ggplot(aes(x = year, y = update, colour = Series)) +
+  ggplot2::ggplot(aes(x = year, y = update, colour = Series, linetype = Series)) +
   geom_hline(
     yintercept = 0,
     color = "darkgrey",
-    lty = 2,
+    lty = 3,
     lwd = 1.25
   ) +
   geom_line(size = 2.0) +
-  scale_color_manual(values = c("#A60F2D", "cornflowerblue")) +
+    scale_color_manual(
+    values = c("#A60F2D", "cornflowerblue"),
+    labels = c("Gillreath-Brown et al. n.d.", "Moberg et al. 2005")
+  ) +
+  scale_linetype_manual(
+    values = c("solid", "twodash"),
+    labels = c("Gillreath-Brown et al. n.d.", "Moberg et al. 2005")
+  ) +
   xlab("Years AD") +
   ylab("Standardized Temperature Values (Z-Scores)") +
   scale_x_continuous(
@@ -334,6 +341,7 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
   theme_bw() +
   guides(color = guide_legend(override.aes = list(fill = NA), direction = "horizontal")) +
   theme(
+     legend.key.width = unit(1.25, 'cm'),
     legend.text = element_text(size = 19, family = "Helvetica"),
     legend.title = element_blank(),
     legend.position = "bottom",
