@@ -765,8 +765,9 @@ figure6
 ```{r Figure_3, fig.cap="Figure 3. Annual accumulated growing degree days across the southwestern United States and Mexico, with locations of sites mentioned in the text or the following figures. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.43, fig.height = 13.15, fig.align = "left"}
 
 # Placing Figure 3 after Figures 4-6 since we use the sites from those figures to plot on to the GDD map.
-NASW_sites <-
-  dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
+NASW_sites <- 
+  MDB_min_fig5 %>% 
+  #dplyr::bind_rows(MDB_min_fig4, MDB_min_fig5, MDB_min_fig6) %>%
   dplyr::ungroup() %>%
   dplyr::select(SiteName, SiteID, Long, Lat) %>%
   dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>%
@@ -792,20 +793,20 @@ figure3 <-
               alpha = 0.8,
               na.rm = TRUE) +
   # For GDD raster in greyscale.
-  scale_fill_gradientn(
-    colors = grey.colors(
-      10,
-      start = 0.15,
-      end = 0.9,
-      rev = TRUE
-    ),
-    na.value = "transparent",
-    name = "Annual GDDs"
-  ) +
-  # For GDD raster in color.
-  # scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
-  #                      na.value = "transparent",
-  #                      name = "Annual GDDs") +
+  # scale_fill_gradientn(
+  #   colors = grey.colors(
+  #     10,
+  #     start = 0.15,
+  #     end = 0.9,
+  #     rev = TRUE
+  #   ),
+  #   na.value = "transparent",
+  #   name = "Annual GDDs"
+  # ) +
+  #For GDD raster in color.
+  scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                       na.value = "transparent",
+                       name = "Annual GDDs") +
   coord_equal() +
   theme_bw() +
   geom_sf(
@@ -817,18 +818,19 @@ figure3 <-
   ) +
   geom_sf(data = NASW_sites,
           aes(geometry = geometry),
-          inherit.aes = FALSE) +
-  ggrepel::geom_label_repel(
-    data = NASW_sites,
-    aes(label = SiteName, geometry = geometry),
-    stat = "sf_coordinates",
-    min.segment.length = 0.4,
-    force = 47,
-    label.size = 0,
-    size = 4.5,
-    inherit.aes = FALSE,
-    max.overlaps = 20
-  ) +
+          inherit.aes = FALSE,
+           size = 4) +
+  # ggrepel::geom_label_repel(
+  #   data = NASW_sites,
+  #   aes(label = SiteName, geometry = geometry),
+  #   stat = "sf_coordinates",
+  #   min.segment.length = 0.4,
+  #   force = 47,
+  #   label.size = 0,
+  #   size = 4.5,
+  #   inherit.aes = FALSE,
+  #   max.overlaps = 20
+  # ) +
   theme(
     legend.position = c(.15, .2),
     panel.border = element_blank(),
@@ -848,13 +850,13 @@ figure3 <-
 
 figure3
 
-# ggplot2::ggsave(
-#   figure3,
-#   filename = here::here("vignettes/figures/Figure_3.png"),
-#   width = 15.43,
-#   height = 13.15,
-#   dpi = 600
-# )
+ggplot2::ggsave(
+  figure3,
+  filename = "/Users/andrewgillreath-brown/Dropbox/WSU/SKOPEII/model/Paper 2/blankmap.png",
+  width = 15.43,
+  height = 13.15,
+  dpi = 900
+)
 
 ```
 
@@ -1017,7 +1019,6 @@ NASW_sites2 <- MDB %>%
   ) %>%
   dplyr::arrange(period) %>%
   dplyr::distinct(geometry, .keep_all = TRUE) %>%
-  tidyr::complete(period = seq(-4300, 1800, 100)) %>% 
   split(.$period)
 
 # We create an accumulation of sites with samples across all centuries.
@@ -1450,10 +1451,7 @@ img_list <- lapply(imgs, magick::image_read)
 img_joined <- magick::image_join(img_list)
 
 # animate at 4 frames per second
-img_animated <- magick::image_animate(img_joined, fps = 4)
-
-# view animated image
-img_animated
+img_animated <- magick::image_animate(img_joined, fps = 1)
 
 # save to disk
 magick::image_write(image = img_animated,

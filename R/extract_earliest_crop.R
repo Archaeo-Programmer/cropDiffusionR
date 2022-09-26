@@ -13,6 +13,6 @@ extract_earliest_crop <-
       dplyr::group_by(Province) %>%
       dplyr::slice_max(MedianBP) %>%
       dplyr::ungroup() %>% 
-      dplyr::arrange(Latitude)
+      dplyr::arrange(Lat)
     
   }
