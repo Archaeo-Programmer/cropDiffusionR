@@ -888,9 +888,119 @@ knitr::kable(stats_table,
 ```
 
 
-```{r maize_frontier_animation, fig.cap="Supplemental Video S1. Each maize site with a maize sample is plotted on modern accumulated growing degree days. Sites were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
-# Animation to show location of maize sites in 100 year bins.
+```{r SuppFig1, fig.cap="Supplemental Figure S1. Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
+
+# Subset the dataframe to only have the 2 sigma data and the unique lab code.
+MDB_min_rayshader <- MDB %>%
+  dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(
+    Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first()
+  ) %>%
+  dplyr::left_join(., MDB_gdd, by = "LabID")
+
+# Using rayshader package to show all maize samples and the modern GDD at each sample location.
+mtplot <-
+  MDB_min_rayshader %>%
+  dplyr::mutate(Province = as.factor(Province)) %>%
+  dplyr::arrange(Date) %>%
+  ggplot(aes(x = Date, y = Lat, color = GDD)) +
+  geom_point(size = 2) +
+  scale_colour_gradientn(limits = c(0, 7000), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
+  scale_x_continuous(
+    breaks = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000)),
+    minor_breaks = c(seq(-4000, -1000, 1000), 1000),
+    limits = c(-4500, 1500),
+    guide = "axis_minor",
+    labels = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000))
+  ) +
+  scale_y_continuous(
+    breaks = seq(10, 45, 5),
+    minor_breaks = seq(10, 45, 1),
+    limits = c(10, 45),
+    guide = "axis_minor"
+  ) +
+  xlab("Years BC/AD") +
+  ylab("Latitude") +
+  labs(colour = "GDD") +
+  theme_bw()  +
+  theme(
+    legend.title = element_text(
+      size = 14,
+      family = "Helvetica",
+      face = "bold"
+    ),
+    legend.title.align = 1.0,
+    legend.position = "right",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 12, colour = "black"),
+    legend.margin = margin(t = -14),
+    axis.ticks.length = unit(0.125, "inch"),
+    ggh4x.axis.ticks.length.minor = rel(0.5),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    axis.text = element_text(
+      size = 12,
+      colour = "black",
+      family = "Helvetica"
+    ),
+    axis.title.y = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 10,
+        r = 7,
+        b = 10,
+        l = 10
+      )
+    ),
+    axis.title.x = element_text(
+      size = 14,
+      family = "Helvetica",
+      margin = margin(
+        t = 7,
+        r = 10,
+        b = 10,
+        l = 10
+      )
+    ),
+    panel.grid.minor = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.margin = margin(
+      t = 5,
+      r = 25,
+      b = 5,
+      l = 5
+    )
+  )
+
+rayshader::plot_gg(
+  mtplot,
+  width = 6.5,
+  height = 4,
+  multicore = TRUE,
+  windowsize = c(1000, 1000),
+  zoom = 0.77,
+  phi = 50,
+  theta = 35,
+  sunangle = 225,
+  soliddepth = -0.5,
+  pointcontract = 0.7,
+  scale = 200
+)
+rayshader::render_snapshot(
+  clear = TRUE,
+  filename = here::here("vignettes/figures/rayshader_gdd.png")
+)
+
+```
+
+
+```{r SuppVidS1, fig.cap="Supplemental Video S1. Each maize site with a maize sample is plotted on a map of modern annual accumulated growing degree days. Samples were binned into 100 year intervals for plotting. Sites are accumulated across all centuries; therefore, the last century shows all sites with samples in our database. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
+
+# Here, we do not evaluate this code block, as it can take a long time to create due to the GDD raster. 
+
 NASW_sites2 <- MDB %>%
   dplyr::select(LabID, SiteName, SiteID, Long, Lat, Date) %>%
   dplyr::mutate(SiteName = dplyr::coalesce(SiteName, SiteID)) %>%
@@ -900,134 +1010,17 @@ NASW_sites2 <- MDB %>%
     breaks = seq(-4300, 1900, 100),
     labels = seq(-4300, 1800, 100)
   )) %>%
+  # Only label sites that show up in Figures 3-6.
   dplyr::mutate(
     period = as.numeric(as.character(period)),
     label = ifelse(SiteName %in% NASW_sites$SiteName, SiteName, NA_character_)
   ) %>%
   dplyr::arrange(period) %>%
   dplyr::distinct(geometry, .keep_all = TRUE) %>%
+  tidyr::complete(period = seq(-4300, 1800, 100)) %>% 
   split(.$period)
 
-NASW_sites2_names <-
-  data.frame(century = as.numeric(names(NASW_sites2))) %>%
-  dplyr::mutate(
-    century = ifelse(century == 0, 1, century),
-    century = ifelse(
-      century < 0,
-      paste(century, "to", century + 100, "BC"),
-      paste("AD", century, "to", century + 100)
-    ),
-    century = stringr::str_replace_all(century, "[-]", "")
-  ) %>%
-  dplyr::pull(century)
-
-maize_through_time_gdd <-
-  purrr::map2(NASW_sites2, NASW_sites2_names, function(x, y)
-    ggplot2::ggplot(data = NASW_gdd_data_transformed) +
-      geom_raster(
-        aes(x = long, y = lat, fill = GDD),
-        alpha = 0.8,
-        na.rm = TRUE
-      ) +
-      scale_fill_gradientn(
-        colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
-        na.value = "transparent",
-        name = "Annual GDDs"
-      ) +
-      coord_equal() +
-      theme_bw() +
-      geom_sf(
-        data = cropDiffusionR::usa_mexico_states,
-        color = "#2b2b2b",
-        fill = "transparent",
-        size = 0.4,
-        inherit.aes = FALSE
-      ) +
-      geom_sf(
-        data = x,
-        aes(geometry = geometry),
-        size = 4,
-        inherit.aes = FALSE
-      ) +
-      ggrepel::geom_label_repel(
-        data = x,
-        aes(label = label, geometry = geometry),
-        stat = "sf_coordinates",
-        min.segment.length = 0.4,
-        force = 47,
-        label.size = 0,
-        size = 4.5,
-        inherit.aes = FALSE,
-        max.overlaps = 20
-      ) +
-      ggtitle(y) +
-      theme(
-        #legend.key.width = unit(1.25, 'cm'),
-        plot.title = element_text(
-          hjust = 0.5,
-          size = 20,
-          family = "Helvetica",
-          face = "bold"
-        ),
-        legend.position = c(.15, .2),
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        axis.text = element_blank(),
-        axis.text.x = element_blank(),
-        axis.title = element_blank(),
-        axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        legend.text = element_text(size = 15, family = "Helvetica"),
-        legend.title = element_text(
-          size = 16,
-          family = "Helvetica",
-          face = "bold"
-        )
-      ))
-
-invisible(
-  mapply(
-    ggsave,
-    file = paste0(
-      stringr::str_remove(here::here("Paper 2/animation/"), "cropDiffusionR/"),
-      purrr::map_chr(
-        1:length(maize_through_time_gdd),
-        ~ stringr::str_pad(., 4, pad = "0")
-      ),
-      ".png"
-    ),
-    width = 15.43,
-    height = 13.15,
-    dpi = 300,
-    plot = maize_through_time_gdd
-  )
-)
-
-#Gif animation
-# list file names and read in
-imgs <-
-  list.files(stringr::str_remove(here::here("Paper 2/animation/"), "cropDiffusionR/"),
-             full.names = TRUE)
-img_list <- lapply(imgs, magick::image_read)
-
-# join the images together
-img_joined <- magick::image_join(img_list)
-
-# animate at 4 frames per second
-img_animated <- magick::image_animate(img_joined, fps = 4)
-
-# view animated image
-img_animated
-
-# save to disk
-magick::image_write(image = img_animated,
-                    path = stringr::str_remove(
-                      here::here("Paper 2/animation/maize_anomaly_plots_arranged.gif"),
-                      "cropDiffusionR/"
-                    ))
-
-
-# Do another animation but accumulate the data over time.
+# We create an accumulation of sites with samples across all centuries.
 NASW_sites2_cumulative <- dplyr::bind_rows(NASW_sites2) %>%
   dplyr::filter(period < 1600) %>%
   dplyr::mutate(label = ifelse(LabID %in% MDB_min_fig5$LabID, label, NA_character_)) %>%
@@ -1044,9 +1037,11 @@ NASW_sites2_cumulative <- dplyr::bind_rows(NASW_sites2) %>%
   dplyr::mutate(Long = unlist(map(.$geometry, 1)),
                 Lat = unlist(map(.$geometry, 2))) %>%
   split(.$period) %>%
+  # Bind rows to the previous period.
   purrr::accumulate(., function(a, b) {
     bind_rows(a, b)
   }) %>%
+  # Keep only unique sites in each period, since they are accumulated.
   purrr::map(., function(x)
     x %>%
       dplyr::distinct(SiteName, .keep_all = TRUE) %>%
@@ -1070,17 +1065,17 @@ NASW_sites2_cumulative_names <-
   ) %>%
   dplyr::pull(century)
 
-# Plot the maps for when there is only 1 site (so no segments).
+# Plot the maps for when there is only 1 site (i.e., that have no segments).
 maize_through_time_gdd2_1 <-
   purrr::map2(NASW_sites2_cumulative[1:6], NASW_sites2_cumulative_names[1:6], function(x, y) {
     ggplot2::ggplot(data = NASW_gdd_data_transformed) +
-      # geom_raster(aes(x = long, y = lat, fill = GDD),
-      #   alpha = 0.8,
-      #   na.rm = TRUE
-      # ) +
-      # scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
-      #                      na.value = "transparent",
-      #                      name = "Annual GDDs") +
+      geom_raster(aes(x = long, y = lat, fill = GDD),
+        alpha = 0.8,
+        na.rm = TRUE
+      ) +
+      scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                           na.value = "transparent",
+                           name = "Annual GDDs") +
       coord_equal() +
       theme_bw() +
       geom_sf(
@@ -1133,7 +1128,7 @@ maize_through_time_gdd2_1 <-
       )
   })
 
-# Plot ones that have segments (i.e., more than 2 sites).
+# Plot sites that have segments (i.e., more than 2 sites).
 maize_through_time_gdd2_2 <-
   purrr::map2(NASW_sites2_cumulative[7:59], NASW_sites2_cumulative_names[7:59], function(x, y) {
     route <- purrr::discard(x$counter, is.na)
@@ -1150,13 +1145,13 @@ maize_through_time_gdd2_2 <-
       )
     
     ggplot2::ggplot(data = NASW_gdd_data_transformed) +
-      # geom_raster(aes(x = long, y = lat, fill = GDD),
-      #   alpha = 0.8,
-      #   na.rm = TRUE
-      # ) +
-      # scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
-      #                      na.value = "transparent",
-      #                      name = "Annual GDDs") +
+      geom_raster(aes(x = long, y = lat, fill = GDD),
+        alpha = 0.8,
+        na.rm = TRUE
+      ) +
+      scale_fill_gradientn(colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+                           na.value = "transparent",
+                           name = "Annual GDDs") +
       coord_equal() +
       theme_bw() +
       geom_sf(
@@ -1266,109 +1261,207 @@ magick::image_write(image = img_animated2,
 
 ```
 
-```{r SuppFig1, fig.cap="Supplemental Figure S1. Every sample in our maize database is plotted on this graph by date and latitude. Additionally, we include the modern annual accumulated growing degree days for the site location of the sample. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
 
-# Subset the dataframe to only have the 2 sigma data and the unique lab code.
-MDB_min_rayshader <- MDB %>%
-  dplyr::select(LabID, SiteName, Date, Lat, everything()) %>%
-  dplyr::ungroup() %>%
-  dplyr::filter(
-    Lat >= MDB %>% dplyr::filter(SiteName == "Guila Naquitz") %>% dplyr::pull(Lat) %>% dplyr::first()
+```{r SuppVidS2, fig.cap="Supplemental Video S2. Each maize site with a maize sample is plotted on a map of modern annual accumulated growing degree days. Samples were binned into 100 year intervals for plotting. Many centuries have no recorded samples; thus, they are not plotted here. Growing degree days were extracted and calculated from the 30 seconds (~1 km2) average temperature (°C) from WorldClim version 2.1 (https://www.worldclim.org/data/worldclim21.html). We use 10°C as the base and 30°C as the maximum for the GDD calculation.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.height = 7.73, fig.align = "left", eval = FALSE}
+
+NASW_sites2_names <-
+  data.frame(century = as.numeric(names(NASW_sites2))) %>%
+  dplyr::mutate(
+    century = ifelse(century == 0, 1, century),
+    century = ifelse(
+      century < 0,
+      paste(century, "to", century + 100, "BC"),
+      paste("AD", century, "to", century + 100)
+    ),
+    century = stringr::str_replace_all(century, "[-]", "")
   ) %>%
-  dplyr::left_join(., MDB_gdd, by = "LabID")
+  dplyr::pull(century)
 
-# Using rayshader package to show all maize samples and the modern GDD at each sample location.
-mtplot <-
-  MDB_min_rayshader %>%
-  dplyr::mutate(Province = as.factor(Province)) %>%
-  dplyr::arrange(Date) %>%
-  ggplot(aes(x = Date, y = Lat, color = GDD)) +
-  geom_point(size = 2) +
-  scale_colour_gradientn(limits = c(0, 7000), colors = colorRampPalette(rev(RColorBrewer::brewer.pal(8, "RdBu")))(150)) +
-  scale_x_continuous(
-    breaks = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000)),
-    minor_breaks = c(seq(-4000, -1000, 1000), 1000),
-    limits = c(-4500, 1500),
-    guide = "axis_minor",
-    labels = c(seq(-4500, -500, 1000), 1, seq(500, 1500, 1000))
-  ) +
-  scale_y_continuous(
-    breaks = seq(10, 45, 5),
-    minor_breaks = seq(10, 45, 1),
-    limits = c(10, 45),
-    guide = "axis_minor"
-  ) +
-  xlab("Years BC/AD") +
-  ylab("Latitude") +
-  labs(colour = "GDD") +
-  theme_bw()  +
-  theme(
-    legend.title = element_text(
-      size = 14,
-      family = "Helvetica",
-      face = "bold"
+
+maize_through_time_gdd <-
+  purrr::map2(NASW_sites2, NASW_sites2_names, function(x, y)
+    ggplot2::ggplot(data = NASW_gdd_data_transformed) +
+      geom_raster(
+        aes(x = long, y = lat, fill = GDD),
+        alpha = 0.8,
+        na.rm = TRUE
+      ) +
+      scale_fill_gradientn(
+        colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+        na.value = "transparent",
+        name = "Annual GDDs"
+      ) +
+      coord_equal() +
+      theme_bw() +
+      geom_sf(
+        data = cropDiffusionR::usa_mexico_states,
+        color = "#2b2b2b",
+        fill = "transparent",
+        size = 0.4,
+        inherit.aes = FALSE
+      ) +
+      geom_sf(
+        data = x,
+        aes(geometry = geometry),
+        size = 4,
+        inherit.aes = FALSE
+      ) +
+      ggrepel::geom_label_repel(
+        data = x,
+        aes(label = label, geometry = geometry),
+        stat = "sf_coordinates",
+        min.segment.length = 0.4,
+        force = 47,
+        label.size = 0,
+        size = 4.5,
+        inherit.aes = FALSE,
+        max.overlaps = 20
+      ) +
+      ggtitle(y) +
+      theme(
+        #legend.key.width = unit(1.25, 'cm'),
+        plot.title = element_text(
+          hjust = 0.5,
+          size = 20,
+          family = "Helvetica",
+          face = "bold"
+        ),
+        legend.position = c(.15, .2),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size = 15, family = "Helvetica"),
+        legend.title = element_text(
+          size = 16,
+          family = "Helvetica",
+          face = "bold"
+        )
+      ))
+
+invisible(
+  mapply(
+    ggsave,
+    file = paste0(
+      stringr::str_remove(here::here("Paper 2/animation/"), "cropDiffusionR/"),
+      purrr::map_chr(
+        1:length(maize_through_time_gdd),
+        ~ stringr::str_pad(., 4, pad = "0")
+      ),
+      ".png"
     ),
-    legend.title.align = 1.0,
-    legend.position = "right",
-    legend.direction = "vertical",
-    legend.text = element_text(size = 12, colour = "black"),
-    legend.margin = margin(t = -14),
-    axis.ticks.length = unit(0.125, "inch"),
-    ggh4x.axis.ticks.length.minor = rel(0.5),
-    panel.border = element_blank(),
-    panel.grid.major = element_blank(),
-    axis.text = element_text(
-      size = 12,
-      colour = "black",
-      family = "Helvetica"
-    ),
-    axis.title.y = element_text(
-      size = 14,
-      family = "Helvetica",
-      margin = margin(
-        t = 10,
-        r = 7,
-        b = 10,
-        l = 10
-      )
-    ),
-    axis.title.x = element_text(
-      size = 14,
-      family = "Helvetica",
-      margin = margin(
-        t = 7,
-        r = 10,
-        b = 10,
-        l = 10
-      )
-    ),
-    panel.grid.minor = element_blank(),
-    axis.line = element_line(colour = "black"),
-    plot.margin = margin(
-      t = 5,
-      r = 25,
-      b = 5,
-      l = 5
-    )
+    width = 15.43,
+    height = 13.15,
+    dpi = 300,
+    plot = maize_through_time_gdd
   )
+)
 
-rayshader::plot_gg(
-  mtplot,
-  width = 6.5,
-  height = 4,
-  multicore = TRUE,
-  windowsize = c(1000, 1000),
-  zoom = 0.77,
-  phi = 50,
-  theta = 35,
-  sunangle = 225,
-  soliddepth = -0.5,
-  pointcontract = 0.7,
-  scale = 200
+# Plot empty centuries.
+NASW_sites2_names_empty <-
+  data.frame(century = setdiff(seq(-4300, 1800, 100), as.numeric(names(NASW_sites2)))) %>%
+  dplyr::mutate(
+    century = ifelse(century == 0, 1, century),
+    century = ifelse(
+      century < 0,
+      paste(century, "to", century + 100, "BC"),
+      paste("AD", century, "to", century + 100)
+    ),
+    century = stringr::str_replace_all(century, "[-]", "")
+  ) %>%
+  dplyr::pull(century)
+
+maize_through_time_gdd2 <-
+  purrr::map(NASW_sites2_names_empty, function(x)
+    ggplot2::ggplot(data = NASW_gdd_data_transformed) +
+      geom_raster(
+        aes(x = long, y = lat, fill = GDD),
+        alpha = 0.8,
+        na.rm = TRUE
+      ) +
+      scale_fill_gradientn(
+        colors = colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(255),
+        na.value = "transparent",
+        name = "Annual GDDs"
+      ) +
+      coord_equal() +
+      theme_bw() +
+      geom_sf(
+        data = cropDiffusionR::usa_mexico_states,
+        color = "#2b2b2b",
+        fill = "transparent",
+        size = 0.4,
+        inherit.aes = FALSE
+      ) +
+      ggtitle(x) +
+      theme(
+        #legend.key.width = unit(1.25, 'cm'),
+        plot.title = element_text(
+          hjust = 0.5,
+          size = 20,
+          family = "Helvetica",
+          face = "bold"
+        ),
+        legend.position = c(.15, .2),
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.text = element_blank(),
+        axis.text.x = element_blank(),
+        axis.title = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        legend.text = element_text(size = 15, family = "Helvetica"),
+        legend.title = element_text(
+          size = 16,
+          family = "Helvetica",
+          face = "bold"
+        )
+      ))
+
+invisible(
+  mapply(
+    ggsave,
+    file = paste0(
+      stringr::str_remove(here::here("Paper 2/animation/empty/"), "cropDiffusionR/"),
+      purrr::map_chr(
+        1:length(maize_through_time_gdd2),
+        ~ stringr::str_pad(., 4, pad = "0")
+      ),
+      ".png"
+    ),
+    width = 15.43,
+    height = 13.15,
+    dpi = 300,
+    plot = maize_through_time_gdd2
+  )
 )
-rayshader::render_snapshot(
-  clear = TRUE,
-  filename = here::here("vignettes/figures/rayshader_gdd.png")
-)
+
+#Gif animation
+# list file names and read in
+imgs <-
+  list.files(stringr::str_remove(here::here("Paper 2/animation"), "cropDiffusionR/"),
+             full.names = TRUE)
+img_list <- lapply(imgs, magick::image_read)
+
+# join the images together
+img_joined <- magick::image_join(img_list)
+
+# animate at 4 frames per second
+img_animated <- magick::image_animate(img_joined, fps = 4)
+
+# view animated image
+img_animated
+
+# save to disk
+magick::image_write(image = img_animated,
+                    path = stringr::str_remove(
+                      here::here("Paper 2/animation/maize_anomaly_plots_arranged.gif"),
+                      "cropDiffusionR/"
+                    ))
 
 ```
+
+
