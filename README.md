@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/533072698.svg)](https://zenodo.org/badge/latestdoi/533072698)
+
 # cropDiffusionR: Exploring the Diffusion of Agricultural Crops
 
 `cropDiffusionR` is an *R* package implementing functions to perform
