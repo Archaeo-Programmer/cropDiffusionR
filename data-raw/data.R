@@ -38,8 +38,7 @@ maize_DB <-
   dplyr::select(-contains(c(".x", ".y"))) %>%
   dplyr::select(names(
     readr::read_csv(
-      #here::here("data-raw/Maize_Database_NO_Locations.csv"),
-      "/Users/andrew/Dropbox/WSU/SKOPEII/model/cropDiffusionR/data-raw/Maize_Database_NO_Locations.csv",
+      here::here("data-raw/Maize_Database_NO_Locations.csv"),
       show_col_types = FALSE
     )
   )) %>%
