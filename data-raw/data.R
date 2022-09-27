@@ -3,7 +3,7 @@ devtools::install_github('diegovalle/mxmaps')
 
 # Accumulated growing degree days for the year with a base temperature of 5 degrees Celsius.
 # Data was downloaded from https://sage.nelson.wisc.edu/data-and-models/atlas-of-the-biosphere/mapping-the-biosphere/ecosystems/growing-degree-days/,
-# then was converted to a raster from a ArcGIS format. 
+# then was converted to a raster from a ArcGIS format.
 global_gdd <- raster::raster(here::here("data-raw/gdd1.tif"), crs = "+proj=utm +zone=15 +datum=NAD83 +units=m +no_defs")
 
 usethis::use_data(global_gdd,
@@ -13,14 +13,15 @@ usethis::use_data(global_gdd,
 # Ancient Maize database from various sources. Here, we will join the data to the data from the p3k14c R package, which will take precedence over data listed, as it was checked more systematically.
 maizeDB_orig <-
   readr::read_csv(here::here("data-raw/Maize_Database_NO_Locations.csv"),
-                  col_types = readr::cols()) %>% 
-  dplyr::arrange(LabID) %>% 
+                  col_types = readr::cols()) %>%
+  dplyr::arrange(LabID) %>%
   dplyr::filter(Province %in% c("Arizona", "New Mexico", "Utah", "Colorado") | Country == "Mexico")
 
 # Currently, some known errors in p3k14c data, so adjusting specific rows here. Here is a vector with LabIDs that need to default to the csv file instead of p3k14c::p3k14c_data.
 correct_data <- c("AA-3308", "A-2791", "A-4183", "AA-6403", "Beta-402794", "Beta-76002", "RL-175")
+incomplete_SiteID <- toupper(c("42BEà", "42SA", "5LPà", "LAà", "42à", "42EMà", "42MDà", "42UNà", "42WNà", "5STà", "BB:6:à", "X:12:2à", "BB:", "AA:", "EE:", paste0(LETTERS, ":")))
 
-maize_DB <- 
+maize_DB <-
   dplyr::left_join(
     maizeDB_orig,
     p3k14c::p3k14c_data %>% dplyr::select(LabID, Age, Error, d13C, SiteID, SiteName, Method),
@@ -33,16 +34,64 @@ maize_DB <-
     Method = dplyr::coalesce(Method.y, Method.x),
     SiteID = dplyr::coalesce(SiteID.x, SiteID.y),
     SiteName = dplyr::coalesce(SiteName.x, SiteName.y)
-  ) %>% 
-  dplyr::select(-contains(c(".x", ".y"))) %>% 
-  dplyr::select(names(readr::read_csv(here::here("data-raw/Maize_Database_NO_Locations.csv"), show_col_types = FALSE))) %>% 
+  ) %>%
+  dplyr::select(-contains(c(".x", ".y"))) %>%
+  dplyr::select(names(
+    readr::read_csv(
+      #here::here("data-raw/Maize_Database_NO_Locations.csv"),
+      "/Users/andrew/Dropbox/WSU/SKOPEII/model/cropDiffusionR/data-raw/Maize_Database_NO_Locations.csv",
+      show_col_types = FALSE
+    )
+  )) %>%
   # Remove any duplicate rows.
-  dplyr::distinct() %>% 
+  dplyr::distinct() %>%
   #Currently, some known errors in p3k14c data, so adjusting specific rows here.
-  dplyr::filter(!LabID %in% correct_data) %>% 
-  dplyr::bind_rows(maizeDB_orig %>% dplyr::filter(LabID %in% correct_data)) %>% 
-  dplyr::arrange(LabID)
-  
+  # First, remove the rows with errors.
+  dplyr::filter(!LabID %in% correct_data) %>%
+  # Then, add the rows back to our database.
+  dplyr::bind_rows(maizeDB_orig %>% dplyr::filter(LabID %in% correct_data)) %>%
+  dplyr::arrange(LabID) %>%
+  dplyr::mutate(
+    # Convert SiteIDs to uppercase for consistency.
+    SiteID = trimws(toupper(SiteID)),
+    # Some siteIDs are incomplete/incorrect, so replace with NA.
+    SiteID = ifelse(SiteID %in% incomplete_SiteID, NA_character_, SiteID),
+    # Remove the parentheses from many of the Arizona sample site IDs.
+    SiteID = trimws(stringr::str_replace(SiteID, " \\s*\\([^\\)]+\\)", "")),
+    # Also, remove the starting AZ on some of the Arizona sample site IDs.
+    SiteID = stringr::str_replace(SiteID, "^(AZ )", "")
+  ) %>%
+  # Remove the leading 0s on some siteIDs so that these are consistent.
+  # First, we separate the beginning part of the SiteID from the ending number.
+  tidyr::separate(
+    SiteID,
+    into = c("SiteID1", "SiteID2"),
+    "(?<=[[:alpha:]][[:alpha:]])",
+    remove = FALSE
+  ) %>%
+  # Then, convert to numeric to remove any leading 0s. This does not apply to Arizona or Mexico sites, since the numbering systems are different.
+  dplyr::mutate(
+    SiteID2 = as.numeric(SiteID2),
+    SiteID = ifelse(
+      Province != "Arizona" &
+        Country != "Mexico" &
+        SiteID2 > 0 &
+        !SiteName %in% c("CKL-1-190810-8-1", "PY0810-1-1", "LA 18091"),
+      paste0(SiteID1, SiteID2),
+      SiteID
+    )
+  ) %>%
+  dplyr::select(-c(SiteID1, SiteID2)) %>%
+  # Fill in any missing site IDs by SiteName.
+  dplyr::group_by(SiteName) %>%
+  tidyr::fill(SiteID, .direction = "updown") %>%
+  # Fill in any missing site names by SiteID.
+  dplyr::group_by(SiteID) %>%
+  tidyr::fill(SiteName, .direction = "updown") %>%
+  dplyr::mutate(SiteIDName = dplyr::coalesce(SiteID, SiteName)) %>%
+  dplyr::ungroup() %>%
+  suppressWarnings()
+
 # We can check which rows have different ages. In a few cases, p3k14c had incorrect data.
 # View(maize_DB[maizeDB_orig$Age != maize_DB$Age,])
 # View(maizeDB_orig[maizeDB_orig$Age != maize_DB$Age,])
@@ -59,15 +108,15 @@ rcarbon_output <-
     # specify the calibration curve
     calCurves = "intcal20"
   ) %>%
-  summary() %>% 
+  summary() %>%
   dplyr::mutate(dplyr::across(dplyr::everything(), ~ stringr::str_replace_all(.x, "NA to NA", NA_character_)))
 
 # Merge the calibration data to the maize database.
-maizeDB <- dplyr::left_join(maize_DB, rcarbon_output, by = c("LabID" = "DateID")) %>% 
-  dplyr::relocate(MedianBP, .after = Error) %>% 
-  dplyr::relocate(Source, .after = last_col()) %>% 
-  dplyr::mutate(MedianBP = as.numeric(MedianBP), 
-                Date = rcarbon::BPtoBCAD(MedianBP)) %>% 
+maizeDB <- dplyr::left_join(maize_DB, rcarbon_output, by = c("LabID" = "DateID")) %>%
+  dplyr::relocate(MedianBP, .after = Error) %>%
+  dplyr::relocate(Source, .after = last_col()) %>%
+  dplyr::mutate(MedianBP = as.numeric(MedianBP),
+                Date = rcarbon::BPtoBCAD(MedianBP)) %>%
   dplyr::relocate(Date, .after = MedianBP)
 
 usethis::use_data(maizeDB,
@@ -76,20 +125,20 @@ usethis::use_data(maizeDB,
 
 # Accumulated growing degree days for the year with a base temperature of 10 degrees Celsius.
 # Data was downloaded from https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_tavg.zip,
-# then was converted to a rasterstack. Here, we run the data locally, as the files are too big to 
+# then was converted to a rasterstack. Here, we run the data locally, as the files are too big to
 # do a temporary file.
 # current.list <-
 #   list.files(path = "/Users/andrew/Downloads/wc2.1_30s_tavg",
 #              pattern = ".tif",
 #              full.names = TRUE)
 # c.stack <- raster::stack(current.list)
-# 
-# 
+#
+#
 # my_stack <- raster::stack(raster::crop(c.stack, outsp))
 # #then mask out (i.e. assign NA) the values outside the polygon
 # my_stack2 <- raster::stack(raster::mask(my_stack, outsp))
-# 
-# 
+#
+#
 # # Calculate average days per month during 1970-2000.
 # month_days <-
 #   tibble::tibble(date = seq(
@@ -103,13 +152,13 @@ usethis::use_data(maizeDB,
 #   dplyr::count() %>%
 #   dplyr::group_by(month) %>%
 #   dplyr::summarise(`days` = mean(n))
-# 
-# 
+#
+#
 # # Get annual accumulated growing degree days for each month.
-# # Here, we use a base of 10°C and the max of 30°C. 
+# # Here, we use a base of 10°C and the max of 30°C.
 # my_stack2[my_stack2 < 10] <- 10.0
 # my_stack2[my_stack2 > 30] <- 30.0
-# 
+#
 # # Then, we get the accumulated growing degree days for each month.
 # my_stack2$wc2.1_30s_tavg_01 <- ((my_stack2$wc2.1_30s_tavg_01 - 10.00) * 31)
 # my_stack2$wc2.1_30s_tavg_02 <- ((my_stack2$wc2.1_30s_tavg_02 - 10.00) * 28.3)
@@ -123,7 +172,7 @@ usethis::use_data(maizeDB,
 # my_stack2$wc2.1_30s_tavg_10 <- ((my_stack2$wc2.1_30s_tavg_10 - 10.00) * 31)
 # my_stack2$wc2.1_30s_tavg_11 <- ((my_stack2$wc2.1_30s_tavg_11 - 10.00) * 30)
 # my_stack2$wc2.1_30s_tavg_12 <- ((my_stack2$wc2.1_30s_tavg_12 - 10.00) * 31)
-# 
+#
 # # Sum all 12 months.
 # accum_GDD_annual <- sum(my_stack2)
 NASW_gdd <- accum_GDD_annual
@@ -142,7 +191,7 @@ mexico_states <-
     ),
     by = c("ADMIN_NAME" = "state_name")
   ) %>%
-  dplyr::select(state_name = ADMIN_NAME, state_abbr, geom = geometry) %>% 
+  dplyr::select(state_name = ADMIN_NAME, state_abbr, geom = geometry) %>%
   dplyr::mutate(country = "Mexico")
 
 # Get USA states data from southwestern United States.
@@ -160,7 +209,7 @@ usa <-
       state_name == "New Mexico" ~ "NM",
       TRUE ~ NA_character_
     )
-  ) %>% 
+  ) %>%
   dplyr::mutate(country = "USA")
 
 # Bind together.
@@ -170,7 +219,7 @@ usethis::use_data(usa_mexico_states,
                   overwrite = TRUE)
 
 
-# Digital elevation model for the four corner states and Mexico (i.e., the North American Southwest). 
+# Digital elevation model for the four corner states and Mexico (i.e., the North American Southwest).
 NASW_elevation <- elevatr::get_elev_raster(locations = cropDiffusionR::usa_mexico_states, z = 10)
 
 usethis::use_data(NASW_elevation,
