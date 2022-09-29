@@ -27,7 +27,7 @@ require(ggh4x)
 
 ```
 
-```{r load_data, include = FALSE, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide'} 
+```{r load_data, include = FALSE, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide'}
 
 # Load the temperature anomaly reconstruction from paleoMAT.
 temp_anom <-

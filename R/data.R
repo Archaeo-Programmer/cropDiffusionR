@@ -32,7 +32,7 @@
 #'
 #' @format An object of class `RasterLayer`.
 #' @source \url{https://www.worldclim.org/data/worldclim21.html}
-"NASW_gdd"
+"WorldClim_annual_gdd"
 
 #' Southwestern United States and Mexico States Polygon.
 #'

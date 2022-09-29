@@ -122,61 +122,73 @@ usethis::use_data(maizeDB,
                   overwrite = TRUE)
 
 
-# Accumulated growing degree days for the year with a base temperature of 10 degrees Celsius.
-# Data was downloaded from https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_tavg.zip,
+# Accumulated growing degree days for the year with a base temperature of 10°C and a max of 30°C using WorldClim.
+
+# Calculate average days per month during 1970-2000.
+month_days <-
+  tibble::tibble(date = seq(
+    lubridate::as_date("1970-01-01"),
+    lubridate::as_date("2000-12-31"),
+    "1 day"
+  )) %>%
+  dplyr::mutate(year = lubridate::year(date),
+                month = lubridate::month(date)) %>%
+  dplyr::group_by(year, month) %>%
+  dplyr::count() %>%
+  dplyr::group_by(month) %>%
+  dplyr::summarise(`days` = mean(n)) %>% 
+  dplyr::pull(days)
+
+# Data was downloaded from https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_tmin.zip and 
+# https://biogeo.ucdavis.edu/data/worldclim/v2.1/base/wc2.1_30s_tmax.zip,
 # then was converted to a rasterstack. Here, we run the data locally, as the files are too big to
 # do a temporary file.
-# current.list <-
-#   list.files(path = "/Users/andrew/Downloads/wc2.1_30s_tavg",
-#              pattern = ".tif",
-#              full.names = TRUE)
-# c.stack <- raster::stack(current.list)
-#
-#
-# my_stack <- raster::stack(raster::crop(c.stack, outsp))
-# #then mask out (i.e. assign NA) the values outside the polygon
-# my_stack2 <- raster::stack(raster::mask(my_stack, outsp))
-#
-#
-# # Calculate average days per month during 1970-2000.
-# month_days <-
-#   tibble::tibble(date = seq(
-#     lubridate::as_date("1970-01-01"),
-#     lubridate::as_date("2000-12-31"),
-#     "1 day"
-#   )) %>%
-#   dplyr::mutate(year = lubridate::year(date),
-#                 month = lubridate::month(date)) %>%
-#   dplyr::group_by(year, month) %>%
-#   dplyr::count() %>%
-#   dplyr::group_by(month) %>%
-#   dplyr::summarise(`days` = mean(n))
-#
-#
-# # Get annual accumulated growing degree days for each month.
-# # Here, we use a base of 10°C and the max of 30°C.
-# my_stack2[my_stack2 < 10] <- 10.0
-# my_stack2[my_stack2 > 30] <- 30.0
-#
-# # Then, we get the accumulated growing degree days for each month.
-# my_stack2$wc2.1_30s_tavg_01 <- ((my_stack2$wc2.1_30s_tavg_01 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_02 <- ((my_stack2$wc2.1_30s_tavg_02 - 10.00) * 28.3)
-# my_stack2$wc2.1_30s_tavg_03 <- ((my_stack2$wc2.1_30s_tavg_03 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_04 <- ((my_stack2$wc2.1_30s_tavg_04 - 10.00) * 30)
-# my_stack2$wc2.1_30s_tavg_05 <- ((my_stack2$wc2.1_30s_tavg_05 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_06 <- ((my_stack2$wc2.1_30s_tavg_06 - 10.00) * 30)
-# my_stack2$wc2.1_30s_tavg_07 <- ((my_stack2$wc2.1_30s_tavg_07 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_08 <- ((my_stack2$wc2.1_30s_tavg_08 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_09 <- ((my_stack2$wc2.1_30s_tavg_09 - 10.00) * 30)
-# my_stack2$wc2.1_30s_tavg_10 <- ((my_stack2$wc2.1_30s_tavg_10 - 10.00) * 31)
-# my_stack2$wc2.1_30s_tavg_11 <- ((my_stack2$wc2.1_30s_tavg_11 - 10.00) * 30)
-# my_stack2$wc2.1_30s_tavg_12 <- ((my_stack2$wc2.1_30s_tavg_12 - 10.00) * 31)
-#
-# # Sum all 12 months.
-# accum_GDD_annual <- sum(my_stack2)
-NASW_gdd <- accum_GDD_annual
 
-usethis::use_data(NASW_gdd,
+# Get tmin data.
+current.list.min <-
+  list.files(path = "./../../../../../Downloads/wc2.1_30s_tmin",
+             pattern = ".tif",
+             full.names = TRUE)
+c.stack.min <- raster::stack(current.list.min)
+
+# Crop to extent of southwestern US and Mexico.
+my_stack_min <- raster::stack(raster::crop(c.stack.min, cropDiffusionR::usa_mexico_states))
+# Mask out (i.e. assign NA) the values outside the polygon.
+my_stack_min2 <- raster::brick(raster::mask(my_stack_min, cropDiffusionR::usa_mexico_states))
+
+# Get tmax data.
+current.list.max <-
+  list.files(path = "./../../../../../Downloads/wc2.1_30s_tmax",
+             pattern = ".tif",
+             full.names = TRUE)
+c.stack.max <- raster::stack(current.list.max)
+
+# Crop to extent of southwestern US and Mexico.
+my_stack_max <- raster::stack(raster::crop(c.stack.max, cropDiffusionR::usa_mexico_states))
+# Mask out (i.e. assign NA) the values outside the polygon.
+my_stack_max2 <- raster::brick(raster::mask(my_stack_max, cropDiffusionR::usa_mexico_states))
+
+# Get GDD for each month.
+WorldClim_monthly_gdd <- list(my_stack_min2, my_stack_max2) %>%
+  purrr::reduce(
+    .f = function(x, y) {
+      paleomat::calc_gdd(
+        tmin = x,
+        tmax = y,
+        t.base = 10,
+        t.cap = 30
+      )
+    }
+  ) %>%
+  # Multiply by the number of days in a month to get the total accumulated GDD for each month.
+  {
+    . * month_days
+  }
+
+# Sum all 12 months.
+WorldClim_annual_gdd <- sum(WorldClim_monthly_gdd, na.rm = FALSE)
+
+usethis::use_data(WorldClim_annual_gdd,
                   overwrite = TRUE)
 
 # Create southwestern United States and Mexico states polygon.
