@@ -783,7 +783,7 @@ NASW_sites <-
 
 # Get raster for the North American Southwest and convert to a dataframe.
 NASW_gdd_data <-
-  raster::as.data.frame(cropDiffusionR::NASW_gdd, xy = TRUE)
+  raster::as.data.frame(cropDiffusionR::WorldClim_annual_gdd, xy = TRUE)
 # Assign names to the columns.
 names(NASW_gdd_data) <- c("long", "lat", "GDD")
 #Transform the data for plotting in ggplot.
