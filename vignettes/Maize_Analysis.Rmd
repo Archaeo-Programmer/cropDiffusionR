@@ -77,7 +77,7 @@ MDB <- cropDiffusionR::maizeDB %>%
 MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
-  cropDiffusionR::extract_GDD()
+  cropDiffusionR::extract_GDD(gdd_raster = cropDiffusionR::WorldClim_annual_gdd,  sites = .)
 
 ```
 

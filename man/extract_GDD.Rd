@@ -2,16 +2,18 @@
 % Please edit documentation in R/extract_GDD.R
 \name{extract_GDD}
 \alias{extract_GDD}
-\title{Extract annual accumulated growing degree days}
+\title{Extract growing degree days}
 \usage{
-extract_GDD(sites)
+extract_GDD(gdd_raster, sites)
 }
 \arguments{
+\item{gdd_raster}{A raster containing growing degree days.}
+
 \item{sites}{A data.frame with an ID and sfc_Point geometry containing site locations.}
 }
 \value{
 A tibble with growing degree days for each ID.
 }
 \description{
-\code{extract_GDD()} extracts annual accumulated growing degree days from WorldClim 2.0 for 1970 to 2000 at site locations.
+\code{extract_GDD()} extracts growing degree days from a user provided GDD raster dataset at site locations.
 }
