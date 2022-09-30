@@ -28,7 +28,7 @@
 #' Annual Accumulated Growing Degree Days from WorldClim.
 #'
 #' A `raster` containing annual accumulated growing degree days for the year with a base temperature of 10°C and maximum temperature of 30°C. 
-#' GDD was calculated from the tavg 30 seconds (~1 \ifelse{html}{\out{km<sup>2</sup>}}{\eqn{km^2}}).
+#' GDD was calculated from tmin and max 30 seconds (~1 \ifelse{html}{\out{km<sup>2</sup>}}{\eqn{km^2}}).
 #'
 #' @format An object of class `RasterLayer`.
 #' @source \url{https://www.worldclim.org/data/worldclim21.html}
