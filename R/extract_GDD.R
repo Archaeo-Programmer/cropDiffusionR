@@ -14,6 +14,7 @@ extract_GDD <-
     # Get annual accumulated growing degree days.
     terra::extract(x = gdd_raster,
                     y = sites) %>%
-      dplyr::bind_cols(LabID = sites$LabID, GDD = .)
+      dplyr::bind_cols(LabID = sites$LabID, GDD = .) %>% 
+      suppressWarnings()
     
   }
