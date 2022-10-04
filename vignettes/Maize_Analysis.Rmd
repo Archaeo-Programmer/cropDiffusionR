@@ -42,12 +42,30 @@ temp_anom <-
     se = 4
   )
 
+# Get county shapefiles for SWUS to add as an additional column to MDB.
+SWUS_counties <-
+  sf::st_as_sf(
+    maps::map(
+      "county",
+      fill = TRUE,
+      plot = FALSE,
+      regions = "colorado|utah|arizona|new mexico"
+    )
+  ) %>%
+  sf::st_transform(crs = 4326) %>%
+  tidyr::separate(ID, into = c("REGION", "NAME"), sep = ",") %>%
+  sf::st_make_valid() %>%
+  dplyr::mutate(
+    county_st = paste(NAME, REGION, sep = ", "))
+
 # Create the Supplementary Table 1, which does not have site locations.
 # write.csv(cropDiffusionR::maizeDB,
 #           here::here("vignettes/tables/tableS1.csv"),
 #           row.names = FALSE)
 
 # Load location data for each sample. Site location are not saved in this repository, as we want to ensure that archaeological site locations are protected. %>% str_remove("project_root/")
+sf::sf_use_s2(FALSE)
+
 MDB <- cropDiffusionR::maizeDB %>%
   dplyr::left_join(
     .,
@@ -56,7 +74,16 @@ MDB <- cropDiffusionR::maizeDB %>%
       col_types = readr::cols()
     ),
     by = "LabID"
-  )
+  ) %>% 
+  dplyr::mutate(Long1 = Long, Lat1 = Lat) %>% 
+    # Convert to spatial object
+  sf::st_as_sf(coords = c("Long1", "Lat1"),
+               crs = 4326) %>%
+  sf::st_make_valid() %>%
+  # Join to counties data to get county and state information.
+  sf::st_join(SWUS_counties) %>%
+  dplyr::mutate(county_st = ifelse(!is.na(REGION) & !is.na(NAME), paste(NAME, REGION, sep = ", "), NA)) %>% 
+  sf::st_drop_geometry()
 
 # If you do not have your own locational information, then you can run the code below using the mostly coarse scale locational data provided by the p3k14c package. If so, then you can uncomment this code and run instead of lines 52-60 above. However, some of the samples may not be available in the p3k14c package, and locations could vary at least 10 km from the actual site. p3k14c_data has a column that details the locational accruacy. Please refer to Table 2 in https://doi.org/10.1038/s41597-022-01118-7 for more information on the locational accuracy codes.
 # MDB <- cropDiffusionR::maizeDB %>%
@@ -78,6 +105,7 @@ MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
   cropDiffusionR::extract_GDD(gdd_raster = cropDiffusionR::WorldClim_annual_gdd,  sites = .)
+
 
 ```
 
@@ -412,6 +440,11 @@ MDB_min_fig4 <- MDB %>%
       TRUE
   )
 
+# Write output to file, but without location data.
+# tmp4 <- MDB_min_fig4 %>% 
+#   dplyr::select(-c(Long, Lat))
+# readr::write_rds(tmp4, here::here("vignettes/output/earliest_maize_province.rds"))
+
 # Plot using a linear model.
 figure4 <-
   MDB_min_fig4 %>%
@@ -528,6 +561,11 @@ MDB_min_fig5 <- MDB %>%
   cropDiffusionR::extract_diffusion(direction = "north") %>%
   dplyr::filter(Date <= 1500) %>%
   dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName))
+
+# Write output to file, but without location data.
+# tmp5 <- MDB_min_fig5 %>% 
+#   dplyr::select(-c(Long, Lat))
+# readr::write_rds(tmp5, here::here("vignettes/output/maize_frontier_mexico.rds"))
 
 # Plot using a linear model.
 figure5 <-
@@ -653,6 +691,11 @@ MDB_min_fig6 <- MDB %>%
   cropDiffusionR::extract_diffusion(direction = "north") %>%
   dplyr::filter(Date <= 1500) %>%
   dplyr::mutate(SiteName = ifelse(SiteName == "Elsinore Burial", SiteID, SiteName))
+
+# Write output to file, but without location data.
+# tmp6 <- MDB_min_fig6 %>%
+#   dplyr::select(-c(Long, Lat))
+# readr::write_rds(tmp6, here::here("vignettes/output/maize_frontier_swus.rds"))
 
 # Plot using a linear model.
 figure6 <-
