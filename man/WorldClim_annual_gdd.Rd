@@ -3,7 +3,7 @@
 \docType{data}
 \name{WorldClim_annual_gdd}
 \alias{WorldClim_annual_gdd}
-\title{Annual Accumulated Growing Degree Days from WorldClim.}
+\title{Annual Accumulated Growing Degree Days (°C) from WorldClim}
 \format{
 An object of class \code{RasterLayer}.
 }
@@ -14,7 +14,7 @@ An object of class \code{RasterLayer}.
 WorldClim_annual_gdd
 }
 \description{
-A \code{raster} containing annual accumulated growing degree days for the year with a base temperature of 10°C and maximum temperature of 30°C.
+A \code{raster} containing annual accumulated growing degree days (°C) for the year with a base temperature of 10°C and maximum temperature of 30°C.
 GDD was calculated from tmin and max 30 seconds (~1 \ifelse{html}{\out{km<sup>2</sup>}}{\eqn{km^2}}).
 }
 \keyword{datasets}

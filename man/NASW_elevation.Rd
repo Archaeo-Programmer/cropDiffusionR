@@ -3,7 +3,7 @@
 \docType{data}
 \name{NASW_elevation}
 \alias{NASW_elevation}
-\title{Digital Elevation Model for the Southwestern United States and Mexico States.}
+\title{Digital Elevation Model for the Southwestern United States and Mexico States}
 \format{
 An object of class \code{RasterLayer}.
 }

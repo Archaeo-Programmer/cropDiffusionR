@@ -3,7 +3,7 @@
 \docType{data}
 \name{usa_mexico_states}
 \alias{usa_mexico_states}
-\title{Southwestern United States and Mexico States Polygon.}
+\title{Southwestern United States and Mexico States Polygon}
 \format{
 An object of class \code{sfc_MULTIPOLYGON}.
 }

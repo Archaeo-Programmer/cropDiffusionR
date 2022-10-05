@@ -3,7 +3,7 @@
 \docType{data}
 \name{maizeDB}
 \alias{maizeDB}
-\title{North American Southwest Ancient Maize Database.}
+\title{North American Southwest Ancient Maize Database}
 \format{
 An object of class \code{tibble}.
 }

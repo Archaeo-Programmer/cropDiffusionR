@@ -3,7 +3,7 @@
 \docType{data}
 \name{global_gdd}
 \alias{global_gdd}
-\title{Annual Accumulated Growing Degree Days from SAGE.}
+\title{Annual Accumulated Growing Degree Days (°C) from SAGE}
 \format{
 An object of class \code{RasterLayer}.
 }
@@ -14,6 +14,6 @@ An object of class \code{RasterLayer}.
 global_gdd
 }
 \description{
-A \code{raster} containing annual global accumulated growing degree days for the year with a base temperature of 5°C.
+A \code{raster} containing annual global accumulated growing degree days (°C) for the year with a base temperature of 5°C.
 }
 \keyword{datasets}

@@ -122,7 +122,7 @@ usethis::use_data(maizeDB,
                   overwrite = TRUE)
 
 
-# Accumulated growing degree days (GDD) for the year with a base temperature of 10°C and a max of 30°C using WorldClim.
+# Accumulated growing degree days (GDD) °C for the year with a base temperature of 10°C and a max of 30°C using WorldClim.
 
 # Calculate average days per month during 1970-2000.
 month_days <-
@@ -206,14 +206,14 @@ mexico_states <-
   dplyr::mutate(country = "Mexico")
 
 # Get USA states data from southwestern United States.
-usa <-
+swus_states <-
   sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
   sf::st_transform(., crs = 4326) %>%
   dplyr::filter(ID %in% c("colorado", "utah", "arizona", "new mexico")) %>%
   dplyr::rename(state_name = ID) %>%
   dplyr::mutate(
     state_name = stringr::str_to_title(state_name),
-    state_abbr = case_when(
+    state_abbr = dplyr::case_when(
       state_name == "Arizona" ~ "AZ",
       state_name == "Colorado" ~ "CO",
       state_name == "Utah" ~ "UT",
@@ -223,10 +223,14 @@ usa <-
   ) %>%
   dplyr::mutate(country = "USA")
 
-# Bind together.
-usa_mexico_states <- dplyr::bind_rows(usa, mexico_states)
+# Save data for the Four Corners states.
+usethis::use_data(swus_states,
+                  overwrite = TRUE)
 
-usethis::use_data(usa_mexico_states,
+# Bind together to make a SWUS and Mexico file.
+swus_mexico_states <- dplyr::bind_rows(swus_states, mexico_states)
+
+usethis::use_data(swus_mexico_states,
                   overwrite = TRUE)
 
 

@@ -6,7 +6,7 @@
 analysis on the relationship between maize agriculture and temperature changes in prehistory.
 
 This is the official R package for [cropDiffusionR](https://github.com/Archaeo-Programmer/cropDiffusionR), 
-which contains all code associated with the analyses described and presented, including figures and tables, in Gillreath-Brown et al. 2022 (submitted): 
+which contains all code associated with the analyses described and presented, including figures and tables, in Gillreath-Brown and Kohler 2022 (submitted): 
 
 Gillreath-Brown, A., and T. A. Kohler (2022). Children of El Niño: How Maize Farmers in the US Southwest Grew and Prospered under El Niño but Suffered under La Niña. Submitted to *KIVA* for review.
     
