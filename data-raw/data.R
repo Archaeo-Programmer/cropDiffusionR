@@ -122,7 +122,7 @@ usethis::use_data(maizeDB,
                   overwrite = TRUE)
 
 
-# Accumulated growing degree days for the year with a base temperature of 10°C and a max of 30°C using WorldClim.
+# Accumulated growing degree days (GDD) for the year with a base temperature of 10°C and a max of 30°C using WorldClim.
 
 # Calculate average days per month during 1970-2000.
 month_days <-
