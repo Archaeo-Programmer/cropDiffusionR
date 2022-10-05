@@ -191,20 +191,7 @@ WorldClim_annual_gdd <- sum(WorldClim_monthly_gdd, na.rm = FALSE)
 usethis::use_data(WorldClim_annual_gdd,
                   overwrite = TRUE)
 
-# Create southwestern United States and Mexico states polygon.
-# Get Mexico states shapefile. Data was downloaded from https://www.arcgis.com/home/item.html?id=ac9041c51b5c49c683fbfec61dc03ba8.
-mexico_states <-
-  sf::read_sf(here::here("data-raw/mexstates/mexstates.shp")) %>%
-  dplyr::left_join(
-    .,
-    mxmaps::df_mxstate_2020 %>% dplyr::select(state_name, state_abbr) %>% dplyr::mutate(
-      state_name = stringi::stri_trans_general(state_name, id = "Latin-ASCII")
-    ),
-    by = c("ADMIN_NAME" = "state_name")
-  ) %>%
-  dplyr::select(state_name = ADMIN_NAME, state_abbr, geom = geometry) %>%
-  dplyr::mutate(country = "Mexico")
-
+# Create southwestern United States shapefile.
 # Get USA states data from southwestern United States.
 swus_states <-
   sf::st_as_sf(maps::map("state", fill = TRUE, plot = FALSE)) %>%
@@ -226,6 +213,20 @@ swus_states <-
 # Save data for the Four Corners states.
 usethis::use_data(swus_states,
                   overwrite = TRUE)
+
+# Create a shapefile to include Mexico with the swus_states.
+# Get Mexico states shapefile. Data was downloaded from https://www.arcgis.com/home/item.html?id=ac9041c51b5c49c683fbfec61dc03ba8.
+mexico_states <-
+  sf::read_sf(here::here("data-raw/mexstates/mexstates.shp")) %>%
+  dplyr::left_join(
+    .,
+    mxmaps::df_mxstate_2020 %>% dplyr::select(state_name, state_abbr) %>% dplyr::mutate(
+      state_name = stringi::stri_trans_general(state_name, id = "Latin-ASCII")
+    ),
+    by = c("ADMIN_NAME" = "state_name")
+  ) %>%
+  dplyr::select(state_name = ADMIN_NAME, state_abbr, geom = geometry) %>%
+  dplyr::mutate(country = "Mexico")
 
 # Bind together to make a SWUS and Mexico file.
 swus_mexico_states <- dplyr::bind_rows(swus_states, mexico_states)

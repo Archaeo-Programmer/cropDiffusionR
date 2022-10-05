@@ -34,13 +34,22 @@
 #' @source \url{https://www.worldclim.org/data/worldclim21.html}
 "WorldClim_annual_gdd"
 
-#' Southwestern United States and Mexico States Polygon
+#' Southwestern United States Polygons
+#'
+#' A `MULTIPOLYGON` containing the state boundaries for the southwestern United States (i.e., Arizona, Colorado, New Mexico, and Utah).
+#'
+#' @format An object of class `sfc_MULTIPOLYGON`.
+#' @source \url{https://github.com/adeckmyn/maps}
+"swus_states"
+
+#' Southwestern United States and Mexico States Polygons
 #'
 #' A `MULTIPOLYGON` containing the state boundaries for the southwestern United States (i.e., Arizona, Colorado, New Mexico, and Utah) and Mexico.
 #'
 #' @format An object of class `sfc_MULTIPOLYGON`.
+#' @source \url{https://github.com/adeckmyn/maps}
 #' @source \url{https://www.arcgis.com/home/item.html?id=ac9041c51b5c49c683fbfec61dc03ba8}
-"usa_mexico_states"
+"swus_mexico_states"
 
 #' Digital Elevation Model for the Southwestern United States and Mexico States
 #'
