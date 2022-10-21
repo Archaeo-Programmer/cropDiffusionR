@@ -70,7 +70,7 @@ MDB <- cropDiffusionR::maizeDB %>%
   dplyr::left_join(
     .,
     readr::read_csv(stringr::str_remove(here::here(
-      "Paper 2/Maize_Database_Locations_DONT_DISTRIBUTE.csv"), "cropDiffusionR/"),
+      "maize_database/Maize_Database_Locations_DONT_DISTRIBUTE.csv"), "cropDiffusionR/"),
       col_types = readr::cols()
     ),
     by = "LabID"
@@ -85,7 +85,7 @@ MDB <- cropDiffusionR::maizeDB %>%
   dplyr::mutate(county_st = ifelse(!is.na(REGION) & !is.na(NAME), paste(NAME, REGION, sep = ", "), NA)) %>% 
   sf::st_drop_geometry()
 
-# If you do not have your own locational information, then you can run the code below using the mostly coarse scale locational data provided by the p3k14c package. If so, then you can uncomment this code and run instead of lines 52-60 above. However, some of the samples may not be available in the p3k14c package, and locations could vary at least 10 km from the actual site. p3k14c_data has a column that details the locational accruacy. Please refer to Table 2 in https://doi.org/10.1038/s41597-022-01118-7 for more information on the locational accuracy codes.
+# If you do not have your own location information, then you can run the code below using the mostly coarse scale location data provided by the p3k14c package. If so, then you can uncomment this code and run instead of lines 52-60 above. However, some of the samples may not be available in the p3k14c package, and locations could vary at least 10 km from the actual site. p3k14c_data has a column that details the location accuracy. Please refer to Table 2 in https://doi.org/10.1038/s41597-022-01118-7 for more information on the location accuracy codes.
 # MDB <- cropDiffusionR::maizeDB %>%
 #   dplyr::left_join(
 #     .,
@@ -105,7 +105,6 @@ MDB_gdd <- MDB %>%
   sf::st_as_sf(coords = c("Long", "Lat"), crs = 4326) %>%
   dplyr::select(LabID) %>%
   cropDiffusionR::extract_GDD(gdd_raster = cropDiffusionR::WorldClim_annual_gdd,  sites = .)
-
 
 ```
 
@@ -218,14 +217,14 @@ paleomat_extent <-
                                     colour = NA_character_),
     plot.background = element_rect(fill = "transparent",
                                    colour = NA_character_),
-    # necessary to avoid drawing plot outline
+    # Necessary to avoid drawing plot outline.
     legend.background = element_rect(fill = "transparent", color = NA),
     legend.box.background = element_rect(fill = "transparent", color = NA),
     legend.key = element_rect(fill = "transparent", color = NA),
     legend.box.margin = margin(-10, -10, -10, -20)
   )
 
-# Plot the low-frequency temperature anomaly reconstruction.
+# Plot low-frequency temperature anomaly reconstruction.
 anom_plot <- temp_anom %>%
   ggplot2::ggplot(aes(x = year, y = anom)) +
   geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
