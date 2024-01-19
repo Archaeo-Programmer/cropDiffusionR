@@ -38,8 +38,7 @@ temp_anom <-
   dplyr::rename(
     year = 1,
     anom = 2,
-    ci = 3,
-    se = 4
+    ci = 3
   )
 
 # Get county shapefiles for SWUS to add as an additional column to MDB.
@@ -111,9 +110,9 @@ MDB_gdd <- MDB %>%
 
 # Figures
 
-```{r Figure_1, fig.cap="Figure 1. Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on (Gillreath-Brown, Bocinsky, and Kohler, n.d., fig. 5)). Blue line fitted by loess smoothing (α = 0.15). Negative values on y-axis indicate cooler-than-modern low-frequency conditions; horizontal line at 0 marks modern average July temperatures. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.51, fig.height = 10.32, fig.align = "left"}
+```{r Figure_1, fig.cap="Figure 1. Low-frequency July temperature anomaly reconstruction for the southwestern United States as defined in inset (based on Gillreath-Brown et al. 2024:Figure 5). The extent of the SWUS inset is approximately: xmin = -112.82, xmax = -105.52, ymin = 32.66, ymax = 38.90. Blue line fitted by LOESS (local polynomial regression fitting) smoothing (α = 0.15). Negative values on the y-axis indicate temperatures cooler than the 1961–1990 average; the horizontal line at 0 marks the average July temperature from 1961¬–1990. Negative values on x-axis indicate years BC.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 15.51, fig.height = 10.32, fig.align = "left"}
 
-# Create a bounding box for limits of the Gillreath-Brown et al. 2022 study.
+# Create a bounding box for limits of the Gillreath-Brown et al. 2024 study.
 bb <-
   c(
     "xmin" = -112.81446,
@@ -148,7 +147,7 @@ paleomat_extent <-
   ) +
   geom_sf(
     data = bb,
-    size = 0.75,
+    linewidth = 1,
     fill = NA,
     aes(colour = "slategrey",
         linetype = "dashed"),
@@ -157,12 +156,12 @@ paleomat_extent <-
   ) +
   scale_color_manual(
     values = c("slategrey" = "slategrey"),
-    labels = c("Gillreath-Brown et al. n.d. \n Study Area"),
+    labels = c("Gillreath-Brown et al. 2024 \n Study Area"),
     name = "Data Extent"
   ) +
   scale_linetype_manual(
     values = c("dashed" = "dashed"),
-    labels = c("Gillreath-Brown et al. n.d. \n Study Area"),
+    labels = c("Gillreath-Brown et al. 2024 \n Study Area"),
     name = "Data Extent"
   ) +
   labs(colour = "") +
@@ -171,7 +170,7 @@ paleomat_extent <-
     x = -109.2,
     y = 37.5,
     label = "UTAH",
-    size = 4,
+    size = 3.5,
     fontface = 2,
     hjust = 1.0
   ) +
@@ -180,7 +179,7 @@ paleomat_extent <-
     x = -108.90,
     y = 37.5,
     label = "COLORADO",
-    size = 4,
+    size = 3.5,
     fontface = 2,
     hjust = 0
   ) +
@@ -189,7 +188,7 @@ paleomat_extent <-
     x = -109.2,
     y = 36.3,
     label = "ARIZONA",
-    size = 4,
+    size = 3.5,
     fontface = 2,
     hjust = 1
   ) +
@@ -198,7 +197,7 @@ paleomat_extent <-
     x = -108.90,
     y = 36.3,
     label = "NEW MEXICO",
-    size = 4,
+    size = 3.5,
     fontface = 2,
     hjust = 0
   ) +
@@ -227,7 +226,7 @@ paleomat_extent <-
 # Plot low-frequency temperature anomaly reconstruction.
 anom_plot <- temp_anom %>%
   ggplot2::ggplot(aes(x = year, y = anom)) +
-  geom_ribbon(aes(ymax = anom + se, ymin = anom - se), alpha = 0.2) +
+  geom_ribbon(aes(ymax = anom + ci, ymin = anom - ci), alpha = 0.2) +
   geom_line(size = 2, colour = "cornflowerblue") +
   geom_hline(
     yintercept = 0,
@@ -242,9 +241,9 @@ anom_plot <- temp_anom %>%
     labels = c(seq(-3000,-500, 500), 1, seq(500, 2000, 500))
   ) +
   scale_y_continuous(
-    limits = c(-2.5, 2.5),
-    breaks = seq(-2.5, 2.5, 0.5),
-    minor_breaks = seq(-2.5, 2.5, by = 0.25),
+    limits = c(-2.0, 3.0),
+    breaks = seq(-2.0, 3.0, 0.5),
+    minor_breaks = seq(-2.0, 3.0, by = 0.25),
     guide = "axis_minor"
   ) +
   theme_bw() +
@@ -296,26 +295,26 @@ plot.with.inset <-
   cowplot::draw_plot(anom_plot) +
   cowplot::draw_plot(
     paleomat_extent,
-    x = 0.04,
-    y = .638,
-    width = .51,
-    height = .34
+    x = 0.067,
+    y = 0.68,
+    width = .50,
+    height = .30
   )
 
 plot.with.inset
 
-# ggplot2::ggsave(
-#   filename = here::here("vignettes/figures/Figure_1.png"),
-#   plot = plot.with.inset,
-#   width = 15.51,
-#   height = 10.32,
-#   dpi = 600
-# )
+ggplot2::ggsave(
+  filename = here::here("vignettes/figures/Figure_1.png"),
+  plot = plot.with.inset,
+  width = 15.51,
+  height = 10.32,
+  dpi = 600
+)
 
 ```
 
 
-```{r Figure_2, fig.cap="Figure 2. Low-frequency July temperature anomaly for the SWUS (Gillreath-Brown, Bocinsky, and Kohler, n.d.) and the Northern Hemisphere low-frequency component (Moberg et al. 2005) from AD 133 to 1900. Both series have been standardized to a mean of 0 and an s of 1 for the period in the graph.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
+```{r Figure_2, fig.cap="Figure 2. Low-frequency July temperature anomaly for the SWUS (Gillreath-Brown et al. 2024) and the Northern Hemisphere low-frequency component (Moberg et al. 2005) from AD 133 to 1900. Both series have been standardized to a mean of 0 and an s of 1 for the period in the graph.", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 temp_anom_standard <-
   readr::read_csv(
@@ -324,7 +323,7 @@ temp_anom_standard <-
   ) %>%
   dplyr::mutate(Year = as.integer(Year)) %>%
   dplyr::filter(Year >= 133 & Year <= 1900) %>%
-  dplyr::mutate(Series = "Gillreath-Brown et al. n.d.") %>%
+  dplyr::mutate(Series = "Gillreath-Brown et al. 2024") %>%
   dplyr::select(year = Year, anom = 2, Series)
 
 Moberg_standard <- paleomat::moberg_2005 %>%
@@ -349,11 +348,11 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
   geom_line(size = 2.0) +
     scale_color_manual(
     values = c("#A60F2D", "cornflowerblue"),
-    labels = c("Gillreath-Brown et al. n.d.", "Moberg et al. 2005")
+    labels = c("Gillreath-Brown et al. 2024", "Moberg et al. 2005")
   ) +
   scale_linetype_manual(
     values = c("solid", "twodash"),
-    labels = c("Gillreath-Brown et al. n.d.", "Moberg et al. 2005")
+    labels = c("Gillreath-Brown et al. 2024", "Moberg et al. 2005")
   ) +
   xlab("Years AD") +
   ylab("Standardized Temperature Values (Z-Scores)") +
@@ -415,18 +414,18 @@ Moberg_paleomat_fig <- Moberg_paleomat %>%
 
 Moberg_paleomat_fig
 
-# ggplot2::ggsave(
-#   Moberg_paleomat_fig,
-#   filename = here::here("vignettes/figures/Figure_2.png"),
-#   width = 17.25,
-#   height = 11.5,
-#   dpi = 600
-# )
+ggplot2::ggsave(
+  Moberg_paleomat_fig,
+  filename = here::here("vignettes/figures/Figure_2.png"),
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
 
 ```
 
 
-```{r Figure_4, fig.cap="Figure 4. Earliest site with maize in each of the labeled political subdivisions, using data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.001 degrees/year for this sample (r2 = 0.01; p > F = 0.72).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
+```{r Figure_4, fig.cap="Figure 4. Earliest site with maize in each of the labeled political subdivisions, using data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Supplemental Table S1. The linear model shows the regression of latitude on date for the labeled sites. The slope of the regression line implies an average spread rate of 0.001 degrees/year for this sample (r2 = 0.01; p > F = 0.72).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig4 <- MDB %>%
@@ -553,7 +552,7 @@ figure4
 ```
 
 
-```{r Figure_5, fig.cap="Figure 5. Location of maize’s northern frontier through time. Shown is the earliest site with maize in each century, with the constraint that only sites further north than earlier sites appear in the plot. Data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Table S1. The linear model shows the regression of date on latitude for the labeled sites. The slope of the regression line implies an average spread rate of 0.003 degrees/year for this sample (r2 = 0.76; p > F < 0.001). Between just Guilà Naquitz and Las Capas however the implied rate of spread is ~8.7 times more rapid (0.026 degrees/year).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
+```{r Figure_5, fig.cap="Figure 5. Location of maize’s northern frontier through time. Shown is the earliest site with maize in each century, with the constraint that only sites further north than earlier sites appear in the plot. Data from the Ancient Maize Map (Blake et al. 2017) with additions listed in Supplemental Table S1. The linear model shows the regression of latitude on date for the labeled sites. The slope of the regression line implies an average spread rate of 0.003 degrees/year for this sample (r2 = 0.76; p > F < 0.001). Between just Guilà Naquitz and Las Capas however the implied rate of spread is ~8.7 times more rapid (0.026 degrees/year).", echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'hide',fig.keep = 'all', fig.width = 17.25, fig.height = 11.5, fig.align = "left"}
 
 # Subset the dataframe to only have the 2 sigma data and the unique lab code.
 MDB_min_fig5 <- MDB %>%
