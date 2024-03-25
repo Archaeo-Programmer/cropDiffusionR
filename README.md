@@ -6,9 +6,9 @@
 analysis on the relationship between maize agriculture and temperature changes in prehistory.
 
 This is the official R package for [cropDiffusionR](https://github.com/Archaeo-Programmer/cropDiffusionR), 
-which contains all code associated with the analyses described and presented, including figures and tables, in Gillreath-Brown and Kohler 2022 (submitted): 
+which contains all code associated with the analyses described and presented, including figures and tables, in Gillreath-Brown and Kohler 2024: 
 
-Gillreath-Brown, A., and T. A. Kohler (2022). Children of El Niño: How Maize Farmers in the US Southwest Grew and Prospered under El Niño but Suffered under La Niña. Submitted to *KIVA* for review.
+Gillreath-Brown, A., and T. A. Kohler (2024). How Maize Farmers in the US Southwest Grew and Prospered under El Niño but Suffered under La Niña. Accepted at *KIVA*.
     
 All code for analysis, figures, and tables is in [Maize_Analysis.Rmd](vignettes/Maize_Analysis.Rmd).
 
@@ -26,7 +26,7 @@ devtools::install_github("Archaeo-Programmer/cropDiffusionR")
 The [:file\_folder: vignettes](vignettes) directory contains:
 
   - [:page\_facing\_up: Maize_Analysis](vignettes/Maize_Analysis.Rmd): R
-    Markdown document with all analysis and code to reproduce the figures and tables for the submitted paper (Gillreath-Brown and Kohler 2022).
+    Markdown document with all analysis and code to reproduce the figures and tables for the paper (Gillreath-Brown and Kohler 2024).
     It also has a rendered version, [Maize_Analysis.html](vignettes/Maize_Analysis.html), which shows figure and table output.
   - [:file\_folder: figures](vignettes/figures): Plots, figures, and illustrations in the paper, including supplementary materials.
   - [:file\_folder: tables](vignettes/tables): Tables in the paper, including supplementary materials.
