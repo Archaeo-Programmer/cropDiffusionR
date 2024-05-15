@@ -486,7 +486,8 @@ Moberg_paleomat_diff_fig <- Moberg_paleomat_diff %>%
     guide = "axis_minor",
     labels = c(1, seq(200, 2000, 200))
   ) +
-  scale_y_continuous(breaks = seq(-4, 3, 0.5)) +
+  scale_y_continuous(limits = c(-3, 4),
+                     breaks = seq(-3, 4, 1.0)) +
   annotate(
     "text",
     x = 400,
@@ -551,13 +552,13 @@ Moberg_paleomat_diff_fig <- Moberg_paleomat_diff %>%
 
 Moberg_paleomat_diff_fig
 
-# ggplot2::ggsave(
-#   Moberg_paleomat_diff_fig,
-#   filename = here::here("vignettes/figures/Figure_3.png"),
-#   width = 17.25,
-#   height = 11.5,
-#   dpi = 600
-# )
+ggplot2::ggsave(
+  Moberg_paleomat_diff_fig,
+  filename = here::here("vignettes/figures/Figure_3.png"),
+  width = 17.25,
+  height = 11.5,
+  dpi = 600
+)
 
 ```
 
