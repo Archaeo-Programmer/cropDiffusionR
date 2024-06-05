@@ -8,7 +8,7 @@ analysis on the relationship between maize agriculture and temperature changes i
 This is the official R package for [cropDiffusionR](https://github.com/Archaeo-Programmer/cropDiffusionR), 
 which contains all code associated with the analyses described and presented, including figures and tables, in Gillreath-Brown and Kohler 2024: 
 
-Gillreath-Brown, A., and T. A. Kohler (2024). How Maize Farmers in the US Southwest Grew and Prospered under El Niño but Suffered under La Niña. Accepted at *KIVA*.
+Gillreath-Brown, A., and T. A. Kohler (2024). How Maize Farmers in the US Southwest Grew and Prospered Under El Niño but Suffered Under La Niña. *KIVA* 1–25. [https://doi.org/10.1080/00231940.2024.2348941](https://doi.org/10.1080/00231940.2024.2348941)
     
 All code for analysis, figures, and tables is in [Maize_Analysis.Rmd](vignettes/Maize_Analysis.Rmd).
 
